@@ -59,3 +59,19 @@ function ouvirPosicaoDoMouse(tipo, nomeFuncao, callback) {
 export function aoClicarNaTela(callback) {
   return ouvirPosicaoDoMouse('click', 'aoClicarNaTela', callback)
 }
+
+/**
+ * Executa uma função sempre que o mouse se mover pela página.
+ *
+ * @param {(posicao: { x: number, y: number }) => void} callback - Recebe a posição atual do mouse,
+ *   em pixels, relativa ao canto superior esquerdo da janela.
+ * @returns {() => void} Função `parar()`, que remove o evento.
+ * @example
+ * Borg.aoMoverMouse(({ x, y }) => {
+ *   Borg.mudarEstilo('#seguidor', 'left', `${x}px`)
+ *   Borg.mudarEstilo('#seguidor', 'top', `${y}px`)
+ * })
+ */
+export function aoMoverMouse(callback) {
+  return ouvirPosicaoDoMouse('mousemove', 'aoMoverMouse', callback)
+}
