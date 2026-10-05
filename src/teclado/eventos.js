@@ -57,6 +57,7 @@ function ouvirTecla(tipo, nomeFuncao, tecla, callback) {
  * @param {string} tecla - Ex.: `'a'`, `'7'`, `'espaço'`, `'enter'`, `'esc'`, `'seta cima'` ou `'qualquer'`.
  * @param {(tecla: string) => void} callback - Recebe o nome, em português, da tecla pressionada.
  * @returns {() => void} Função `parar()`, que remove o evento.
+ * @throws {TypeError} Quando a tecla não existe ou o `callback` não é uma função.
  * @example
  * Borg.aoPressionar('espaço', () => {
  *   Borg.alternarClasse('body', 'escuro')
@@ -72,6 +73,7 @@ export function aoPressionar(tecla, callback) {
  * @param {string} tecla - Ex.: `'a'`, `'7'`, `'espaço'`, `'enter'`, `'esc'`, `'seta cima'` ou `'qualquer'`.
  * @param {(tecla: string) => void} callback - Recebe o nome, em português, da tecla solta.
  * @returns {() => void} Função `parar()`, que remove o evento.
+ * @throws {TypeError} Quando a tecla não existe ou o `callback` não é uma função.
  * @example
  * Borg.aoSoltar('seta direita', () => {
  *   Borg.mudarTexto('#status', 'Parado')
