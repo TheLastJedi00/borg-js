@@ -65,3 +65,18 @@ function ouvirTecla(tipo, nomeFuncao, tecla, callback) {
 export function aoPressionar(tecla, callback) {
   return ouvirTecla('keydown', 'aoPressionar', tecla, callback)
 }
+
+/**
+ * Executa uma função quando uma tecla for solta.
+ *
+ * @param {string} tecla - Ex.: `'a'`, `'7'`, `'espaço'`, `'enter'`, `'esc'`, `'seta cima'` ou `'qualquer'`.
+ * @param {(tecla: string) => void} callback - Recebe o nome, em português, da tecla solta.
+ * @returns {() => void} Função `parar()`, que remove o evento.
+ * @example
+ * Borg.aoSoltar('seta direita', () => {
+ *   Borg.mudarTexto('#status', 'Parado')
+ * })
+ */
+export function aoSoltar(tecla, callback) {
+  return ouvirTecla('keyup', 'aoSoltar', tecla, callback)
+}
