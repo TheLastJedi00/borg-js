@@ -11,4 +11,9 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
   },
+  test: {
+    environment: 'jsdom',
+    include: ['tests/**/*.test.js'],
+    restoreMocks: true,
+  },
 })
