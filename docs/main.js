@@ -1,5 +1,7 @@
 import * as Borg from '../src/index.js'
 import { secoesDeInicio } from './inicio.js'
+import { funcoes } from './funcoes.js'
+import { blocoDeCodigo } from './util.js'
 
 // Deixa a Borg disponível como no uso com <script src="borg.js">.
 window.Borg = Borg
@@ -29,5 +31,47 @@ function adicionarSecao(menu, { id, rotulo, html }, classe = 'secao') {
   return elemento
 }
 
+/**
+ * Monta o HTML da seção de uma função: descrição, parâmetros, retorno e exemplo.
+ * @param {(typeof funcoes)[number]} funcao
+ * @returns {string}
+ */
+function htmlDaFuncao(funcao) {
+  const linhas = funcao.tabela
+    .map(([nome, tipo, descricao]) => `<tr><td><code>${nome}</code></td><td>${tipo}</td><td>${descricao}</td></tr>`)
+    .join('')
+
+  return `
+    <h2>${funcao.nome}<span class="parametros">(${funcao.parametros})</span></h2>
+    <p>${funcao.descricao}</p>
+    <h3>Parâmetros</h3>
+    <table class="tabela">
+      <thead><tr><th>Nome</th><th>Tipo</th><th>Descrição</th></tr></thead>
+      <tbody>${linhas}</tbody>
+    </table>
+    <h3>Retorno</h3>
+    <p>${funcao.retorno}</p>
+    <h3>Exemplo</h3>
+    <div class="exemplo">
+      <div>
+        ${blocoDeCodigo(funcao.html)}
+        ${blocoDeCodigo(funcao.js)}
+      </div>
+      <div class="palco">${funcao.html}</div>
+    </div>
+  `
+}
+
 const menuInicio = document.getElementById('menu-inicio')
 secoesDeInicio.forEach((secao) => adicionarSecao(menuInicio, secao))
+
+const menuFuncoes = document.getElementById('menu-funcoes')
+funcoes.forEach((funcao) => {
+  adicionarSecao(
+    menuFuncoes,
+    { id: funcao.nome, rotulo: funcao.nome, html: htmlDaFuncao(funcao) },
+    'secao funcao',
+  )
+  // Roda o mesmo código que aparece na página, cada exemplo no seu próprio escopo.
+  new Function('Borg', funcao.js)(Borg)
+})
