@@ -26,3 +26,36 @@ export function aoClicar(seletor, callback) {
     elementos.forEach((elemento) => elemento.removeEventListener('click', aoReceberClique))
   }
 }
+
+/**
+ * Registra um evento do mouse no documento e entrega a posição `{ x, y }`.
+ * @param {string} tipo - Tipo do evento (`'click'`, `'mousemove'`).
+ * @param {string} nomeFuncao
+ * @param {(posicao: { x: number, y: number }) => void} callback
+ * @returns {() => void}
+ */
+function ouvirPosicaoDoMouse(tipo, nomeFuncao, callback) {
+  validarFuncao(callback, nomeFuncao)
+  const aoReceberEvento = (evento) => callback({ x: evento.clientX, y: evento.clientY })
+
+  document.addEventListener(tipo, aoReceberEvento)
+
+  return function parar() {
+    document.removeEventListener(tipo, aoReceberEvento)
+  }
+}
+
+/**
+ * Executa uma função sempre que houver um clique em qualquer lugar da página.
+ *
+ * @param {(posicao: { x: number, y: number }) => void} callback - Recebe a posição do clique,
+ *   em pixels, relativa ao canto superior esquerdo da janela.
+ * @returns {() => void} Função `parar()`, que remove o evento.
+ * @example
+ * Borg.aoClicarNaTela(({ x, y }) => {
+ *   Borg.mudarTexto('#posicao', `Clique em ${x}, ${y}`)
+ * })
+ */
+export function aoClicarNaTela(callback) {
+  return ouvirPosicaoDoMouse('click', 'aoClicarNaTela', callback)
+}
