@@ -24,6 +24,23 @@ Deve ser possível criar, de forma simples e rápida, elementos que reagem a:
 | Porta 3000 | Não se aplica: a spec não tem backend. |
 | Erros | Mensagens de erro e aviso em português, pensadas para iniciantes. |
 
+## Decisões da execução
+
+Detalhes que a spec não definia e que foram decididos durante a implementação:
+
+| Tema | Decisão |
+| --- | --- |
+| Seletor | Também aceita `NodeList` e array de elementos. É procurado no momento da chamada, então elementos criados depois não são incluídos. |
+| `aoPressionar` | Dispara uma vez por toque e ignora a repetição de tecla segurada (`event.repeat`). Para movimento contínuo, use `teclaPressionada`. |
+| Rolagem | Para `'espaço'` e as setas registradas (não para `'qualquer'`), a rolagem da página é bloqueada, exceto dentro de campos de texto. |
+| Teclas | `'espaco'` (sem acento) também é aceita. Um nome de tecla desconhecido lança um erro que lista os nomes válidos. |
+| `teclaPressionada` | Começa a acompanhar o teclado na primeira chamada. |
+| `mostrar` | Também funciona com `display: none` vindo do CSS. Restaura o `display` inline original salvo por `esconder`. |
+| `alternarClasse` | Aceita a classe com ponto (`'.ativo'`). Uma classe com espaço gera erro. |
+| `mudarTexto` | Aceita texto ou número e usa `textContent`, sem interpretar HTML. |
+| `mudarEstilo` | Números viram `px`, exceto em propriedades sem unidade (`opacity`, `z-index` etc.). Aceita variáveis CSS (`--cor`). Avisa quando o navegador não aceita a propriedade ou o valor. |
+| Site de docs | O código mostrado em cada exemplo é o mesmo que roda no palco (`docs/funcoes.js`). |
+
 ## Requisitos funcionais
 
 ### Regras gerais da API
