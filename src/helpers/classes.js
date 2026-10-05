@@ -6,6 +6,8 @@ import { erroDeTipo, validarTexto } from '../nucleo/mensagens.js'
  *
  * @param {string|Element} seletor - Seletor CSS (ex.: `'#menu'`) ou um elemento do DOM.
  * @param {string} classe - Nome da classe, com ou sem ponto (`'ativo'` ou `'.ativo'`).
+ * @returns {void}
+ * @throws {TypeError} Quando a classe está vazia ou tem espaço, ou o seletor é inválido.
  * @example
  * Borg.aoClicar('#tema', () => {
  *   Borg.alternarClasse('body', 'escuro')

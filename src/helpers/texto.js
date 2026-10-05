@@ -6,6 +6,8 @@ import { descrever, erroDeTipo } from '../nucleo/mensagens.js'
  *
  * @param {string|Element} seletor - Seletor CSS (ex.: `'#titulo'`) ou um elemento do DOM.
  * @param {string|number} texto - Novo texto. Números são convertidos para texto.
+ * @returns {void}
+ * @throws {TypeError} Quando o texto não é um texto ou número, ou o seletor é inválido.
  * @example
  * let pontos = 0
  * Borg.aoClicar('#botao', () => {

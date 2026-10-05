@@ -7,6 +7,8 @@ const displayOriginal = new WeakMap()
  * Esconde o elemento.
  *
  * @param {string|Element} seletor - Seletor CSS (ex.: `'#mensagem'`) ou um elemento do DOM.
+ * @returns {void}
+ * @throws {TypeError} Quando o seletor é inválido.
  * @example
  * Borg.aoClicar('#fechar', () => {
  *   Borg.esconder('#janela')
@@ -28,6 +30,8 @@ export function esconder(seletor) {
  * regra do CSS (`display: none`).
  *
  * @param {string|Element} seletor - Seletor CSS (ex.: `'#mensagem'`) ou um elemento do DOM.
+ * @returns {void}
+ * @throws {TypeError} Quando o seletor é inválido.
  * @example
  * Borg.aoClicar('#abrir', () => {
  *   Borg.mostrar('#janela')

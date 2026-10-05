@@ -25,6 +25,7 @@ function garantirMonitoramento() {
  *
  * @param {string} tecla - Ex.: `'a'`, `'espaço'`, `'seta cima'` ou `'qualquer'`.
  * @returns {boolean} `true` enquanto a tecla estiver pressionada.
+ * @throws {TypeError} Quando a tecla não existe.
  * @example
  * function loop() {
  *   if (Borg.teclaPressionada('seta direita')) x += 5

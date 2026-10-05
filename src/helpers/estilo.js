@@ -33,6 +33,8 @@ function paraFormatoCss(propriedade) {
  * @param {string} propriedade - Nome no formato do CSS (`'background-color'`) ou do JS (`'backgroundColor'`).
  * @param {string|number} valor - Valor do estilo. Números viram pixels (`100` → `'100px'`),
  *   exceto em propriedades sem unidade, como `opacity` e `z-index`.
+ * @returns {void}
+ * @throws {TypeError} Quando a propriedade ou o valor têm tipo inválido, ou o seletor é inválido.
  * @example
  * Borg.aoMoverMouse(({ x }) => {
  *   Borg.mudarEstilo('#barra', 'width', x)
