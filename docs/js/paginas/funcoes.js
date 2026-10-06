@@ -1,12 +1,23 @@
-import * as Borg from '../src/index.js'
-import { secoesDeInicio } from './inicio.js'
-import { funcoes } from './funcoes.js'
-import { blocoDeCodigo } from './util.js'
+import * as Borg from '../../../src/index.js'
+import { secoesDeInicio } from '../dados/inicio.js'
+import { funcoes } from '../dados/funcoes.js'
+import { blocoDeCodigo } from '../util.js'
 
 // Deixa a Borg disponível como no uso com <script src="borg.js">.
 window.Borg = Borg
 
-const conteudo = document.getElementById('conteudo')
+document.getElementById('conteudo').innerHTML = `
+  <div class="layout">
+    <nav class="menu" aria-label="Seções">
+      <p class="menu-titulo">Começando</p>
+      <ul id="menu-inicio"></ul>
+      <p class="menu-titulo">Funções</p>
+      <ul id="menu-funcoes"></ul>
+    </nav>
+    <div id="secoes"></div>
+  </div>
+`
+const conteudo = document.getElementById('secoes')
 
 /**
  * Adiciona uma seção à página e um link no menu.

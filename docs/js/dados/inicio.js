@@ -1,4 +1,4 @@
-import { blocoDeCodigo } from './util.js'
+import { blocoDeCodigo } from '../util.js'
 
 /** Seções da parte "Começando" da documentação. */
 export const secoesDeInicio = [
