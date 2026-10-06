@@ -46,10 +46,35 @@ Regras de execução (ver `.claude/RULES.md`):
 - [x] **6.2** Criar o provedor de sugestões de função para `.js` e `.mjs` e para o conteúdo de `<script>` em `.html`, com `SnippetString`, assinatura, descrição e o `import` automático como edição adicional (`additionalTextEdits`).
 - [x] **6.3** Criar o provedor de sugestões de nome de tecla dentro das aspas.
 - [x] **6.4** Criar `npm run build:extensao`: empacota a extensão com as sugestões embutidas (sem rede) e gera o `.vsix` com `@vscode/vsce`. A saída fica fora do controle de versão. Completar no `package.json` da extensão os campos exigidos pelos dois registros (`publisher`, `repository`, `license`, `icon`, `engines.vscode`).
-- [ ] **6.5** Gravar o GIF do autocomplete para o `README.md` da extensão. *Pendente: precisa de uma gravação de tela do VS Code, que não dá para fazer na execução automática.*
+- [ ] **6.5** Gravar o GIF do autocomplete para o `README.md` da extensão. *Pendente: ver a Fase 8.*
 - [x] **6.6** Criar `npm run publicar:extensao` com `@vscode/vsce` e `ovsx` (dependências de desenvolvimento). O script gera o `.vsix` uma vez e publica esse arquivo no Marketplace (`vsce publish --packagePath`, token em `VSCE_PAT`) e no Open VSX (`ovsx publish`, token em `OVSX_PAT`). Se faltar um token, ele para antes de publicar e explica qual variável definir. A lógica de checar os tokens é testada primeiro.
 - [x] **6.7** Documentar no `README.md` da raiz, seção "Publicar a extensão", os passos manuais feitos uma vez: criar o publisher no Marketplace, criar o token do Azure DevOps (escopo Marketplace → Manage), criar o namespace e o token no Open VSX, e definir `VSCE_PAT` e `OVSX_PAT`. Incluir a opção de usar `vsce publish --azure-credential` no lugar do token.
-- [ ] **6.8** Publicar a versão `0.1.0` nos dois registros pela CLI e conferir a página da extensão em cada um. Depende dos passos manuais da 6.7. Se os tokens não estiverem disponíveis na execução, a task fica pendente e isso é destacado no PR. *Marketplace: publicada em 06/10/2026 pelo upload do `.vsix` no site do publisher, porque o cadastro do Azure DevOps (necessário para o `VSCE_PAT`) travou. Página conferida: https://marketplace.visualstudio.com/items?itemName=lenoborges.borg-js. Open VSX: pendente (falta o `OVSX_PAT`).*
+- [x] **6.8** Publicar a versão `0.1.0` no Marketplace do VS Code e conferir a página. *Publicada em 06/10/2026 pelo upload do `.vsix` no site do publisher, porque o cadastro do Azure DevOps (necessário para o `VSCE_PAT`) travou. Página conferida: https://marketplace.visualstudio.com/items?itemName=lenoborges.borg-js.*
+- [ ] **6.9** Publicar a versão `0.1.0` no Open VSX e conferir a página. *Pendente: ver a Fase 8.*
+
+## Fase 8 · Pendências (passos do dono do projeto)
+
+Estas tasks dependem de contas, tokens ou gravações que só o dono do projeto pode fazer. Cada uma diz o que falta e quando ela está pronta.
+
+- [ ] **8.1** Publicar no **Open VSX** (completa a 6.9).
+  1. Entrar em https://open-vsx.org com o GitHub e aceitar o acordo de publicação (Eclipse Publisher Agreement).
+  2. Criar um token em https://open-vsx.org/user-settings/tokens.
+  3. Criar o namespace e publicar o `.vsix` que já foi para o Marketplace:
+     ```bash
+     npm run build:extensao
+     npx ovsx create-namespace lenoborges -p <token>
+     npx ovsx publish dist-extensao/borg-js-0.1.0.vsix -p <token>
+     ```
+  - **Pronto quando** https://open-vsx.org/extension/lenoborges/borg-js mostrar a versão `0.1.0` com o ícone e o README.
+- [ ] **8.2** Gravar o **GIF do autocomplete** (completa a 6.5).
+  1. No VS Code com a extensão instalada, gravar um arquivo `main.js` vazio: digitar `aoCli`, aceitar com Enter, ver o `import` aparecer, pular os campos com Tab e escrever a reação. Até 15 segundos, largura de até 800 px.
+  2. Salvar em `extensao-vscode/imagens/autocomplete.gif` e colocar no `README.md` da extensão, logo depois do primeiro parágrafo.
+  3. Subir a versão para `0.1.1` em `extensao-vscode/package.json`, escrever a entrada no `CHANGELOG.md`, rodar `npm run build:extensao` e publicar o `.vsix` nos dois registros (upload em **Update** no painel do publisher do Marketplace e `npx ovsx publish` no Open VSX).
+  - **Pronto quando** o GIF aparecer na página da extensão nos dois registros.
+- [ ] **8.3** (Opcional) Habilitar a **publicação pela CLI no Marketplace**, para não depender do upload manual.
+  - Caminho A: terminar o cadastro do Azure DevOps (tentar em janela anônima ou outro navegador, entrando por https://dev.azure.com) e criar o `VSCE_PAT` com o escopo **Marketplace → Manage**.
+  - Caminho B: instalar a Azure CLI, rodar `az login` e publicar com `npm run publicar:extensao -- --azure-credential`.
+  - **Pronto quando** `npm run publicar:extensao` publicar uma versão nova sem passos manuais.
 
 ## Fase 7 · `feat/docs-movimento`
 
