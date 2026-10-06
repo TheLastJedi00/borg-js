@@ -515,6 +515,205 @@ aoPressionar('espaço', () => {
 })`,
     },
   },
+  {
+    id: 'mira',
+    nivel: 'facil',
+    titulo: 'Mira que segue o mouse',
+    enunciado: `
+      <p>
+        A mira acompanha o mouse por todo o resultado. Quando clicar, o texto mostra onde foi o tiro,
+        por exemplo: <em>Tiro em 120, 45</em>.
+      </p>
+      <p>Dica: <code>aoMoverMouse</code> entrega a posição no mesmo formato que <code>moverPara</code> recebe.</p>`,
+    funcoes: ['aoMoverMouse', 'moverPara', 'aoClicarNaTela', 'mudarTexto'],
+    inicial: {
+      html: `
+<p id="tiro">Clique para atirar</p>
+<div class="mira" id="mira"></div>`,
+      css: `
+.mira {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #ef4444;
+  border-radius: 50%;
+  pointer-events: none;
+}`,
+      js: `
+// 1. Quando o mouse se mover, leve a #mira até a posição dele
+
+// 2. Quando clicar na tela, mostre no #tiro onde foi o clique
+`,
+    },
+    solucao: {
+      js: `
+aoMoverMouse((posicao) => {
+  moverPara('#mira', posicao)
+})
+
+aoClicarNaTela(({ x, y }) => {
+  mudarTexto('#tiro', 'Tiro em ' + x + ', ' + y)
+})`,
+    },
+  },
+  {
+    id: 'quadrado-na-tela',
+    nivel: 'medio',
+    titulo: 'Quadrado que não sai da tela',
+    enunciado: `
+      <p>
+        Cada toque em uma seta anda 30 px com o quadrado naquela direção. Ele nunca pode sair da tela:
+        quando bater na borda, mostre <em>Bateu na borda!</em>; quando não bater, apague o aviso.
+      </p>
+      <p>
+        Dica: crie uma função <code>andar(passo)</code> que recebe o deslocamento, como
+        <code>{ x: 30 }</code>, para não repetir o mesmo código nas quatro setas. Clique no resultado
+        antes de testar.
+      </p>`,
+    funcoes: ['moverPara', 'moverPor', 'manterNaTela', 'aoPressionar', 'mudarTexto'],
+    inicial: {
+      html: `
+<p id="aviso"></p>
+<div class="quadrado" id="quadrado"></div>`,
+      css: `
+.quadrado {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
+      js: `
+moverPara('#quadrado', { x: 100, y: 80 })
+
+function andar(passo) {
+  // 1. Mova o #quadrado pelo passo
+  // 2. Se manterNaTela precisou ajustar, mostre o aviso; se não, apague
+}
+
+// 3. Chame andar com o passo certo em cada seta
+`,
+    },
+    solucao: {
+      js: `
+moverPara('#quadrado', { x: 100, y: 80 })
+
+function andar(passo) {
+  moverPor('#quadrado', passo)
+
+  if (manterNaTela('#quadrado')) {
+    mudarTexto('#aviso', 'Bateu na borda!')
+  } else {
+    mudarTexto('#aviso', '')
+  }
+}
+
+aoPressionar('seta direita', () => andar({ x: 30 }))
+aoPressionar('seta esquerda', () => andar({ x: -30 }))
+aoPressionar('seta baixo', () => andar({ y: 30 }))
+aoPressionar('seta cima', () => andar({ y: -30 }))`,
+    },
+  },
+  {
+    id: 'pegar-estrelas',
+    nivel: 'dificil',
+    titulo: 'Pegar as estrelas',
+    altura: 320,
+    enunciado: `
+      <p>
+        Mova o jogador com as setas, sem parar enquanto a seta estiver pressionada e sem sair da tela.
+        Quando ele encostar na estrela, ganhe um ponto, e a estrela aparece em outro lugar sorteado.
+      </p>
+      <p>
+        Dica: use <code>teclaPressionada</code> com <code>moverPor</code> em um loop, e
+        <code>colidiu</code> para saber se pegou. Para sortear o lugar, combine <code>Math.random()</code>
+        com <code>tamanhoDaTela()</code>. Clique no resultado antes de testar.
+      </p>`,
+    funcoes: [
+      'elemento',
+      'moverPara',
+      'moverPor',
+      'manterNaTela',
+      'colidiu',
+      'tamanhoDaTela',
+      'teclaPressionada',
+      'mudarTexto',
+    ],
+    inicial: {
+      html: `
+<p id="pontos">Estrelas: 0</p>
+<div class="jogador" id="jogador"></div>
+<div class="estrela" id="estrela">★</div>`,
+      css: `
+.jogador {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}
+
+.estrela {
+  font-size: 2rem;
+  line-height: 1;
+  color: #f59e0b;
+}`,
+      js: `
+const jogador = elemento('#jogador')
+const estrela = elemento('#estrela')
+let pontos = 0
+
+function sortearEstrela() {
+  // 1. Leve a estrela para um ponto sorteado dentro da tela
+}
+
+moverPara(jogador, { x: 20, y: 60 })
+sortearEstrela()
+
+function loop() {
+  // 2. Mova o jogador conforme as setas pressionadas e mantenha ele na tela
+
+  // 3. Se o jogador encostou na estrela, some um ponto, mostre e sorteie outro lugar
+
+  requestAnimationFrame(loop)
+}
+
+loop()
+`,
+    },
+    solucao: {
+      js: `
+const jogador = elemento('#jogador')
+const estrela = elemento('#estrela')
+let pontos = 0
+
+function sortearEstrela() {
+  const tela = tamanhoDaTela()
+  moverPara(estrela, {
+    x: Math.random() * (tela.largura - 40),
+    y: 40 + Math.random() * (tela.altura - 80),
+  })
+}
+
+moverPara(jogador, { x: 20, y: 60 })
+sortearEstrela()
+
+function loop() {
+  if (teclaPressionada('seta direita')) moverPor(jogador, { x: 4 })
+  if (teclaPressionada('seta esquerda')) moverPor(jogador, { x: -4 })
+  if (teclaPressionada('seta baixo')) moverPor(jogador, { y: 4 })
+  if (teclaPressionada('seta cima')) moverPor(jogador, { y: -4 })
+  manterNaTela(jogador)
+
+  if (colidiu(jogador, estrela)) {
+    pontos = pontos + 1
+    mudarTexto('#pontos', 'Estrelas: ' + pontos)
+    sortearEstrela()
+  }
+
+  requestAnimationFrame(loop)
+}
+
+loop()`,
+    },
+  },
 ]
 
 /** Níveis na ordem em que aparecem na página. */

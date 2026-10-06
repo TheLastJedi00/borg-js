@@ -12,6 +12,15 @@ export const URL_BORG_MJS = `${URL_DO_SITE}/borg.mjs`
 /** Build para script tag, que cria o objeto global `Borg`. */
 export const URL_BORG_JS = `${URL_DO_SITE}/borg.js`
 
+/** ID do publisher da extensão Borg JS. Precisa ser igual ao `publisher` de `extensao-vscode/package.json`. */
+export const PUBLISHER_DA_EXTENSAO = 'lenoborges'
+
+/** Página da extensão no Marketplace do VS Code. */
+export const URL_EXTENSAO_MARKETPLACE = `https://marketplace.visualstudio.com/items?itemName=${PUBLISHER_DA_EXTENSAO}.borg-js`
+
+/** Página da extensão no Open VSX (Cursor, VSCodium e outros editores baseados no VS Code). */
+export const URL_EXTENSAO_OPEN_VSX = `https://open-vsx.org/extension/${PUBLISHER_DA_EXTENSAO}/borg-js`
+
 const LIMITE_DA_LINHA = 80
 
 /**

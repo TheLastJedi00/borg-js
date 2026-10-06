@@ -1,7 +1,14 @@
 import * as Borg from '../../src/index.js'
 import { URL_BORG_MJS, linhaDeImport } from './url.js'
 
-export { URL_DO_SITE, URL_BORG_MJS, URL_BORG_JS, linhaDeImport } from './url.js'
+export {
+  URL_DO_SITE,
+  URL_BORG_MJS,
+  URL_BORG_JS,
+  URL_EXTENSAO_MARKETPLACE,
+  URL_EXTENSAO_OPEN_VSX,
+  linhaDeImport,
+} from './url.js'
 
 /** Nomes das funções públicas da Borg. */
 export const FUNCOES_DA_BORG = Object.keys(Borg)

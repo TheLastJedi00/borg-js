@@ -4,7 +4,7 @@
 
 # Borg JS
 
-Biblioteca JavaScript **educacional** com funções **em português** para fazer elementos reagirem a cliques, ao mouse e ao teclado, sem precisar lidar com a parte complicada do DOM.
+Biblioteca JavaScript **educacional** com funções **em português** para fazer elementos reagirem a cliques, ao mouse e ao teclado e se moverem na tela, sem precisar lidar com a parte complicada do DOM.
 
 Com ela, você foca no que importa enquanto aprende: a lógica de reação e o design com HTML e CSS.
 
@@ -62,8 +62,37 @@ Inclua o `borg.js` com uma tag `<script>`. Ele cria o objeto global `Borg`, e es
 | `alternarClasse(seletor, classe)` | Liga e desliga uma classe. |
 | `mudarTexto(seletor, texto)` | Troca o texto de um elemento. |
 | `mudarEstilo(seletor, propriedade, valor)` | Muda um estilo CSS. |
+| `elemento(seletor)` | Pega o elemento da página, para usar em qualquer função. |
+| `posicao(seletor)` | Lê a posição `{ x, y }` do elemento na tela. |
+| `tamanho(seletor)` | Lê o tamanho `{ largura, altura }` do elemento. |
+| `tamanhoDaTela()` | Lê o tamanho `{ largura, altura }` da janela. |
+| `moverPara(seletor, { x, y })` | Coloca o elemento em um ponto da tela. |
+| `moverPor(seletor, { x, y })` | Desloca o elemento a partir de onde ele está. |
+| `manterNaTela(seletor)` | Traz o elemento de volta para dentro da janela. Diz se bateu na borda. |
+| `colidiu(seletorA, seletorB)` | Diz se dois elementos estão se encostando. |
+| `estaNaTela(seletor)` | Diz se o elemento aparece na tela agora. |
+| `aoEntrarNaTela(seletor, callback)` | Reage quando o elemento aparece na tela, ao rolar. |
+| `aoSairDaTela(seletor, callback)` | Reage quando o elemento some da tela. |
 
 As funções que começam com `ao` devolvem uma função `parar()`, que remove o evento. Detalhes e exemplos em [Funções](https://borg.lenoborges.br/funcoes.html).
+
+```js
+import { elemento, moverPor, posicao, teclaPressionada } from 'https://borg.lenoborges.br/borg.mjs'
+
+const nave = elemento('#nave')
+
+function loop() {
+  if (teclaPressionada('seta direita')) moverPor(nave, { x: 5 })
+  requestAnimationFrame(loop)
+}
+loop()
+
+console.log(posicao(nave)) // { x: ..., y: ... }
+```
+
+## Autocomplete no VS Code
+
+A extensão **Borg JS** escreve a chamada inteira de cada função, com o seletor, a arrow function e o `import`. Procure "Borg JS" na aba de extensões do VS Code (Marketplace) ou do Cursor e VSCodium (Open VSX). O código dela está em [`extensao-vscode/`](extensao-vscode/).
 
 ## Desenvolvimento
 
