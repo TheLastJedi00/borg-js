@@ -176,11 +176,19 @@
 }
 
 .heroi-import code {
+  min-width: 0;
+  overflow: hidden;
   padding: 0;
   background: none;
   color: var(--texto-suave);
   font-size: var(--t-0);
   white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* O botão de copiar nunca encolhe: quem encolhe (com "…") é a linha do import */
+.heroi-import .botao-icone {
+  flex: none;
 }
 
 /* A coruja fica na frente de uma lua */
