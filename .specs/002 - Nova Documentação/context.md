@@ -23,6 +23,23 @@ A biblioteca (`src/`) não ganha nem perde funções nesta spec.
 | Testes do site | A lógica sem layout (documento do playground, HTML do projeto, URLs) é testada em `tests/docs/` antes de ser implementada. |
 | Porta | O site continua em `localhost:4200`. Não há backend (a porta 3000 não se aplica). |
 
+## Decisões da execução
+
+Detalhes que a spec não definia e que foram decididos durante a implementação:
+
+| Tema | Decisão |
+| --- | --- |
+| Domínio | `https://borg.lenoborges.br`, o domínio próprio já verificado no projeto da Vercel, no lugar do exemplo `borg-js.vercel.app`. |
+| Identidade visual | Fontes Bricolage Grotesque (títulos) e Atkinson Hyperlegible Next/Mono (texto e código), escolhidas pela legibilidade para iniciantes. Âmbar (`#FBBF24`, o olho da coruja) marca atenção e foco. A coruja do topo é feita com a Borg e reage ao mouse, ao clique e ao teclado. |
+| Animações | Só a coruja que "acorda" ao abrir a página e uma entrada suave nas seções da página inicial. Tudo é desligado com `prefers-reduced-motion`. |
+| Playground | Resultado em `iframe` com `sandbox="allow-scripts"`. Monta só quando chega perto da tela. Espaço e setas no resultado não rolam a página de fora. O console mostra dicas em português para erros comuns do navegador e avisa quando um script não carrega. |
+| `import` gerado | `comImport` coloca no topo o `import` das funções chamadas no exemplo. Acima de 80 caracteres, o `import` quebra em várias linhas. |
+| Editores | Quebram linhas longas em vez de rolar para o lado, melhor para o celular e para iniciantes. |
+| Projetos | Trazem o próprio CSS e rodam sem o estilo base do playground, para o arquivo copiado ficar igual. Além de "Copiar projeto inteiro", há "Baixar index.html". |
+| Copiar | Se a área de transferência não responder em 1,5 s, a cópia tenta um jeito alternativo e, se falhar, avisa o aluno. |
+| `vite preview` | O plugin também envia o cabeçalho CORS de `borg.mjs` e `borg.js`, como o `vercel.json` faz em produção. |
+| Desafios | 3 fáceis, 3 médios e 3 difíceis. O teste de reflexo usa Enter para começar, porque um botão focado seria acionado de novo pela barra de espaço. |
+
 ## Público
 
 - **Alunos iniciantes**: nunca usaram módulos JS e podem nunca ter aberto o console do navegador.
