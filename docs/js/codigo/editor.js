@@ -15,9 +15,10 @@ import { javascript } from '@codemirror/lang-javascript'
 import { css } from '@codemirror/lang-css'
 import { tags } from '@lezer/highlight'
 
-/** @typedef {'html' | 'js' | 'css'} Linguagem */
+/** @typedef {'html' | 'js' | 'css' | 'texto'} Linguagem */
 
-const linguagens = { html, js: javascript, css }
+/** `texto` é texto puro, sem realce (mensagens do console, por exemplo). */
+const linguagens = { html, js: javascript, css, texto: () => [] }
 
 /** Cores do realce. Usam os tokens do CSS, então seguem o site. */
 const realce = HighlightStyle.define([
@@ -104,7 +105,7 @@ export function criarEditor({ pai, codigo, linguagem, somenteLeitura = false, ro
     linguagens[linguagem](),
     // Quebrar linhas longas é melhor para iniciantes do que rolar para o lado, ainda mais no celular.
     EditorView.lineWrapping,
-    EditorView.contentAttributes.of({ 'aria-label': rotulo ?? `Código ${linguagem.toUpperCase()}` }),
+    EditorView.contentAttributes.of({ 'aria-label': rotulo ?? (linguagem === 'texto' ? 'Texto' : `Código ${linguagem.toUpperCase()}`) }),
   ]
 
   const extensoes = somenteLeitura

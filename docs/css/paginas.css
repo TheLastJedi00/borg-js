@@ -104,6 +104,17 @@
   margin-top: var(--e-6);
 }
 
+/* Texto corrido na largura de leitura; tabelas e exemplos usam a largura toda */
+.secao > p,
+.secao > ul,
+.secao > ol:not(.aulas) {
+  max-width: var(--largura-texto);
+}
+
+.secao li + li {
+  margin-top: var(--e-2);
+}
+
 .funcao h2 {
   font-family: var(--fonte-codigo);
   font-size: var(--t-4);
@@ -523,4 +534,141 @@
     grid-template-columns: minmax(0, 1fr);
     gap: var(--e-5);
   }
+}
+
+/* ---------- Começar ---------- */
+
+.arvore {
+  display: inline-block;
+  min-width: 260px;
+  padding: var(--e-4) var(--e-5);
+  border: 1px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+  font-size: var(--t-1);
+}
+
+.problemas {
+  max-width: 920px;
+  margin-top: var(--e-8);
+}
+
+.problemas > p {
+  margin: var(--e-3) 0 var(--e-5);
+  color: var(--texto-suave);
+}
+
+.problemas td {
+  font-size: var(--t-1);
+}
+
+.problemas td:first-child {
+  width: 45%;
+}
+
+/* Mensagens de erro longas quebram em qualquer lugar */
+.problemas td:first-child code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Professores ---------- */
+
+.aulas {
+  counter-reset: aula;
+  margin: var(--e-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aula {
+  counter-increment: aula;
+  padding: var(--e-5) 0 var(--e-5) 76px;
+  border-top: 1px solid var(--borda);
+  position: relative;
+}
+
+.aula::before {
+  content: 'Aula ' counter(aula);
+  position: absolute;
+  top: calc(var(--e-5) + 4px);
+  left: 0;
+  color: var(--destaque);
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-1);
+  font-weight: 800;
+}
+
+.aula-objetivo {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+}
+
+.aula dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--e-2) var(--e-4);
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-1);
+}
+
+.aula dl > div {
+  display: contents;
+}
+
+.aula dt {
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.aula dd {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .aula {
+    padding-left: 0;
+  }
+
+  .aula::before {
+    position: static;
+    display: block;
+    margin-bottom: var(--e-1);
+  }
+
+  .aula dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .aula dd {
+    margin-bottom: var(--e-2);
+  }
+}
+
+.tabela-erros table {
+  min-width: 720px;
+}
+
+.tabela-erros td code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.equivalentes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: var(--e-5) var(--e-4);
+  margin-top: var(--e-5);
+}
+
+.equivalente > p {
+  margin-bottom: var(--e-2);
+  font-weight: 700;
+}
+
+.equivalente > p code {
+  background: none;
+  padding: 0;
+  font-size: var(--t-2);
 }
