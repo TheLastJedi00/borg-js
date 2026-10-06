@@ -1,6 +1,7 @@
 import { secoesComoFunciona } from '../dados/como-funciona.js'
 import { funcoes } from '../dados/funcoes.js'
 import { secaoSemImport } from '../dados/sem-import.js'
+import { secaoMovimentoSuave } from '../dados/movimento-suave.js'
 import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { iniciarPagina } from '../layout.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
@@ -53,6 +54,7 @@ const menu = htmlDoMenuLateral([
       .filter((funcao) => funcao.grupo === grupo)
       .map(({ nome }) => ({ id: nome, rotulo: nome, codigo: true })),
   })),
+  { titulo: 'Receitas', itens: [secaoMovimentoSuave] },
   { titulo: 'Outras formas', itens: [secaoSemImport] },
 ])
 
@@ -67,6 +69,7 @@ conteudo.innerHTML = `
       </header>
       ${secoesComoFunciona.map((secao) => htmlDaSecao(secao)).join('')}
       ${funcoes.map((funcao) => htmlDaSecao({ id: funcao.nome, html: htmlDaFuncao(funcao) }, 'secao funcao')).join('')}
+      ${htmlDaSecao(secaoMovimentoSuave)}
       ${htmlDaSecao(secaoSemImport)}
     </div>
   </div>
