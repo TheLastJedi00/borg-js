@@ -746,3 +746,19 @@
   color: var(--texto-suave);
   font-size: var(--t-1);
 }
+
+/* ---------- Professores: IA na aula ---------- */
+
+.acoes-ia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin: var(--e-5) 0;
+}
+
+.acoes-ia .botao svg {
+  width: 18px;
+  height: 18px;
+  margin-right: var(--e-2);
+  vertical-align: -3px;
+}

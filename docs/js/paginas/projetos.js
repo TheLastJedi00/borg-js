@@ -3,7 +3,7 @@ import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
 import { gerarHtmlDoProjeto } from '../playground/projeto.js'
 import { comImport } from '../config.js'
-import { ligarBotaoDeCopiar } from '../util.js'
+import { ligarBotaoDeCopiar, baixarArquivo } from '../util.js'
 import { aviso } from '../componentes.js'
 import { htmlDoMenuLateral, ligarMenuLateral, irParaAncora } from '../menu-lateral.js'
 import { projetos } from '../dados/projetos.js'
@@ -70,14 +70,7 @@ conteudo.querySelectorAll('[data-copiar]').forEach((botao) => {
 })
 
 conteudo.querySelectorAll('[data-baixar]').forEach((botao) => {
-  botao.addEventListener('click', () => {
-    const url = URL.createObjectURL(new Blob([arquivoDo(botao.dataset.baixar)], { type: 'text/html' }))
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'index.html'
-    link.click()
-    URL.revokeObjectURL(url)
-  })
+  botao.addEventListener('click', () => baixarArquivo(arquivoDo(botao.dataset.baixar), 'index.html', 'text/html'))
 })
 
 ativarBlocosDeCodigo(conteudo)

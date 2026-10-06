@@ -31,6 +31,7 @@ const passosIniciais = [
         <li><strong>Cursor, VSCodium e parecidos</strong>: procure "Borg JS" na aba de extensões ou abra a <a href="${URL_EXTENSAO_OPEN_VSX}">página no Open VSX</a>.</li>
       </ul>
       ${aviso('dica', 'A extensão ajuda a não esquecer parênteses e chaves, mas não é obrigatória. Os passos a seguir funcionam com qualquer editor.')}
+      ${aviso('dica', 'Usa IA para estudar? Peça ao seu professor o arquivo <strong>AGENTS.md</strong> (ou baixe em <a href="./professores.html#ia-na-aula">IA na aula</a>) e coloque na pasta do projeto. Com ele, a IA vira um tutor: conhece a Borg, mas ajuda você a pensar em vez de entregar o código pronto.')}
     `,
   },
   {
