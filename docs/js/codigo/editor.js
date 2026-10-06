@@ -14,6 +14,7 @@ import { html } from '@codemirror/lang-html'
 import { javascript } from '@codemirror/lang-javascript'
 import { css } from '@codemirror/lang-css'
 import { tags } from '@lezer/highlight'
+import { autocompleteDaBorg } from './autocomplete.js'
 
 /** @typedef {'html' | 'js' | 'css' | 'texto'} Linguagem */
 
@@ -78,6 +79,43 @@ const tema = EditorView.theme(
       backgroundColor: 'transparent',
       color: 'var(--codigo-texto)',
     },
+    '.cm-tooltip': {
+      backgroundColor: 'var(--codigo-fundo)',
+      color: 'var(--codigo-texto)',
+      border: '1px solid rgb(255 255 255 / 0.12)',
+      borderRadius: '8px',
+      overflow: 'hidden',
+    },
+    '.cm-tooltip.cm-tooltip-autocomplete > ul': {
+      fontFamily: 'var(--fonte-codigo)',
+      maxHeight: '14em',
+    },
+    '.cm-tooltip.cm-tooltip-autocomplete > ul > li': {
+      padding: '3px 10px',
+    },
+    '.cm-tooltip-autocomplete ul li[aria-selected]': {
+      backgroundColor: 'rgb(45 212 191 / 0.22)',
+      color: 'var(--codigo-texto)',
+    },
+    '.cm-completionDetail': {
+      color: 'var(--codigo-comentario)',
+      fontStyle: 'normal',
+      marginLeft: '0.8em',
+    },
+    '.cm-completionMatchedText': {
+      color: 'var(--ambar)',
+      textDecoration: 'none',
+    },
+    '.cm-tooltip.cm-completionInfo': {
+      padding: '8px 12px',
+      maxWidth: '280px',
+      fontFamily: 'var(--fonte-texto)',
+      lineHeight: '1.45',
+    },
+    '.cm-snippetField': {
+      backgroundColor: 'rgb(251 191 36 / 0.14)',
+      borderRadius: '3px',
+    },
     '.cm-matchingBracket': {
       backgroundColor: 'rgb(251 191 36 / 0.2)',
       outline: '1px solid rgb(251 191 36 / 0.5)',
@@ -121,6 +159,7 @@ export function criarEditor({ pai, codigo, linguagem, somenteLeitura = false, ro
         bracketMatching(),
         closeBrackets(),
         EditorState.tabSize.of(2),
+        ...(linguagem === 'js' ? [autocompleteDaBorg()] : []),
         keymap.of([...closeBracketsKeymap, ...defaultKeymap, ...historyKeymap, indentWithTab]),
         EditorView.updateListener.of((atualizacao) => {
           if (atualizacao.docChanged) aoMudar?.(atualizacao.state.doc.toString())
