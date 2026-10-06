@@ -324,3 +324,189 @@ pre {
 .pg-painel .cm-editor.cm-focused {
   box-shadow: inset 0 0 0 2px rgb(251 191 36 / 0.55);
 }
+
+/* ---------- Avisos ---------- */
+
+.aviso {
+  display: flex;
+  gap: var(--e-3);
+  padding: var(--e-4) var(--e-5);
+  border-left: 4px solid;
+  border-radius: 0 var(--raio-codigo) var(--raio-codigo) 0;
+}
+
+.aviso > strong {
+  flex-shrink: 0;
+  font-family: var(--fonte-titulo);
+}
+
+.aviso > div > * + * {
+  margin-top: var(--e-2);
+}
+
+.aviso-dica {
+  border-color: var(--agua);
+  background: var(--agua-fundo);
+  color: var(--agua-texto);
+}
+
+.aviso-cuidado {
+  border-color: var(--ambar);
+  background: var(--ambar-fundo);
+  color: var(--ambar-texto);
+}
+
+.aviso code {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: inherit;
+}
+
+@media (max-width: 560px) {
+  .aviso {
+    flex-direction: column;
+    gap: var(--e-1);
+  }
+}
+
+/* ---------- Cartões ---------- */
+
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  padding: var(--e-5);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-bloco);
+  background: var(--superficie);
+  color: var(--texto);
+}
+
+.cartao p {
+  color: var(--texto-suave);
+}
+
+.cartao-link {
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.cartao-link:hover {
+  border-color: var(--agua);
+  transform: translateY(-2px);
+}
+
+.cartao-link h3 {
+  color: var(--texto);
+}
+
+/* ---------- Passos ---------- */
+
+.passos {
+  counter-reset: passo;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passo {
+  counter-increment: passo;
+  position: relative;
+  padding: 0 0 var(--e-7) 64px;
+}
+
+.passo::before {
+  content: counter(passo);
+  position: absolute;
+  top: -4px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--gradiente);
+  color: var(--destaque-texto);
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-3);
+  font-weight: 800;
+}
+
+/* Linha que liga um passo ao próximo */
+.passo:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 46px;
+  bottom: 6px;
+  left: 20px;
+  width: 2px;
+  background: var(--borda);
+}
+
+.passo-corpo {
+  margin-top: var(--e-3);
+}
+
+.passo-corpo > * + * {
+  margin-top: var(--e-4);
+}
+
+@media (max-width: 560px) {
+  .passo {
+    padding-left: 52px;
+  }
+
+  .passo::before {
+    width: 36px;
+    height: 36px;
+    font-size: var(--t-2);
+  }
+
+  .passo:not(:last-child)::after {
+    left: 17px;
+  }
+}
+
+/* ---------- Recolhível ---------- */
+
+.recolhivel {
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-codigo);
+  background: var(--superficie);
+}
+
+.recolhivel > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: 48px;
+  padding: var(--e-2) var(--e-4);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.recolhivel > summary::-webkit-details-marker {
+  display: none;
+}
+
+.recolhivel > summary::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s;
+}
+
+.recolhivel[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+.recolhivel-corpo {
+  padding: 0 var(--e-4) var(--e-4);
+}
+
+.recolhivel-corpo > * + * {
+  margin-top: var(--e-3);
+}
