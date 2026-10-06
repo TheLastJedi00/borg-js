@@ -42,7 +42,7 @@ input { font: inherit; padding: 8px 12px; border: 1px solid var(--borda); border
 `
 
 /** Impede que `</script` ou `</style` no código do aluno feche a tag antes da hora. */
-const protegerTag = (codigo, tag) => codigo.replace(new RegExp(`</(${tag})`, 'gi'), '<\\/$1')
+export const protegerTag = (codigo, tag) => codigo.replace(new RegExp(`</(${tag})`, 'gi'), '<\\/$1')
 
 /**
  * Repassa o console e os erros do resultado para a página, com `postMessage`.
