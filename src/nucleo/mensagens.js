@@ -60,3 +60,30 @@ export function validarTexto(valor, nomeFuncao, nomeParametro) {
     )
   }
 }
+
+/**
+ * Garante que o valor é um vetor `{ x, y }` com pelo menos um dos eixos.
+ * Cada eixo informado precisa ser um número finito. Outras propriedades são ignoradas.
+ * @param {*} valor
+ * @param {string} nomeFuncao
+ */
+export function validarVetor(valor, nomeFuncao) {
+  const exemplo = `Exemplo: ${nomeFuncao}('#nave', { x: 100, y: 50 })`
+  const ehObjeto = typeof valor === 'object' && valor !== null && !Array.isArray(valor)
+
+  if (!ehObjeto || (!('x' in valor) && !('y' in valor))) {
+    throw erroDeTipo(
+      nomeFuncao,
+      `a posição precisa ser um objeto com x e/ou y, mas recebeu ${descrever(valor)}. ${exemplo}`,
+    )
+  }
+
+  for (const eixo of ['x', 'y']) {
+    if (eixo in valor && !Number.isFinite(valor[eixo])) {
+      throw erroDeTipo(
+        nomeFuncao,
+        `o "${eixo}" da posição precisa ser um número, mas recebeu ${descrever(valor[eixo])}. ${exemplo}`,
+      )
+    }
+  }
+}

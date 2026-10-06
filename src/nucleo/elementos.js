@@ -41,3 +41,13 @@ export function resolverElementos(seletor, nomeFuncao) {
     `o seletor precisa ser um texto como "#meu-id" ou um elemento do DOM, mas recebeu ${descrever(seletor)}.`,
   )
 }
+
+/**
+ * Retorna o primeiro elemento do seletor, ou `null` (com aviso) quando nada é encontrado.
+ * @param {string|Element|NodeList|Element[]} seletor
+ * @param {string} nomeFuncao - Nome da função da Borg, usado nas mensagens.
+ * @returns {Element|null}
+ */
+export function primeiroElemento(seletor, nomeFuncao) {
+  return resolverElementos(seletor, nomeFuncao)[0] ?? null
+}
