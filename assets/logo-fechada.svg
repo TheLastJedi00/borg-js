@@ -40,12 +40,12 @@
     <circle class="pupila" cx="1025" cy="807" r="25"/>
     <circle class="pupila" cx="588" cy="807" r="25"/>
   </g>
-  <g class="palpebras" fill="#324E7B">
-    <g class="palpebras-cima">
+  <g class="palpebras" fill="#324E7B" stroke="#324E7B" stroke-width="8">
+    <g class="palpebras-cima" transform="translate(0 130)">
       <path d="M895 677C895 605.203 953.203 547 1025 547C1096.8 547 1155 605.203 1155 677H895Z"/>
       <path d="M458 677C458 605.203 516.203 547 588 547C659.797 547 718 605.203 718 677H458Z"/>
     </g>
-    <g class="palpebras-baixo">
+    <g class="palpebras-baixo" transform="translate(0 -130)">
       <path d="M895 937C895 1008.8 953.203 1067 1025 1067C1096.8 1067 1155 1008.8 1155 937H895Z"/>
       <path d="M458 937C458 1008.8 516.203 1067 588 1067C659.797 1067 718 1008.8 718 937H458Z"/>
     </g>

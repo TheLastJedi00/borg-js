@@ -2,8 +2,9 @@
 
 :root {
   /* Marca */
-  --agua: #2dd4bf;
-  --ceu: #38bdf8;
+  --agua: #00bcb8;
+  --ceu: #3986ff;
+  --marinho: #324e7b;
   --ambar: #fbbf24;
   --coral: #f87171;
   --gradiente: linear-gradient(120deg, var(--agua), var(--ceu));
