@@ -1,7 +1,7 @@
 import * as Borg from '../../../src/index.js'
 import { secoesDeInicio } from '../dados/inicio.js'
 import { funcoes } from '../dados/funcoes.js'
-import { blocoDeCodigo } from '../util.js'
+import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { iniciarPagina } from '../layout.js'
 
 // Deixa a Borg disponível como no uso com <script src="borg.js">.
@@ -87,3 +87,5 @@ funcoes.forEach((funcao) => {
   // Roda o mesmo código que aparece na página, cada exemplo no seu próprio escopo.
   new Function('Borg', funcao.js)(Borg)
 })
+
+ativarBlocosDeCodigo()
