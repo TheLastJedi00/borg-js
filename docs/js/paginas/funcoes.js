@@ -2,11 +2,12 @@ import * as Borg from '../../../src/index.js'
 import { secoesDeInicio } from '../dados/inicio.js'
 import { funcoes } from '../dados/funcoes.js'
 import { blocoDeCodigo } from '../util.js'
+import { iniciarPagina } from '../layout.js'
 
 // Deixa a Borg disponível como no uso com <script src="borg.js">.
 window.Borg = Borg
 
-document.getElementById('conteudo').innerHTML = `
+iniciarPagina().innerHTML = `
   <div class="pagina com-lateral">
     <nav class="lateral menu-lateral" aria-label="Seções">
       <p>Começando</p>

@@ -12,6 +12,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/estilo.css" />
+    <script>
+      try {
+        const tema = localStorage.getItem('borg-tema')
+        if (tema) document.documentElement.dataset.theme = tema
+      } catch {}
+    </script>
     <title>Professores · Borg JS</title>
   </head>
   <body data-pagina="professores">
