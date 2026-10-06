@@ -3,5 +3,16 @@
   "framework": null,
   "installCommand": "npm ci",
   "buildCommand": "npm run build:docs",
-  "outputDirectory": "docs-dist"
+  "outputDirectory": "docs-dist",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/borg.(mjs|js)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Content-Type", "value": "text/javascript; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
+      ]
+    }
+  ]
 }

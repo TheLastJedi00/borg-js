@@ -1,12 +1,24 @@
-import * as Borg from '../src/index.js'
-import { secoesDeInicio } from './inicio.js'
-import { funcoes } from './funcoes.js'
-import { blocoDeCodigo } from './util.js'
+import * as Borg from '../../../src/index.js'
+import { secoesDeInicio } from '../dados/inicio.js'
+import { funcoes } from '../dados/funcoes.js'
+import { blocoDeCodigo } from '../util.js'
+import { iniciarPagina } from '../layout.js'
 
 // Deixa a Borg disponível como no uso com <script src="borg.js">.
 window.Borg = Borg
 
-const conteudo = document.getElementById('conteudo')
+iniciarPagina().innerHTML = `
+  <div class="pagina com-lateral">
+    <nav class="lateral menu-lateral" aria-label="Seções">
+      <p>Começando</p>
+      <ul id="menu-inicio"></ul>
+      <p>Funções</p>
+      <ul id="menu-funcoes"></ul>
+    </nav>
+    <div id="secoes"></div>
+  </div>
+`
+const conteudo = document.getElementById('secoes')
 
 /**
  * Adiciona uma seção à página e um link no menu.
@@ -45,10 +57,10 @@ function htmlDaFuncao(funcao) {
     <h2>${funcao.nome}<span class="parametros">(${funcao.parametros})</span></h2>
     <p>${funcao.descricao}</p>
     <h3>Parâmetros</h3>
-    <table class="tabela">
+    <div class="tabela"><table>
       <thead><tr><th>Nome</th><th>Tipo</th><th>Descrição</th></tr></thead>
       <tbody>${linhas}</tbody>
-    </table>
+    </table></div>
     <h3>Retorno</h3>
     <p>${funcao.retorno}</p>
     <h3>Exemplo</h3>

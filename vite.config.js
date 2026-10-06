@@ -1,13 +1,9 @@
 import { defineConfig } from 'vite'
+import { configuracaoDaBiblioteca } from './build/biblioteca.js'
 
 export default defineConfig({
   build: {
-    lib: {
-      entry: 'src/index.js',
-      name: 'Borg',
-      formats: ['iife', 'es'],
-      fileName: (formato) => (formato === 'es' ? 'borg.mjs' : 'borg.js'),
-    },
+    lib: configuracaoDaBiblioteca,
     outDir: 'dist',
     emptyOutDir: true,
   },

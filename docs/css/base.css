@@ -1,0 +1,153 @@
+/* Base: elementos HTML sem classe. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--altura-topo) + var(--e-5));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte-texto);
+  font-size: var(--t-2);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--t-5);
+}
+
+h3 {
+  font-size: var(--t-3);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--t-2);
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--destaque);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--fonte-codigo);
+}
+
+:not(pre) > code {
+  padding: 0.08em 0.36em;
+  border-radius: 6px;
+  background: var(--superficie-2);
+  color: var(--texto);
+  font-size: 0.88em;
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0 0.45em;
+  border: 1px solid var(--borda);
+  border-bottom-width: 3px;
+  border-radius: 7px;
+  background: var(--superficie);
+  font-size: 0.85em;
+  text-align: center;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--foco);
+  border-radius: var(--raio-controle);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--agua) 40%, transparent);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-1);
+}
+
+th,
+td {
+  padding: var(--e-3) var(--e-3);
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

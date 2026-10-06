@@ -1,0 +1,129 @@
+/* Tokens de design da Borg JS. Toda cor, fonte e medida do site sai daqui. */
+
+:root {
+  /* Marca */
+  --agua: #2dd4bf;
+  --ceu: #38bdf8;
+  --ambar: #fbbf24;
+  --coral: #f87171;
+  --gradiente: linear-gradient(120deg, var(--agua), var(--ceu));
+
+  /* Tema claro */
+  --fundo: #f2f7f7;
+  --superficie: #ffffff;
+  --superficie-2: #e6f0f1;
+  --borda: #cfe0e2;
+  --texto: #0b2530;
+  --texto-suave: #4a6570;
+  --destaque: #0a7f8c;
+  --destaque-texto: #0b2530;
+  --ambar-fundo: #fef3c7;
+  --ambar-texto: #78470c;
+  --coral-fundo: #fee2e2;
+  --coral-texto: #8f1d1d;
+  --agua-fundo: #d5f5f0;
+  --agua-texto: #0b5e57;
+
+  /* Código: sempre escuro, nos dois temas */
+  --codigo-fundo: #0b2530;
+  --codigo-superficie: #123341;
+  --codigo-borda: #1d4556;
+  --codigo-texto: #e3f1f2;
+  --codigo-suave: #86a7b1;
+  --codigo-palavra: #5eead4;
+  --codigo-texto-literal: #fcd34d;
+  --codigo-numero: #fda4af;
+  --codigo-funcao: #7dd3fc;
+  --codigo-tag: #f0abfc;
+  --codigo-atributo: #a5f3fc;
+  --codigo-comentario: #6b8d97;
+
+  /* Tipografia */
+  --fonte-titulo: 'Bricolage Grotesque', 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --fonte-texto: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --fonte-codigo: 'Atkinson Hyperlegible Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Escala 1,25 a partir de 18px */
+  --t-0: 0.8125rem;
+  --t-1: 0.9rem;
+  --t-2: 1.125rem;
+  --t-3: 1.4rem;
+  --t-4: 1.75rem;
+  --t-5: 2.2rem;
+  --t-heroi: clamp(2.6rem, 6.4vw, 4.75rem);
+
+  /* Espaços */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 72px;
+  --e-9: 112px;
+
+  /* Raios por hierarquia: bloco grande > código > controle */
+  --raio-bloco: 22px;
+  --raio-codigo: 14px;
+  --raio-controle: 10px;
+  --raio-pilula: 999px;
+
+  /* Sombras com a cor da tinta, não cinza */
+  --sombra-1: 0 1px 2px rgb(11 37 48 / 0.08);
+  --sombra-2: 0 18px 40px -18px rgb(11 37 48 / 0.35);
+
+  --largura-texto: 70ch;
+  --largura-pagina: 1180px;
+  --altura-topo: 68px;
+
+  --foco: 0 0 0 3px var(--fundo), 0 0 0 5px var(--ambar);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --fundo: #071a22;
+    --superficie: #0d2630;
+    --superficie-2: #12313d;
+    --borda: #1f4352;
+    --texto: #e3f1f2;
+    --texto-suave: #93b2bb;
+    --destaque: #5eead4;
+    --ambar-fundo: #3b2a07;
+    --ambar-texto: #fde68a;
+    --coral-fundo: #3d1414;
+    --coral-texto: #fecaca;
+    --agua-fundo: #0b3a37;
+    --agua-texto: #99f6e4;
+    --codigo-fundo: #04121a;
+    --codigo-superficie: #0a2029;
+    --codigo-borda: #173947;
+    --sombra-1: 0 1px 2px rgb(0 0 0 / 0.4);
+    --sombra-2: 0 18px 40px -18px rgb(0 0 0 / 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --fundo: #071a22;
+  --superficie: #0d2630;
+  --superficie-2: #12313d;
+  --borda: #1f4352;
+  --texto: #e3f1f2;
+  --texto-suave: #93b2bb;
+  --destaque: #5eead4;
+  --ambar-fundo: #3b2a07;
+  --ambar-texto: #fde68a;
+  --coral-fundo: #3d1414;
+  --coral-texto: #fecaca;
+  --agua-fundo: #0b3a37;
+  --agua-texto: #99f6e4;
+  --codigo-fundo: #04121a;
+  --codigo-superficie: #0a2029;
+  --codigo-borda: #173947;
+  --sombra-1: 0 1px 2px rgb(0 0 0 / 0.4);
+  --sombra-2: 0 18px 40px -18px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
