@@ -134,6 +134,7 @@ pre {
 
 .bloco-codigo,
 .bloco-codigo .cm-scroller,
+.playground .cm-scroller,
 pre {
   scrollbar-color: var(--codigo-borda) transparent;
   scrollbar-width: thin;

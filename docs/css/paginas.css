@@ -21,7 +21,7 @@
 
 .menu-lateral a {
   display: block;
-  padding: 5px var(--e-3);
+  padding: 3px var(--e-3);
   border-left: 2px solid var(--borda);
   color: var(--texto-suave);
   font-size: var(--t-1);
@@ -41,6 +41,51 @@
 .menu-lateral .nome-funcao {
   font-family: var(--fonte-codigo);
   font-size: var(--t-0);
+}
+
+/* Bloco "Nesta página": só aparece como botão no celular */
+.menu-lateral-recolhivel > summary {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .menu-lateral-recolhivel {
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-codigo);
+    background: var(--superficie);
+  }
+
+  .menu-lateral-recolhivel > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 var(--e-4);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .menu-lateral-recolhivel > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-lateral-recolhivel > summary::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  .menu-lateral-recolhivel[open] > summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .menu-lateral-grupos {
+    padding: 0 var(--e-4) var(--e-4);
+  }
 }
 
 .secao {

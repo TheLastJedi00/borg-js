@@ -6,49 +6,7 @@ import { iniciarPagina } from '../layout.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
 import { comImport } from '../config.js'
 import { aviso } from '../componentes.js'
-
-iniciarPagina().innerHTML = `
-  <div class="pagina com-lateral">
-    <nav class="lateral menu-lateral" aria-label="Nesta página">
-      <p>Como funciona</p>
-      <ul id="menu-como-funciona"></ul>
-      <p>Funções</p>
-      <ul id="menu-funcoes"></ul>
-      <p>Outras formas</p>
-      <ul id="menu-outras"></ul>
-    </nav>
-    <div id="secoes">
-      <header class="pagina-cabecalho">
-        <h1>Funções</h1>
-        <p>Todas as funções da Borg: o que cada uma recebe, o que devolve e um exemplo que você pode editar.</p>
-      </header>
-    </div>
-  </div>
-`
-const conteudo = document.getElementById('secoes')
-
-/**
- * Adiciona uma seção à página e um link no menu.
- * @param {HTMLElement} menu
- * @param {{ id: string, rotulo: string, html: string }} secao
- * @param {string} [classe]
- * @returns {HTMLElement}
- */
-function adicionarSecao(menu, { id, rotulo, html }, classe = 'secao') {
-  const elemento = document.createElement('section')
-  elemento.id = id
-  elemento.className = classe
-  elemento.innerHTML = html
-  conteudo.append(elemento)
-
-  const item = document.createElement('li')
-  const link = document.createElement('a')
-  link.href = `#${id}`
-  link.textContent = rotulo
-  item.append(link)
-  menu.append(item)
-  return elemento
-}
+import { htmlDoMenuLateral, ligarMenuLateral, irParaAncora } from '../menu-lateral.js'
 
 /**
  * Monta o HTML da seção de uma função: descrição, avisos, parâmetros, retorno e exemplo.
@@ -82,19 +40,39 @@ function htmlDaFuncao(funcao) {
   `
 }
 
-const menuComoFunciona = document.getElementById('menu-como-funciona')
-secoesComoFunciona.forEach((secao) => adicionarSecao(menuComoFunciona, secao))
+/** @param {{ id: string, html: string }} secao */
+const htmlDaSecao = ({ id, html }, classe = 'secao') => `<section id="${id}" class="${classe}">${html}</section>`
 
-const menuFuncoes = document.getElementById('menu-funcoes')
-funcoes.forEach((funcao) => {
-  adicionarSecao(
-    menuFuncoes,
-    { id: funcao.nome, rotulo: funcao.nome, html: htmlDaFuncao(funcao) },
-    'secao funcao',
-  )
-})
+const gruposDeFuncoes = [...new Set(funcoes.map(({ grupo }) => grupo))]
 
-adicionarSecao(document.getElementById('menu-outras'), secaoSemImport)
+const menu = htmlDoMenuLateral([
+  { titulo: 'Como funciona', itens: secoesComoFunciona },
+  ...gruposDeFuncoes.map((grupo) => ({
+    titulo: grupo,
+    itens: funcoes
+      .filter((funcao) => funcao.grupo === grupo)
+      .map(({ nome }) => ({ id: nome, rotulo: nome, codigo: true })),
+  })),
+  { titulo: 'Outras formas', itens: [secaoSemImport] },
+])
 
-ativarBlocosDeCodigo()
-ativarPlaygrounds()
+const conteudo = iniciarPagina()
+conteudo.innerHTML = `
+  <div class="pagina com-lateral">
+    ${menu}
+    <div>
+      <header class="pagina-cabecalho">
+        <h1>Funções</h1>
+        <p>Todas as funções da Borg: o que cada uma recebe, o que devolve e um exemplo que você pode editar.</p>
+      </header>
+      ${secoesComoFunciona.map((secao) => htmlDaSecao(secao)).join('')}
+      ${funcoes.map((funcao) => htmlDaSecao({ id: funcao.nome, html: htmlDaFuncao(funcao) }, 'secao funcao')).join('')}
+      ${htmlDaSecao(secaoSemImport)}
+    </div>
+  </div>
+`
+
+ativarBlocosDeCodigo(conteudo)
+ativarPlaygrounds(conteudo)
+ligarMenuLateral(conteudo)
+irParaAncora()

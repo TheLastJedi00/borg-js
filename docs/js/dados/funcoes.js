@@ -3,11 +3,12 @@
  *
  * O `html`, o `css` e o `js` de cada exemplo vão para um playground: aparecem na página e
  * rodam de verdade no resultado. O `js` é escrito sem o `import`; a página coloca no topo o
- * `import` das funções usadas (veja `comImport`).
+ * `import` das funções usadas (veja `comImport`). O `grupo` organiza o menu lateral.
  */
 export const funcoes = [
   {
     nome: 'aoClicar',
+    grupo: 'Mouse',
     parametros: 'seletor, callback',
     descricao: 'Executa uma função sempre que o elemento for clicado.',
     tabela: [
@@ -36,6 +37,7 @@ aoClicar('#botao-contar', () => {
   },
   {
     nome: 'aoClicarNaTela',
+    grupo: 'Mouse',
     parametros: 'callback',
     descricao: 'Executa uma função sempre que houver um clique em qualquer lugar da página.',
     tabela: [
@@ -64,6 +66,7 @@ aoClicarNaTela(({ x, y }) => {
   },
   {
     nome: 'aoMoverMouse',
+    grupo: 'Mouse',
     parametros: 'callback',
     descricao: 'Executa uma função sempre que o mouse se mover pela página.',
     tabela: [
@@ -104,6 +107,7 @@ aoMoverMouse(({ x }) => {
   },
   {
     nome: 'aoPressionar',
+    grupo: 'Teclado',
     parametros: 'tecla, callback',
     descricao: 'Executa uma função quando uma tecla for pressionada.',
     tabela: [
@@ -134,6 +138,7 @@ aoPressionar('qualquer', (tecla) => {
   },
   {
     nome: 'aoSoltar',
+    grupo: 'Teclado',
     parametros: 'tecla, callback',
     descricao: 'Executa uma função quando uma tecla for solta.',
     tabela: [
@@ -167,6 +172,7 @@ aoSoltar('k', () => {
   },
   {
     nome: 'teclaPressionada',
+    grupo: 'Teclado',
     parametros: 'tecla',
     descricao:
       'Diz se uma tecla está pressionada neste momento. É ideal para jogos, dentro de um loop. Quando a janela perde o foco, todas as teclas são consideradas soltas.',
@@ -220,6 +226,7 @@ loop()`,
   },
   {
     nome: 'mostrar',
+    grupo: 'Reações',
     parametros: 'seletor',
     descricao:
       'Torna o elemento visível. Funciona com o atributo <code>hidden</code>, com <code>esconder</code> e com <code>display: none</code> vindo do CSS.',
@@ -235,6 +242,7 @@ aoClicar('#botao-mostrar', () => {
   },
   {
     nome: 'esconder',
+    grupo: 'Reações',
     parametros: 'seletor',
     descricao: 'Esconde o elemento.',
     tabela: [['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.']],
@@ -264,6 +272,7 @@ aoClicar('#botao-voltar', () => {
   },
   {
     nome: 'alternarClasse',
+    grupo: 'Reações',
     parametros: 'seletor, classe',
     descricao: 'Adiciona a classe se o elemento não a tiver, e remove se tiver.',
     tabela: [
@@ -297,6 +306,7 @@ aoClicar('#interruptor', () => {
   },
   {
     nome: 'mudarTexto',
+    grupo: 'Reações',
     parametros: 'seletor, texto',
     descricao: 'Troca o texto do elemento.',
     tabela: [
@@ -327,6 +337,7 @@ aoClicar('#botao-idioma', () => {
   },
   {
     nome: 'mudarEstilo',
+    grupo: 'Reações',
     parametros: 'seletor, propriedade, valor',
     descricao: 'Altera um estilo CSS do elemento.',
     tabela: [
