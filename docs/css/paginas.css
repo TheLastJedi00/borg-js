@@ -369,3 +369,164 @@
     padding-bottom: var(--e-7);
   }
 }
+
+/* ---------- Início: comparação e motivos ---------- */
+
+.comparacao {
+  padding-top: var(--e-9);
+  padding-bottom: var(--e-8);
+}
+
+.comparacao h2,
+.caminhos h2 {
+  max-width: 22ch;
+}
+
+.comparacao-sub {
+  max-width: var(--largura-texto);
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+.comparacao-lados {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--e-5);
+  align-items: start;
+  margin-top: var(--e-6);
+}
+
+.comparacao-lados figure {
+  margin: 0;
+}
+
+.comparacao-lados figcaption {
+  margin-bottom: var(--e-2);
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.comparacao-lados figure:last-child figcaption {
+  color: var(--texto);
+}
+
+/* O lado da Borg ganha a borda da marca */
+.comparacao-lados figure:last-child .bloco-codigo {
+  box-shadow: 0 0 0 2px var(--agua);
+}
+
+.motivos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--e-6);
+  margin: var(--e-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.motivos li {
+  padding-top: var(--e-4);
+  border-top: 3px solid var(--texto);
+}
+
+.motivos p {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}
+
+/* ---------- Início: por onde começar ---------- */
+
+.caminhos {
+  padding-top: var(--e-6);
+}
+
+.caminhos-grupos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--e-6);
+  margin-top: var(--e-6);
+}
+
+.caminho > h3 {
+  margin-bottom: var(--e-3);
+  color: var(--texto-suave);
+  font-size: var(--t-2);
+}
+
+.caminho ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--borda);
+}
+
+.caminho li a {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: var(--e-4);
+  padding: var(--e-4) var(--e-2);
+  border-bottom: 1px solid var(--borda);
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.caminho li a:hover {
+  background: var(--superficie);
+}
+
+.caminho li strong {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-3);
+}
+
+.caminho li span {
+  align-self: center;
+  color: var(--texto-suave);
+}
+
+.caminho-professor {
+  align-self: start;
+  padding: var(--e-6);
+  border-radius: var(--raio-bloco);
+  background: var(--superficie-2);
+}
+
+.caminho-professor > h3 {
+  color: var(--texto);
+  font-size: var(--t-4);
+}
+
+.caminho-professor p {
+  margin-bottom: var(--e-5);
+  color: var(--texto-suave);
+}
+
+@media (max-width: 900px) {
+  .comparacao {
+    padding-top: var(--e-7);
+  }
+
+  .comparacao-lados,
+  .caminhos-grupos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .motivos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .caminho li a {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-1);
+  }
+}
+
+@media (max-width: 560px) {
+  .motivos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-5);
+  }
+}

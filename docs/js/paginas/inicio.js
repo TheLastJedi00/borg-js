@@ -28,6 +28,34 @@ aoPressionar('qualquer', (tecla) => {
 })
 `)
 
+const SEM_A_BORG = `
+const botao = document.querySelector('#botao')
+const mensagem = document.querySelector('#mensagem')
+
+if (botao === null) {
+  console.error('Não achei #botao')
+} else {
+  botao.addEventListener('click', () => {
+    mensagem.hidden = false
+  })
+}
+
+document.addEventListener('keydown', (evento) => {
+  if (evento.key === ' ') {
+    evento.preventDefault()
+    document.body.classList.toggle('escuro')
+  }
+})`
+
+const COM_A_BORG = comImport(`
+aoClicar('#botao', () => {
+  mostrar('#mensagem')
+})
+
+aoPressionar('espaço', () => {
+  alternarClasse('body', 'escuro')
+})`)
+
 /** A coruja da logo, maior e com partes separadas para reagir. */
 const CORUJA = `
   <svg class="coruja" id="coruja" viewBox="0 0 128 128" role="img"
@@ -89,6 +117,50 @@ conteudo.innerHTML = `
         </dl>
       </div>
       ${blocoDeCodigo(CODIGO_DA_CORUJA, 'js')}
+    </div>
+  </section>
+
+  <section class="pagina comparacao" data-revelar>
+    <h2>O mesmo resultado, com menos coisa no caminho.</h2>
+    <p class="comparacao-sub">
+      Mostrar uma mensagem no clique e trocar o tema com a barra de espaço. À esquerda, em JavaScript puro;
+      à direita, com a Borg.
+    </p>
+    <div class="comparacao-lados">
+      <figure>
+        <figcaption>JavaScript puro</figcaption>
+        ${blocoDeCodigo(SEM_A_BORG, 'js')}
+      </figure>
+      <figure>
+        <figcaption>Com a Borg</figcaption>
+        ${blocoDeCodigo(COM_A_BORG, 'js')}
+      </figure>
+    </div>
+    <ul class="motivos">
+      <li><h3>Nomes que se leem</h3><p><code>aoClicar</code>, <code>mostrar</code>, <code>mudarTexto</code>: o código diz o que faz, em português.</p></li>
+      <li><h3>Erros que ensinam</h3><p>Errou o seletor? A Borg avisa no console o que aconteceu e como corrigir, sem quebrar a página.</p></li>
+      <li><h3>Pouco código</h3><p>Uma reação cabe em três linhas. Sobra tempo para pensar na lógica.</p></li>
+      <li><h3>Foco no HTML e no CSS</h3><p>O aluno desenha a página e decide como ela reage, sem se perder no DOM.</p></li>
+    </ul>
+  </section>
+
+  <section class="pagina caminhos" data-revelar>
+    <h2>Por onde começar</h2>
+    <div class="caminhos-grupos">
+      <div class="caminho">
+        <h3>Estou aprendendo</h3>
+        <ul>
+          <li><a href="./comecar.html"><strong>Começar</strong><span>Do zero ao primeiro botão que reage, passo a passo.</span></a></li>
+          <li><a href="./funcoes.html"><strong>Funções</strong><span>Todas as funções, com exemplos que você pode editar.</span></a></li>
+          <li><a href="./desafios.html"><strong>Desafios</strong><span>Exercícios do fácil ao difícil, com solução.</span></a></li>
+          <li><a href="./projetos.html"><strong>Projetos</strong><span>Jogo, quiz e galeria prontos para estudar e copiar.</span></a></li>
+        </ul>
+      </div>
+      <div class="caminho caminho-professor">
+        <h3>Vou ensinar</h3>
+        <p>Uma sequência de seis aulas com objetivos, os erros mais comuns dos alunos e como passar da Borg para o JavaScript puro.</p>
+        <a class="botao botao-principal" href="./professores.html">Abrir o guia do professor</a>
+      </div>
     </div>
   </section>
 `
