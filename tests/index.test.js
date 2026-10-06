@@ -13,6 +13,17 @@ const API_PUBLICA = [
   'alternarClasse',
   'mudarTexto',
   'mudarEstilo',
+  'elemento',
+  'posicao',
+  'tamanho',
+  'tamanhoDaTela',
+  'moverPara',
+  'moverPor',
+  'manterNaTela',
+  'colidiu',
+  'estaNaTela',
+  'aoEntrarNaTela',
+  'aoSairDaTela',
 ]
 
 describe('Borg JS', () => {
