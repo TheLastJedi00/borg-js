@@ -20,7 +20,8 @@
     "build:docs": "vite build --config vite.docs.config.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "build:extensao": "node build/extensao.js empacotar"
   },
   "keywords": [
     "dom",
