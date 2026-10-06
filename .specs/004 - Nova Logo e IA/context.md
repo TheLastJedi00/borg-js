@@ -34,6 +34,26 @@
 | Testes | TDD na geração do Markdown e do `AGENTS.md` (`tests/docs/`). A logo e as animações são testadas no Chrome em `localhost:4200`. |
 | Porta | O site continua em `localhost:4200`. Não há backend (a porta 3000 não se aplica). |
 
+## Decisões da execução
+
+Detalhes que a spec não definia e que foram decididos durante a implementação:
+
+| Tema | Decisão |
+| --- | --- |
+| Pálpebras | Pelo Figma, o olho fecha quando as pálpebras de cima descem 130 unidades e as de baixo sobem 130. No estado fechado, as pálpebras ganham um contorno de 8 da mesma cor, para cobrir a emenda serrilhada com o branco do olho. |
+| Classes no SVG | As partes da logo usam classes (e não ids), e `svgDaLogo` troca os ids internos (gradientes e máscara) por ids únicos. Assim a coruja aparece no topo, no rodapé e na página inicial sem conflito. |
+| Arquivos gerados | `assets/logo.svg` e `assets/logo-fechada.svg` são gerados por `npm run build:logo` e ficam no repositório. Um teste falha se eles ficarem diferentes do que `logo-animada.svg` gera. |
+| Favicon | Em 16 e 32 px, a coruja continua reconhecível (cabeça azul e os dois olhos), então não foi preciso um favicon simplificado. |
+| Cores | `--agua` passou a `#00bcb8`, `--ceu` a `#3986ff`, e entrou `--marinho` (`#324e7b`), todas da logo. O texto escuro sobre o novo azul tem contraste de cerca de 4,6:1. |
+| Movimento reduzido | Coberto em três lugares: a coruja do topo não pisca ao abrir a página, a da página inicial não pisca sozinha e as pálpebras e pupilas mudam sem transição. Clique e mouse continuam funcionando. |
+| Pupilas | O código mostrado na página inicial continua o mesmo que roda; só o alcance mudou (de 14 para 140), porque o desenho novo tem outra escala. Ele usa `.pupila`, então a coruja do topo também acompanha o mouse. |
+| Botão no celular | O "Copiar para IA" fica na barra do topo em todas as larguras. No celular, mostra só o ícone, e o nome continua disponível para leitores de tela. Isso evita esconder a ação dentro do menu. |
+| Carregamento sob demanda | A documentação e o `AGENTS.md` trazem os dados de todas as páginas, então só carregam quando alguém passa o mouse, foca ou clica nos botões. `ligarBotaoDeCopiar` passou a aceitar um texto que chega por promessa. |
+| Playgrounds no Markdown | `playground.js` guarda o código de todos os playgrounds criados (`codigoDoPlayground`). Assim as seções "Parar de reagir", "Mensagens de ajuda" e "Movimento suave" entram no Markdown com o código. |
+| Textos do Começar | O HTML do primeiro projeto e os problemas comuns foram para `docs/js/dados/comecar.js`, usados pela página e pela documentação. |
+| Domínio | No meio da execução, o domínio oficial foi corrigido para `borg.lenoborges.com.br` (`borg.lenoborges.br` não resolve). A correção foi em um PR próprio (`fix/dominio`, PR #4) e também entrou nesta branch. A extensão 0.1.1 sai com o domínio certo. |
+| README da extensão | Ficou sem imagem da logo: o Marketplace não aceita SVG no README, e o ícone já aparece no topo da página da extensão. |
+
 ## Requisitos
 
 ### 1. Nova logo
