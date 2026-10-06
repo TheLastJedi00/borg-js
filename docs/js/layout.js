@@ -1,5 +1,5 @@
 import { icones } from './icones.js'
-import { svgDaLogo } from './logo.js'
+import { svgDaLogo, piscar, prefereMenosMovimento } from './logo.js'
 
 /** Páginas do menu principal, na ordem em que aparecem. */
 export const PAGINAS = [
@@ -116,5 +116,13 @@ export function iniciarPagina() {
   document.getElementById('rodape').innerHTML = htmlDoRodape()
   ligarTema()
   ligarMenuDoCelular()
+  saudarComUmaPiscada()
   return document.getElementById('conteudo')
+}
+
+/** A coruja do topo pisca uma vez logo depois que a página abre. */
+function saudarComUmaPiscada() {
+  if (prefereMenosMovimento()) return
+  const logo = document.querySelector('.logo-topo')
+  setTimeout(() => piscar(logo), 700)
 }
