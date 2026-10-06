@@ -1,4 +1,4 @@
-import { linhaDeImport } from '../docs/js/config.js'
+import { linhaDeImport } from '../docs/js/url.js'
 
 /**
  * Edição de texto: troca o trecho de `de` até `ate` por `texto`.
