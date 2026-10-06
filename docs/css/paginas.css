@@ -524,3 +524,15 @@
     gap: var(--e-5);
   }
 }
+
+/* ---------- Começar ---------- */
+
+.arvore {
+  display: inline-block;
+  min-width: 260px;
+  padding: var(--e-4) var(--e-5);
+  border: 1px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+  font-size: var(--t-1);
+}
