@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { sugestoesDeFuncao } from './provedor.js'
+import { sugestoesDeFuncao, sugestoesDeTeclaNoDocumento } from './provedor.js'
 
 /** Arquivos onde o autocomplete funciona. Em HTML, só dentro de `<script>`. */
 const DOCUMENTOS = [{ language: 'javascript' }, { language: 'html' }]
@@ -46,6 +46,30 @@ const provedorDeFuncoes = {
   },
 }
 
+/** Sugere os nomes de tecla dentro das aspas de `aoPressionar`, `aoSoltar` e `teclaPressionada`. */
+const provedorDeTeclas = {
+  /**
+   * @param {vscode.TextDocument} documento
+   * @param {vscode.Position} posicao
+   */
+  provideCompletionItems(documento, posicao) {
+    const offset = documento.offsetAt(posicao)
+    const resultado = sugestoesDeTeclaNoDocumento(documento.getText(), offset, documento.languageId)
+    if (!resultado) return undefined
+
+    const digitado = intervalo(documento, resultado.inicio, offset)
+    return resultado.teclas.map((tecla) => {
+      const item = new vscode.CompletionItem(
+        { label: tecla, description: 'tecla' },
+        vscode.CompletionItemKind.Constant,
+      )
+      item.detail = 'Borg JS'
+      item.range = digitado
+      return item
+    })
+  },
+}
+
 /**
  * Liga a extensão: registra os provedores de sugestão.
  * @param {vscode.ExtensionContext} contexto
@@ -53,6 +77,7 @@ const provedorDeFuncoes = {
 export function activate(contexto) {
   contexto.subscriptions.push(
     vscode.languages.registerCompletionItemProvider(DOCUMENTOS, provedorDeFuncoes),
+    vscode.languages.registerCompletionItemProvider(DOCUMENTOS, provedorDeTeclas, "'", '"'),
   )
 }
 
