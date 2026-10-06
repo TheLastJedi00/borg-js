@@ -37,7 +37,7 @@ function htmlDoDesafio(desafio) {
         Funções sugeridas:
         ${desafio.funcoes.map((nome) => `<a href="./funcoes.html#${nome}"><code>${nome}</code></a>`).join(', ')}
       </p>
-      ${playground({ id: `pg-${desafio.id}`, titulo: desafio.titulo, ...inicial })}
+      ${playground({ id: `pg-${desafio.id}`, titulo: desafio.titulo, altura: desafio.altura, ...inicial })}
       ${recolhivel({
         resumo: 'Ver solução',
         classe: 'desafio-solucao',
