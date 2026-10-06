@@ -672,3 +672,108 @@
   padding: 0;
   font-size: var(--t-2);
 }
+
+/* ---------- Desafios ---------- */
+
+.nivel + .nivel {
+  margin-top: var(--e-9);
+}
+
+.nivel > h2 {
+  font-size: var(--t-5);
+}
+
+.nivel-descricao {
+  max-width: var(--largura-texto);
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+}
+
+.desafio {
+  max-width: 920px;
+  margin-top: var(--e-7);
+  padding-top: var(--e-6);
+  border-top: 1px solid var(--borda);
+}
+
+.desafio > * + * {
+  margin-top: var(--e-4);
+}
+
+.desafio-enunciado {
+  max-width: var(--largura-texto);
+}
+
+.desafio-enunciado > * + * {
+  margin-top: var(--e-3);
+}
+
+.desafio-funcoes {
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}
+
+.desafio-solucao .recolhivel-corpo > p {
+  margin-top: var(--e-3);
+  color: var(--texto-suave);
+  font-size: var(--t-0);
+  font-weight: 700;
+}
+
+.desafio-carregar {
+  min-height: 42px;
+}
+
+.desafio-carregar svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Projetos ---------- */
+
+.projeto {
+  max-width: 920px;
+  margin-top: var(--e-8);
+}
+
+.projeto > * + * {
+  margin-top: var(--e-4);
+}
+
+.projeto-descricao {
+  max-width: var(--largura-texto);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+.projeto-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+.projeto-acoes svg {
+  width: 18px;
+  height: 18px;
+}
+
+.projeto-estudo {
+  max-width: var(--largura-texto);
+  padding-top: var(--e-2);
+}
+
+.projeto-estudo ul {
+  margin: var(--e-3) 0 0;
+  padding-left: 1.3em;
+}
+
+.projeto-estudo li + li {
+  margin-top: var(--e-2);
+}
+
+.projeto-funcoes {
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}

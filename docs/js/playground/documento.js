@@ -42,7 +42,7 @@ input { font: inherit; padding: 8px 12px; border: 1px solid var(--borda); border
 `
 
 /** Impede que `</script` ou `</style` no código do aluno feche a tag antes da hora. */
-const protegerTag = (codigo, tag) => codigo.replace(new RegExp(`</(${tag})`, 'gi'), '<\\/$1')
+export const protegerTag = (codigo, tag) => codigo.replace(new RegExp(`</(${tag})`, 'gi'), '<\\/$1')
 
 /**
  * Repassa o console e os erros do resultado para a página, com `postMessage`.
@@ -102,13 +102,19 @@ export function conterRolagem(janela) {
  *
  * Um import map redireciona a URL pública da Borg para a `borg.mjs` da origem atual. Assim, o
  * mesmo `import` que o aluno copia para o projeto dele funciona aqui, em `localhost` e nos
- * previews.
- * @param {{ id: string, origem: string, html: string, css?: string, js: string, tema?: 'light' | 'dark' }} opcoes
+ * previews. Com `estiloBase: false`, o resultado usa só o CSS do exemplo (projetos completos).
+ * @param {{
+ *   id: string, origem: string, html: string, css?: string, js: string,
+ *   tema?: 'light' | 'dark', estiloBase?: boolean,
+ * }} opcoes
  * @returns {string}
  */
-export function montarDocumentoDoPlayground({ id, origem, html, css, js, tema = 'light' }) {
+export function montarDocumentoDoPlayground({ id, origem, html, css, js, tema = 'light', estiloBase = true }) {
   const mapa = JSON.stringify({ imports: { [URL_BORG_MJS]: `${origem}/borg.mjs` } })
-  const estiloDoAluno = css ? `\n<style>\n${protegerTag(css, 'style')}\n</style>` : ''
+  const estilos = [estiloBase ? ESTILO_BASE : '', css ? protegerTag(css, 'style') : '']
+    .filter(Boolean)
+    .map((estilo) => `\n<style>\n${estilo}\n</style>`)
+    .join('')
 
   return `<!doctype html>
 <html lang="pt-BR">
@@ -117,8 +123,7 @@ export function montarDocumentoDoPlayground({ id, origem, html, css, js, tema = 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap">
 <script type="importmap">${mapa}</script>
-<script>(${instalarPonteDoConsole})(${JSON.stringify(id)}, window); (${conterRolagem})(window)</script>
-<style>${ESTILO_BASE}</style>${estiloDoAluno}
+<script>(${instalarPonteDoConsole})(${JSON.stringify(id)}, window); (${conterRolagem})(window)</script>${estilos}
 </head>
 <body data-tema="${tema}">
 ${html.trim()}
