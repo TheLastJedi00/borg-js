@@ -1,0 +1,6 @@
+/* Ponto de entrada do CSS do site. A ordem importa: tokens → base → layout → componentes → páginas. */
+@import './tokens.css';
+@import './base.css';
+@import './layout.css';
+@import './componentes.css';
+@import './paginas.css';

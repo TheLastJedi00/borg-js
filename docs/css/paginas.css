@@ -1,0 +1,779 @@
+/* Estilos específicos de cada página. */
+
+/* ---------- Funções ---------- */
+
+.menu-lateral p {
+  margin: var(--e-5) 0 var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-0);
+  font-weight: 700;
+}
+
+.menu-lateral p:first-child {
+  margin-top: 0;
+}
+
+.menu-lateral ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-lateral a {
+  display: block;
+  padding: 3px var(--e-3);
+  border-left: 2px solid var(--borda);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+  text-decoration: none;
+}
+
+.menu-lateral a:hover {
+  color: var(--texto);
+}
+
+.menu-lateral a[aria-current='true'] {
+  border-left-color: var(--agua);
+  color: var(--texto);
+  font-weight: 700;
+}
+
+.menu-lateral .nome-funcao {
+  font-family: var(--fonte-codigo);
+  font-size: var(--t-0);
+}
+
+/* Bloco "Nesta página": só aparece como botão no celular */
+.menu-lateral-recolhivel > summary {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .menu-lateral-recolhivel {
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-codigo);
+    background: var(--superficie);
+  }
+
+  .menu-lateral-recolhivel > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 0 var(--e-4);
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .menu-lateral-recolhivel > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-lateral-recolhivel > summary::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  .menu-lateral-recolhivel[open] > summary::after {
+    transform: rotate(-135deg);
+  }
+
+  .menu-lateral-grupos {
+    padding: 0 var(--e-4) var(--e-4);
+  }
+}
+
+.secao {
+  max-width: 920px;
+}
+
+.secao + .secao {
+  margin-top: var(--e-8);
+}
+
+.secao > * + * {
+  margin-top: var(--e-4);
+}
+
+.secao > h3 {
+  margin-top: var(--e-6);
+}
+
+/* Texto corrido na largura de leitura; tabelas e exemplos usam a largura toda */
+.secao > p,
+.secao > ul,
+.secao > ol:not(.aulas) {
+  max-width: var(--largura-texto);
+}
+
+.secao li + li {
+  margin-top: var(--e-2);
+}
+
+.funcao h2 {
+  font-family: var(--fonte-codigo);
+  font-size: var(--t-4);
+  font-weight: 600;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.funcao h2 .parametros {
+  color: var(--texto-suave);
+  font-weight: 400;
+}
+
+/* ---------- Início: herói ---------- */
+
+.heroi {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: var(--e-7);
+  align-items: center;
+  max-width: var(--largura-pagina);
+  min-height: min(760px, calc(100dvh - var(--altura-topo)));
+  margin: 0 auto;
+  padding: var(--e-8) var(--e-5);
+}
+
+.heroi h1 {
+  max-width: 13ch;
+  font-size: var(--t-heroi);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.heroi-sub {
+  max-width: 46ch;
+  margin-top: var(--e-5);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+.heroi-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-6);
+}
+
+.heroi-import {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  max-width: 100%;
+  margin-top: var(--e-6);
+  padding: var(--e-1) var(--e-1) var(--e-1) var(--e-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-codigo);
+  background: var(--superficie);
+}
+
+.heroi-import code {
+  padding: 0;
+  background: none;
+  color: var(--texto-suave);
+  font-size: var(--t-0);
+  white-space: nowrap;
+}
+
+/* A coruja fica na frente de uma lua */
+.heroi-palco {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--e-4);
+}
+
+.heroi-palco::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: min(100%, 420px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--superficie-2);
+  translate: -50% -56%;
+}
+
+.coruja {
+  width: min(100%, 340px);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 24px 30px rgb(11 37 48 / 0.18));
+}
+
+.coruja .olho {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.08s;
+  animation: acordar 0.9s 0.3s ease-out backwards;
+}
+
+.coruja.piscando .olho {
+  transform: scaleY(0.08);
+}
+
+.coruja .pupila {
+  transition: translate 0.08s linear;
+}
+
+@keyframes acordar {
+  0%,
+  40% {
+    transform: scaleY(0.08);
+  }
+  55% {
+    transform: scaleY(1);
+  }
+  70% {
+    transform: scaleY(0.08);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.balao {
+  position: absolute;
+  top: 2%;
+  right: 4%;
+  z-index: 1;
+  padding: var(--e-2) var(--e-4);
+  border-radius: var(--raio-codigo);
+  background: var(--texto);
+  color: var(--fundo);
+  font-family: var(--fonte-codigo);
+  font-size: var(--t-3);
+  font-weight: 600;
+  animation: surgir 0.18s ease-out;
+}
+
+.balao::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 22px;
+  border: 10px solid transparent;
+  border-top-color: var(--texto);
+  border-bottom: 0;
+}
+
+@keyframes surgir {
+  from {
+    transform: scale(0.85);
+  }
+}
+
+.heroi-convite {
+  margin-top: var(--e-5);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .heroi {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-6);
+    min-height: 0;
+    padding: var(--e-6) var(--e-4) var(--e-7);
+  }
+
+  .coruja {
+    width: min(60vw, 240px);
+  }
+
+  .heroi-palco::before {
+    width: min(78vw, 300px);
+  }
+}
+
+@media (max-width: 560px) {
+  .heroi-import code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* ---------- Início: o código da coruja ---------- */
+
+/* Faixa escura de ponta a ponta: a noite da coruja */
+.faixa-codigo {
+  background: var(--codigo-fundo);
+  color: var(--codigo-texto);
+}
+
+.faixa-dentro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--e-7);
+  align-items: center;
+  padding-top: var(--e-8);
+  padding-bottom: var(--e-8);
+}
+
+.faixa-texto h2 {
+  font-size: var(--t-5);
+}
+
+.faixa-texto > p {
+  margin-top: var(--e-4);
+  color: var(--codigo-suave);
+}
+
+.reacoes {
+  margin: var(--e-6) 0 0;
+}
+
+.reacoes > div {
+  padding: var(--e-3) 0;
+  border-top: 1px solid var(--codigo-borda);
+}
+
+.reacoes dt code {
+  padding: 0;
+  background: none;
+  color: var(--codigo-funcao);
+  font-size: var(--t-2);
+}
+
+.reacoes dd {
+  margin: 2px 0 0;
+  color: var(--codigo-suave);
+}
+
+.reacoes dd code {
+  background: var(--codigo-superficie);
+  color: var(--codigo-texto);
+}
+
+.faixa-codigo .bloco-codigo {
+  border: 1px solid var(--codigo-borda);
+  background: var(--codigo-superficie);
+}
+
+.faixa-codigo .bloco-codigo .cm-editor {
+  max-height: none;
+  background: var(--codigo-superficie);
+}
+
+@media (max-width: 900px) {
+  .faixa-dentro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-6);
+    padding-top: var(--e-7);
+    padding-bottom: var(--e-7);
+  }
+}
+
+/* ---------- Início: comparação e motivos ---------- */
+
+.comparacao {
+  padding-top: var(--e-9);
+  padding-bottom: var(--e-8);
+}
+
+.comparacao h2,
+.caminhos h2 {
+  max-width: 22ch;
+}
+
+.comparacao-sub {
+  max-width: var(--largura-texto);
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+.comparacao-lados {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: var(--e-5);
+  align-items: start;
+  margin-top: var(--e-6);
+}
+
+.comparacao-lados figure {
+  margin: 0;
+}
+
+.comparacao-lados figcaption {
+  margin-bottom: var(--e-2);
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.comparacao-lados figure:last-child figcaption {
+  color: var(--texto);
+}
+
+/* O lado da Borg ganha a borda da marca */
+.comparacao-lados figure:last-child .bloco-codigo {
+  box-shadow: 0 0 0 2px var(--agua);
+}
+
+.motivos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--e-6);
+  margin: var(--e-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.motivos li {
+  padding-top: var(--e-4);
+  border-top: 3px solid var(--texto);
+}
+
+.motivos p {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}
+
+/* ---------- Início: por onde começar ---------- */
+
+.caminhos {
+  padding-top: var(--e-6);
+}
+
+.caminhos-grupos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: var(--e-6);
+  margin-top: var(--e-6);
+}
+
+.caminho > h3 {
+  margin-bottom: var(--e-3);
+  color: var(--texto-suave);
+  font-size: var(--t-2);
+}
+
+.caminho ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--borda);
+}
+
+.caminho li a {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: var(--e-4);
+  padding: var(--e-4) var(--e-2);
+  border-bottom: 1px solid var(--borda);
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.caminho li a:hover {
+  background: var(--superficie);
+}
+
+.caminho li strong {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-3);
+}
+
+.caminho li span {
+  align-self: center;
+  color: var(--texto-suave);
+}
+
+.caminho-professor {
+  align-self: start;
+  padding: var(--e-6);
+  border-radius: var(--raio-bloco);
+  background: var(--superficie-2);
+}
+
+.caminho-professor > h3 {
+  color: var(--texto);
+  font-size: var(--t-4);
+}
+
+.caminho-professor p {
+  margin-bottom: var(--e-5);
+  color: var(--texto-suave);
+}
+
+@media (max-width: 900px) {
+  .comparacao {
+    padding-top: var(--e-7);
+  }
+
+  .comparacao-lados,
+  .caminhos-grupos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .motivos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .caminho li a {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-1);
+  }
+}
+
+@media (max-width: 560px) {
+  .motivos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-5);
+  }
+}
+
+/* ---------- Começar ---------- */
+
+.arvore {
+  display: inline-block;
+  min-width: 260px;
+  padding: var(--e-4) var(--e-5);
+  border: 1px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+  font-size: var(--t-1);
+}
+
+.problemas {
+  max-width: 920px;
+  margin-top: var(--e-8);
+}
+
+.problemas > p {
+  margin: var(--e-3) 0 var(--e-5);
+  color: var(--texto-suave);
+}
+
+.problemas td {
+  font-size: var(--t-1);
+}
+
+.problemas td:first-child {
+  width: 45%;
+}
+
+/* Mensagens de erro longas quebram em qualquer lugar */
+.problemas td:first-child code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Professores ---------- */
+
+.aulas {
+  counter-reset: aula;
+  margin: var(--e-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aula {
+  counter-increment: aula;
+  padding: var(--e-5) 0 var(--e-5) 76px;
+  border-top: 1px solid var(--borda);
+  position: relative;
+}
+
+.aula::before {
+  content: 'Aula ' counter(aula);
+  position: absolute;
+  top: calc(var(--e-5) + 4px);
+  left: 0;
+  color: var(--destaque);
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-1);
+  font-weight: 800;
+}
+
+.aula-objetivo {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+}
+
+.aula dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--e-2) var(--e-4);
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-1);
+}
+
+.aula dl > div {
+  display: contents;
+}
+
+.aula dt {
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.aula dd {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .aula {
+    padding-left: 0;
+  }
+
+  .aula::before {
+    position: static;
+    display: block;
+    margin-bottom: var(--e-1);
+  }
+
+  .aula dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .aula dd {
+    margin-bottom: var(--e-2);
+  }
+}
+
+.tabela-erros table {
+  min-width: 720px;
+}
+
+.tabela-erros td code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.equivalentes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: var(--e-5) var(--e-4);
+  margin-top: var(--e-5);
+}
+
+.equivalente > p {
+  margin-bottom: var(--e-2);
+  font-weight: 700;
+}
+
+.equivalente > p code {
+  background: none;
+  padding: 0;
+  font-size: var(--t-2);
+}
+
+/* ---------- Desafios ---------- */
+
+.nivel + .nivel {
+  margin-top: var(--e-9);
+}
+
+.nivel > h2 {
+  font-size: var(--t-5);
+}
+
+.nivel-descricao {
+  max-width: var(--largura-texto);
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+}
+
+.desafio {
+  max-width: 920px;
+  margin-top: var(--e-7);
+  padding-top: var(--e-6);
+  border-top: 1px solid var(--borda);
+}
+
+.desafio > * + * {
+  margin-top: var(--e-4);
+}
+
+.desafio-enunciado {
+  max-width: var(--largura-texto);
+}
+
+.desafio-enunciado > * + * {
+  margin-top: var(--e-3);
+}
+
+.desafio-funcoes {
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}
+
+.desafio-solucao .recolhivel-corpo > p {
+  margin-top: var(--e-3);
+  color: var(--texto-suave);
+  font-size: var(--t-0);
+  font-weight: 700;
+}
+
+.desafio-carregar {
+  min-height: 42px;
+}
+
+.desafio-carregar svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Projetos ---------- */
+
+.projeto {
+  max-width: 920px;
+  margin-top: var(--e-8);
+}
+
+.projeto > * + * {
+  margin-top: var(--e-4);
+}
+
+.projeto-descricao {
+  max-width: var(--largura-texto);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+.projeto-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+.projeto-acoes svg {
+  width: 18px;
+  height: 18px;
+}
+
+.projeto-estudo {
+  max-width: var(--largura-texto);
+  padding-top: var(--e-2);
+}
+
+.projeto-estudo ul {
+  margin: var(--e-3) 0 0;
+  padding-left: 1.3em;
+}
+
+.projeto-estudo li + li {
+  margin-top: var(--e-2);
+}
+
+.projeto-funcoes {
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}

@@ -27,8 +27,10 @@ function garantirMonitoramento() {
  * @returns {boolean} `true` enquanto a tecla estiver pressionada.
  * @throws {TypeError} Quando a tecla não existe.
  * @example
+ * import { teclaPressionada } from 'https://borg.lenoborges.br/borg.mjs'
+ *
  * function loop() {
- *   if (Borg.teclaPressionada('seta direita')) x += 5
+ *   if (teclaPressionada('seta direita')) x += 5
  *   requestAnimationFrame(loop)
  * }
  * loop()

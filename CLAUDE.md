@@ -11,7 +11,7 @@ npm run test:watch
 npx vitest run tests/teclado/aoPressionar.test.js   # one test file
 npx vitest run -t "aoClicar"                       # tests whose name matches
 npm run build        # library: dist/borg.js (IIFE, global Borg) + dist/borg.mjs (ESM)
-npm run build:docs   # static docs site in docs-dist/
+npm run build:docs   # static docs site in docs-dist/, with borg.mjs and borg.js at its root
 npm run lint
 ```
 
@@ -27,11 +27,16 @@ npm run lint
   - `estado.js` implements `teclaPressionada`, which has lazy global state.
 - `src/helpers/` holds the DOM reaction helpers (`mostrar`, `esconder`, `alternarClasse`, `mudarTexto`, `mudarEstilo`).
 - Every `ao*` function validates its arguments, registers listeners and returns `parar()`, which removes them.
-- The docs site (`docs/`) imports `src/` directly and sets `window.Borg`. Each entry in `docs/funcoes.js` has `html` and `js` that are both shown as code and executed in the live demo with `new Function('Borg', js)`. Keep demo IDs unique across the page.
+- The docs site (`docs/`) is multi-page (`index`, `comecar`, `funcoes`, `professores`, `desafios`, `projetos`). Each `.html` loads `docs/js/paginas/<pagina>.js`, which calls `iniciarPagina()` from `docs/js/layout.js` (shared header, menu, theme toggle, footer) and renders its content from `docs/js/dados/`.
+  - `docs/js/config.js` holds the official URL (`URL_DO_SITE`) and builds the `import` line. Never hard-code the domain; use `linhaDeImport` or `comImport`, which adds the `import` for the Borg functions a snippet calls.
+  - The build plugin `build/publicarBiblioteca.js` builds `borg.mjs` and `borg.js` from `src/`, using the same lib config as `vite.config.js` (`build/biblioteca.js`). It serves them in `npm run dev` and emits them at the root of `docs-dist/`. `vercel.json` adds CORS headers so other sites can import them.
+  - Examples run in a **playground** (`docs/js/playground/`): CodeMirror editors and a sandboxed `iframe` built by `montarDocumentoDoPlayground`. An import map points the public URL to the current origin's `borg.mjs`, and a bridge forwards `console` and errors to the panel under the result. Playgrounds mount lazily when they get close to the screen. Keep playground IDs unique within a page.
+  - Example data (`dados/funcoes.js`, `desafios.js`, `projetos.js`) holds `js` without the `import`; pages add it. Projects carry their full CSS and use `estiloBase: false`.
+  - Pure docs logic (URLs, playground document, project file, error hints) is tested in `tests/docs/`.
 
 ## Conventions
 
-- Identifiers, JSDoc, test names, commit messages and error messages are in Portuguese. Every public function's JSDoc has `@param`, `@returns`, `@throws` and an `@example` that uses `Borg.`.
+- Identifiers, JSDoc, test names, commit messages and error messages are in Portuguese. Every public function's JSDoc has `@param`, `@returns`, `@throws` and an `@example` that starts with `import { ... } from 'https://borg.lenoborges.br/borg.mjs'` and calls the functions without the `Borg.` prefix. Teaching material uses this `import` style first; the script tag with the global `Borg` is documented only in the "Usando sem import" section.
 - TDD: write the test in `tests/` (mirroring `src/`) before the implementation.
 - Commit messages use conventional prefixes (`feat:`, `test:`, `docs:`, `chore:`, `build:`).
 
