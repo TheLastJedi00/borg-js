@@ -102,6 +102,8 @@ export function criarEditor({ pai, codigo, linguagem, somenteLeitura = false, ro
     tema,
     syntaxHighlighting(realce),
     linguagens[linguagem](),
+    // Quebrar linhas longas é melhor para iniciantes do que rolar para o lado, ainda mais no celular.
+    EditorView.lineWrapping,
     EditorView.contentAttributes.of({ 'aria-label': rotulo ?? `Código ${linguagem.toUpperCase()}` }),
   ]
 

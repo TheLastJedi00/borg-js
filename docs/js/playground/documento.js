@@ -37,6 +37,7 @@ button {
   cursor: pointer;
 }
 button:active { transform: scale(0.97); }
+kbd { padding: 0 6px; border: 1px solid var(--borda); border-bottom-width: 3px; border-radius: 6px; font-family: ui-monospace, monospace; }
 input { font: inherit; padding: 8px 12px; border: 1px solid var(--borda); border-radius: 10px; }
 `
 
@@ -79,6 +80,24 @@ export function instalarPonteDoConsole(id, janela) {
 }
 
 /**
+ * Quando o resultado não tem o que rolar, o navegador passa a rolagem do espaço e das setas
+ * para a página de fora, e a documentação pula. Numa página de verdade isso não acontece,
+ * então aqui essas teclas são contidas. Campos de texto continuam normais.
+ *
+ * Também roda **dentro** do iframe, como `instalarPonteDoConsole`.
+ * @param {Window} janela
+ */
+export function conterRolagem(janela) {
+  const teclas = [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageUp', 'PageDown']
+  janela.addEventListener('keydown', (evento) => {
+    const { tagName, isContentEditable } = evento.target
+    const digitando = tagName === 'INPUT' || tagName === 'TEXTAREA' || isContentEditable
+    const rolavel = janela.document.documentElement.scrollHeight > janela.innerHeight
+    if (teclas.includes(evento.key) && !digitando && !rolavel) evento.preventDefault()
+  })
+}
+
+/**
  * Monta o documento (`srcdoc`) do resultado de um playground.
  *
  * Um import map redireciona a URL pública da Borg para a `borg.mjs` da origem atual. Assim, o
@@ -98,7 +117,7 @@ export function montarDocumentoDoPlayground({ id, origem, html, css, js, tema = 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap">
 <script type="importmap">${mapa}</script>
-<script>(${instalarPonteDoConsole})(${JSON.stringify(id)}, window)</script>
+<script>(${instalarPonteDoConsole})(${JSON.stringify(id)}, window); (${conterRolagem})(window)</script>
 <style>${ESTILO_BASE}</style>${estiloDoAluno}
 </head>
 <body data-tema="${tema}">

@@ -68,6 +68,8 @@
   top: calc(var(--altura-topo) + var(--e-5));
   max-height: calc(100dvh - var(--altura-topo) - var(--e-6));
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--borda) transparent;
 }
 
 @media (max-width: 900px) {

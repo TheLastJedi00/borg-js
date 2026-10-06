@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { montarDocumentoDoPlayground, instalarPonteDoConsole } from '../../docs/js/playground/documento.js'
+import { montarDocumentoDoPlayground, instalarPonteDoConsole, conterRolagem } from '../../docs/js/playground/documento.js'
 import { URL_BORG_MJS } from '../../docs/js/config.js'
 
 const ORIGEM = 'http://localhost:4200'
@@ -135,5 +135,49 @@ describe('instalarPonteDoConsole', () => {
     janela.console.log(undefined, circular)
 
     expect(janela.parent.postMessage.mock.calls[0][0].texto).toBe('undefined [object Object]')
+  })
+})
+
+describe('conterRolagem', () => {
+  function janelaFalsa({ rolavel }) {
+    let ouvinte
+    return {
+      innerHeight: 300,
+      document: { documentElement: { scrollHeight: rolavel ? 900 : 300 } },
+      addEventListener: (tipo, fn) => tipo === 'keydown' && (ouvinte = fn),
+      apertar: (key, alvo = { tagName: 'BODY', isContentEditable: false }) => {
+        const evento = { key, target: alvo, preventDefault: vi.fn() }
+        ouvinte(evento)
+        return evento.preventDefault
+      },
+    }
+  }
+
+  it('impede que espaço e setas rolem a página de fora quando o resultado não tem rolagem', () => {
+    const janela = janelaFalsa({ rolavel: false })
+    conterRolagem(janela)
+
+    for (const tecla of [' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'PageDown', 'PageUp']) {
+      expect(janela.apertar(tecla)).toHaveBeenCalled()
+    }
+  })
+
+  it('deixa as outras teclas em paz', () => {
+    const janela = janelaFalsa({ rolavel: false })
+    conterRolagem(janela)
+    expect(janela.apertar('a')).not.toHaveBeenCalled()
+  })
+
+  it('deixa rolar quando o próprio resultado tem rolagem', () => {
+    const janela = janelaFalsa({ rolavel: true })
+    conterRolagem(janela)
+    expect(janela.apertar(' ')).not.toHaveBeenCalled()
+  })
+
+  it('não atrapalha a digitação em campos de texto', () => {
+    const janela = janelaFalsa({ rolavel: false })
+    conterRolagem(janela)
+    expect(janela.apertar(' ', { tagName: 'INPUT', isContentEditable: false })).not.toHaveBeenCalled()
+    expect(janela.apertar(' ', { tagName: 'TEXTAREA', isContentEditable: false })).not.toHaveBeenCalled()
   })
 })
