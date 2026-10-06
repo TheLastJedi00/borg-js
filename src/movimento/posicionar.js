@@ -81,3 +81,50 @@ export function moverPor(seletor, deslocamento) {
     })
   })
 }
+
+/**
+ * Limita um valor ao intervalo de `0` até `maximo`. Se `maximo` for negativo
+ * (elemento maior que a tela), fica em `0`.
+ * @param {number} valor
+ * @param {number} maximo
+ * @returns {number}
+ */
+function limitar(valor, maximo) {
+  return Math.max(0, Math.min(valor, maximo))
+}
+
+/**
+ * Traz o elemento de volta para dentro da janela, se ele passou de alguma borda.
+ *
+ * O ajuste acontece uma vez, na hora da chamada. O uso comum é dentro do laço do
+ * jogo, logo depois de `moverPor`. Um elemento maior que a janela fica alinhado
+ * à esquerda e ao topo.
+ *
+ * @param {string|Element} seletor - Seletor CSS (ex.: `'#nave'`) ou um elemento do DOM.
+ * @returns {boolean} `true` se algum elemento precisou ser ajustado ("bateu na borda").
+ * @throws {TypeError} Quando o seletor é inválido.
+ * @example
+ * import { moverPor, manterNaTela, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * function jogar() {
+ *   moverPor('#bola', { x: 4 })
+ *   if (manterNaTela('#bola')) {
+ *     mudarTexto('#aviso', 'Bateu na borda!')
+ *   }
+ *   requestAnimationFrame(jogar)
+ * }
+ * jogar()
+ */
+export function manterNaTela(seletor) {
+  let ajustou = false
+  resolverElementos(seletor, 'manterNaTela').forEach((alvo) => {
+    const { left, top, width, height } = alvo.getBoundingClientRect()
+    const x = limitar(left, window.innerWidth - width)
+    const y = limitar(top, window.innerHeight - height)
+    if (x !== left || y !== top) {
+      colocarEm(alvo, { x, y })
+      ajustou = true
+    }
+  })
+  return ajustou
+}
