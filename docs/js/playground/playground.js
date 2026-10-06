@@ -84,10 +84,10 @@ function montar(elemento, opcoes) {
     <div class="pg-resultado">
       <div class="pg-barra">
         <span class="pg-rotulo">Resultado</span>
-        <span class="pg-dica-teclado" hidden>Clique no resultado antes de usar o teclado</span>
         <button type="button" class="botao-ferramenta pg-rodar" title="Rodar de novo">${icones.rodar}Rodar</button>
         <button type="button" class="botao-ferramenta pg-restaurar" title="Voltar ao código original">${icones.restaurar}Restaurar</button>
       </div>
+      <p class="pg-dica-teclado" hidden>Clique no resultado antes de usar o teclado.</p>
       <iframe class="pg-iframe" sandbox="allow-scripts" title="Resultado do exemplo ${nome}"></iframe>
       <div class="pg-console" aria-live="polite" aria-label="Console do exemplo ${nome}">
         <p class="pg-console-vazio">Console: nada por aqui. Mensagens de <code>console.log</code> e erros aparecem aqui.</p>

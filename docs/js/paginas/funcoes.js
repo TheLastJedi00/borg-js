@@ -1,11 +1,9 @@
-import * as Borg from '../../../src/index.js'
 import { secoesDeInicio } from '../dados/inicio.js'
 import { funcoes } from '../dados/funcoes.js'
-import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
+import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { iniciarPagina } from '../layout.js'
-
-// Deixa a Borg disponível como no uso com <script src="borg.js">.
-window.Borg = Borg
+import { playground, ativarPlaygrounds } from '../playground/playground.js'
+import { comImport } from '../config.js'
 
 iniciarPagina().innerHTML = `
   <div class="pagina com-lateral">
@@ -64,13 +62,13 @@ function htmlDaFuncao(funcao) {
     <h3>Retorno</h3>
     <p>${funcao.retorno}</p>
     <h3>Exemplo</h3>
-    <div class="exemplo">
-      <div>
-        ${blocoDeCodigo(funcao.html)}
-        ${blocoDeCodigo(funcao.js)}
-      </div>
-      <div class="palco">${funcao.html}</div>
-    </div>
+    ${playground({
+      id: `exemplo-${funcao.nome}`,
+      titulo: funcao.nome,
+      html: funcao.html,
+      css: funcao.css,
+      js: comImport(funcao.js),
+    })}
   `
 }
 
@@ -84,8 +82,7 @@ funcoes.forEach((funcao) => {
     { id: funcao.nome, rotulo: funcao.nome, html: htmlDaFuncao(funcao) },
     'secao funcao',
   )
-  // Roda o mesmo código que aparece na página, cada exemplo no seu próprio escopo.
-  new Function('Borg', funcao.js)(Borg)
 })
 
 ativarBlocosDeCodigo()
+ativarPlaygrounds()

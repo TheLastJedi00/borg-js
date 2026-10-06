@@ -144,7 +144,7 @@ pre {
 .playground {
   container-type: inline-size;
   overflow: hidden;
-  min-height: calc(var(--altura-resultado) + 120px);
+  min-height: calc(var(--altura-resultado) + 140px);
   border: 1px solid var(--codigo-borda);
   border-radius: var(--raio-bloco);
   background: var(--codigo-fundo);
@@ -232,8 +232,7 @@ pre {
 }
 
 .pg-dica-teclado {
-  padding: 2px var(--e-2);
-  border-radius: var(--raio-controle);
+  padding: var(--e-1) var(--e-4);
   background: rgb(251 191 36 / 0.15);
   color: var(--ambar);
   font-size: var(--t-0);

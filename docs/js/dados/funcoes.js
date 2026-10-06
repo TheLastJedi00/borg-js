@@ -1,8 +1,9 @@
 /**
  * Documentação de cada função pública da Borg.
  *
- * O `html` e o `js` de cada exemplo são exibidos na página e executados de verdade no
- * palco. Assim, o código mostrado é exatamente o código que roda.
+ * O `html`, o `css` e o `js` de cada exemplo vão para um playground: aparecem na página e
+ * rodam de verdade no resultado. O `js` é escrito sem o `import`; a página coloca no topo o
+ * `import` das funções usadas (veja `comImport`).
  */
 export const funcoes = [
   {
@@ -17,12 +18,17 @@ export const funcoes = [
     html: `
 <button id="botao-contar">Clique em mim</button>
 <p class="grande" id="cliques">0</p>`,
+    css: `
+.grande {
+  font-size: 2.5rem;
+  font-weight: 700;
+}`,
     js: `
 let cliques = 0
 
-Borg.aoClicar('#botao-contar', () => {
+aoClicar('#botao-contar', () => {
   cliques = cliques + 1
-  Borg.mudarTexto('#cliques', cliques)
+  mudarTexto('#cliques', cliques)
 })`,
   },
   {
@@ -34,11 +40,20 @@ Borg.aoClicar('#botao-contar', () => {
     ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
-<p class="dica">Clique em qualquer lugar da página</p>
+<p class="dica">Clique em qualquer lugar do resultado</p>
 <p class="grande" id="posicao-clique">—</p>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.grande {
+  font-size: 2.5rem;
+  font-weight: 700;
+}`,
     js: `
-Borg.aoClicarNaTela(({ x, y }) => {
-  Borg.mudarTexto('#posicao-clique', x + ', ' + y)
+aoClicarNaTela(({ x, y }) => {
+  mudarTexto('#posicao-clique', x + ', ' + y)
 })`,
   },
   {
@@ -51,29 +66,57 @@ Borg.aoClicarNaTela(({ x, y }) => {
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
 <p class="dica">Mova o mouse para os lados</p>
-<div class="barra-fundo"><div class="barra" id="barra-mouse"></div></div>`,
+<div class="barra-fundo">
+  <div class="barra" id="barra-mouse"></div>
+</div>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.barra-fundo {
+  width: 100%;
+  height: 16px;
+  border-radius: 999px;
+  background: #cfe0e2;
+  overflow: hidden;
+}
+
+.barra {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
     js: `
-Borg.aoMoverMouse(({ x }) => {
+aoMoverMouse(({ x }) => {
   const porcentagem = (x / window.innerWidth) * 100
-  Borg.mudarEstilo('#barra-mouse', 'width', porcentagem + '%')
+  mudarEstilo('#barra-mouse', 'width', porcentagem + '%')
 })`,
   },
   {
     nome: 'aoPressionar',
     parametros: 'tecla, callback',
-    descricao:
-      'Executa uma função quando uma tecla for pressionada. Dispara uma vez por toque: segurar a tecla não repete. Com <code>\'espaço\'</code> e as setas, a rolagem da página é bloqueada, exceto dentro de campos de texto.',
+    descricao: 'Executa uma função quando uma tecla for pressionada.',
     tabela: [
       ['tecla', 'texto', '<code>\'a\'</code>, <code>\'7\'</code>, <code>\'espaço\'</code>, <code>\'enter\'</code>, <code>\'esc\'</code>, <code>\'seta cima\'</code>, <code>\'seta baixo\'</code>, <code>\'seta esquerda\'</code>, <code>\'seta direita\'</code> ou <code>\'qualquer\'</code>. Maiúsculas não fazem diferença.'],
       ['callback', 'função', 'Recebe o nome, em português, da tecla pressionada.'],
     ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
-<p class="dica">Pressione qualquer tecla</p>
+<p class="dica">Clique aqui e pressione qualquer tecla</p>
 <p class="grande" id="ultima-tecla">—</p>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.grande {
+  font-size: 2.5rem;
+  font-weight: 700;
+}`,
     js: `
-Borg.aoPressionar('qualquer', (tecla) => {
-  Borg.mudarTexto('#ultima-tecla', tecla)
+aoPressionar('qualquer', (tecla) => {
+  mudarTexto('#ultima-tecla', tecla)
 })`,
   },
   {
@@ -86,15 +129,24 @@ Borg.aoPressionar('qualquer', (tecla) => {
     ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
-<p class="dica">Segure e solte a tecla <span class="tecla">k</span></p>
+<p class="dica">Clique aqui, segure e solte a tecla <kbd>k</kbd></p>
 <p class="grande" id="estado-k">solta</p>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.grande {
+  font-size: 2.5rem;
+  font-weight: 700;
+}`,
     js: `
-Borg.aoPressionar('k', () => {
-  Borg.mudarTexto('#estado-k', 'pressionada')
+aoPressionar('k', () => {
+  mudarTexto('#estado-k', 'pressionada')
 })
 
-Borg.aoSoltar('k', () => {
-  Borg.mudarTexto('#estado-k', 'solta')
+aoSoltar('k', () => {
+  mudarTexto('#estado-k', 'solta')
 })`,
   },
   {
@@ -105,17 +157,43 @@ Borg.aoSoltar('k', () => {
     tabela: [['tecla', 'texto', 'Os mesmos nomes de <code>aoPressionar</code>.']],
     retorno: '<code>true</code> enquanto a tecla estiver pressionada, senão <code>false</code>.',
     html: `
-<p class="dica">Segure <span class="tecla">a</span> ou <span class="tecla">d</span></p>
-<div class="pista"><div class="caixa" id="jogador"></div></div>`,
+<p class="dica">Clique aqui e segure <kbd>a</kbd> ou <kbd>d</kbd></p>
+<div class="pista">
+  <div class="jogador" id="jogador"></div>
+</div>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.pista {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  border-radius: 12px;
+  background: rgb(56 189 248 / 0.15);
+}
+
+.jogador {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
     js: `
 let x = 0
 
 function loop() {
-  if (Borg.teclaPressionada('d')) x = x + 4
-  if (Borg.teclaPressionada('a')) x = x - 4
-  x = Math.max(0, Math.min(x, 240))
+  const limite = document.querySelector('.pista').clientWidth - 50
 
-  Borg.mudarEstilo('#jogador', 'left', x)
+  if (teclaPressionada('d')) x = x + 4
+  if (teclaPressionada('a')) x = x - 4
+  x = Math.max(0, Math.min(x, limite))
+
+  mudarEstilo('#jogador', 'left', x)
   requestAnimationFrame(loop)
 }
 
@@ -132,8 +210,8 @@ loop()`,
 <button id="botao-mostrar">Mostrar segredo</button>
 <p id="segredo" hidden>🦉 A coruja vê tudo!</p>`,
     js: `
-Borg.aoClicar('#botao-mostrar', () => {
-  Borg.mostrar('#segredo')
+aoClicar('#botao-mostrar', () => {
+  mostrar('#segredo')
 })`,
   },
   {
@@ -146,13 +224,20 @@ Borg.aoClicar('#botao-mostrar', () => {
 <div class="caixa" id="caixa-sumir"></div>
 <button id="botao-esconder">Esconder</button>
 <button id="botao-voltar">Voltar</button>`,
+    css: `
+.caixa {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
     js: `
-Borg.aoClicar('#botao-esconder', () => {
-  Borg.esconder('#caixa-sumir')
+aoClicar('#botao-esconder', () => {
+  esconder('#caixa-sumir')
 })
 
-Borg.aoClicar('#botao-voltar', () => {
-  Borg.mostrar('#caixa-sumir')
+aoClicar('#botao-voltar', () => {
+  mostrar('#caixa-sumir')
 })`,
   },
   {
@@ -167,15 +252,28 @@ Borg.aoClicar('#botao-voltar', () => {
     html: `
 <div class="lampada" id="lampada"></div>
 <button id="interruptor">Liga / desliga</button>`,
+    css: `
+.lampada {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #94a3b8;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.lampada.acesa {
+  background: #fbbf24;
+  box-shadow: 0 0 32px #fbbf24;
+}`,
     js: `
-Borg.aoClicar('#interruptor', () => {
-  Borg.alternarClasse('#lampada', 'acesa')
+aoClicar('#interruptor', () => {
+  alternarClasse('#lampada', 'acesa')
 })`,
   },
   {
     nome: 'mudarTexto',
     parametros: 'seletor, texto',
-    descricao: 'Troca o texto do elemento. O texto é tratado como texto puro, e tags HTML não são interpretadas.',
+    descricao: 'Troca o texto do elemento.',
     tabela: [
       ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.'],
       ['texto', 'texto ou número', 'O novo texto.'],
@@ -184,20 +282,24 @@ Borg.aoClicar('#interruptor', () => {
     html: `
 <p class="grande" id="saudacao">Olá!</p>
 <button id="botao-idioma">Trocar idioma</button>`,
+    css: `
+.grande {
+  font-size: 2.5rem;
+  font-weight: 700;
+}`,
     js: `
 const saudacoes = ['Olá!', 'Hello!', '¡Hola!', 'Ciao!']
 let indice = 0
 
-Borg.aoClicar('#botao-idioma', () => {
+aoClicar('#botao-idioma', () => {
   indice = (indice + 1) % saudacoes.length
-  Borg.mudarTexto('#saudacao', saudacoes[indice])
+  mudarTexto('#saudacao', saudacoes[indice])
 })`,
   },
   {
     nome: 'mudarEstilo',
     parametros: 'seletor, propriedade, valor',
-    descricao:
-      'Altera um estilo CSS do elemento. Números viram pixels (<code>100</code> → <code>\'100px\'</code>), exceto em propriedades sem unidade, como <code>opacity</code> e <code>z-index</code>.',
+    descricao: 'Altera um estilo CSS do elemento.',
     tabela: [
       ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.'],
       ['propriedade', 'texto', 'Nome no formato do CSS (<code>\'border-radius\'</code>) ou do JS (<code>\'borderRadius\'</code>).'],
@@ -208,17 +310,25 @@ Borg.aoClicar('#botao-idioma', () => {
 <div class="caixa" id="caixa-estilo"></div>
 <button id="botao-crescer">Crescer</button>
 <button id="botao-redondo">Arredondar</button>`,
+    css: `
+.caixa {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+  transition: all 0.2s;
+}`,
     js: `
 let tamanho = 70
 
-Borg.aoClicar('#botao-crescer', () => {
+aoClicar('#botao-crescer', () => {
   tamanho = tamanho >= 130 ? 70 : tamanho + 20
-  Borg.mudarEstilo('#caixa-estilo', 'width', tamanho)
-  Borg.mudarEstilo('#caixa-estilo', 'height', tamanho)
+  mudarEstilo('#caixa-estilo', 'width', tamanho)
+  mudarEstilo('#caixa-estilo', 'height', tamanho)
 })
 
-Borg.aoClicar('#botao-redondo', () => {
-  Borg.mudarEstilo('#caixa-estilo', 'border-radius', '50%')
+aoClicar('#botao-redondo', () => {
+  mudarEstilo('#caixa-estilo', 'border-radius', '50%')
 })`,
   },
 ]
