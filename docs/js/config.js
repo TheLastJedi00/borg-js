@@ -18,12 +18,13 @@ const LIMITE_DA_LINHA = 80
  * Monta o `import` da Borg pela URL pública. Se a linha passar de 80 caracteres, cada
  * função vai para uma linha, para caber na tela sem rolagem.
  * @param {string[]} nomes
+ * @param {string} [origem] - De onde importar. Por padrão, a URL pública de `borg.mjs`.
  * @returns {string}
  */
-export function linhaDeImport(nomes) {
-  const umaLinha = `import { ${nomes.join(', ')} } from '${URL_BORG_MJS}'`
+export function linhaDeImport(nomes, origem = URL_BORG_MJS) {
+  const umaLinha = `import { ${nomes.join(', ')} } from '${origem}'`
   if (umaLinha.length <= LIMITE_DA_LINHA) return umaLinha
-  return `import {\n${nomes.map((nome) => `  ${nome},\n`).join('')}} from '${URL_BORG_MJS}'`
+  return `import {\n${nomes.map((nome) => `  ${nome},\n`).join('')}} from '${origem}'`
 }
 
 /**
