@@ -1,5 +1,6 @@
 import { secoesComoFunciona } from '../dados/como-funciona.js'
 import { funcoes } from '../dados/funcoes.js'
+import { secaoSemImport } from '../dados/sem-import.js'
 import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { iniciarPagina } from '../layout.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
@@ -13,6 +14,8 @@ iniciarPagina().innerHTML = `
       <ul id="menu-como-funciona"></ul>
       <p>Funções</p>
       <ul id="menu-funcoes"></ul>
+      <p>Outras formas</p>
+      <ul id="menu-outras"></ul>
     </nav>
     <div id="secoes">
       <header class="pagina-cabecalho">
@@ -90,6 +93,8 @@ funcoes.forEach((funcao) => {
     'secao funcao',
   )
 })
+
+adicionarSecao(document.getElementById('menu-outras'), secaoSemImport)
 
 ativarBlocosDeCodigo()
 ativarPlaygrounds()
