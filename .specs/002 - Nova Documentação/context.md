@@ -13,7 +13,7 @@ A biblioteca (`src/`) não ganha nem perde funções nesta spec.
 
 | Tema | Decisão |
 | --- | --- |
-| Origem do `import` | O build do site publica `borg.mjs` e `borg.js` na raiz do próprio site (Vercel). O aluno importa direto da URL, sem baixar nada: `import { aoClicar } from 'https://borg.lenoborges.br/borg.mjs'`. Publicar no npm ou em CDN externa continua fora do escopo. |
+| Origem do `import` | O build do site publica `borg.mjs` e `borg.js` na raiz do próprio site (Vercel). O aluno importa direto da URL, sem baixar nada: `import { aoClicar } from 'https://borg.lenoborges.com.br/borg.mjs'`. Publicar no npm ou em CDN externa continua fora do escopo. |
 | Estilo dos exemplos | Todo exemplo usa `import` com exports nomeados e chama as funções direto (`aoClicar(...)`), sem o prefixo `Borg.`. |
 | Uso sem import | Uma seção separada, "Usando sem import", explica uma vez a script tag (`<script src=".../borg.js">`) e o objeto global `Borg.`. Os exemplos das funções não repetem essa versão. |
 | Exemplos editáveis | Os exemplos das funções, dos desafios e dos projetos viram um **playground**: o aluno edita o HTML e o JS e vê o resultado na hora. |
@@ -29,7 +29,7 @@ Detalhes que a spec não definia e que foram decididos durante a implementação
 
 | Tema | Decisão |
 | --- | --- |
-| Domínio | `https://borg.lenoborges.br`, o domínio próprio já verificado no projeto da Vercel, no lugar do exemplo `borg-js.vercel.app`. |
+| Domínio | `https://borg.lenoborges.com.br`, o domínio próprio já verificado no projeto da Vercel, no lugar do exemplo `borg-js.vercel.app`. |
 | Identidade visual | Fontes Bricolage Grotesque (títulos) e Atkinson Hyperlegible Next/Mono (texto e código), escolhidas pela legibilidade para iniciantes. Âmbar (`#FBBF24`, o olho da coruja) marca atenção e foco. A coruja do topo é feita com a Borg e reage ao mouse, ao clique e ao teclado. |
 | Animações | Só a coruja que "acorda" ao abrir a página e uma entrada suave nas seções da página inicial. Tudo é desligado com `prefers-reduced-motion`. |
 | Playground | Resultado em `iframe` com `sandbox="allow-scripts"`. Monta só quando chega perto da tela. Espaço e setas no resultado não rolam a página de fora. O console mostra dicas em português para erros comuns do navegador e avisa quando um script não carrega. |
@@ -105,7 +105,7 @@ Cada função mantém o que já existe (descrição, parâmetros, retorno) e gan
 - Uma linha "Dica" ou "Cuidado" quando houver um comportamento importante (ex.: `aoPressionar` não repete ao segurar a tecla).
 
 A seção **"Usando sem import"** mostra:
-- o mesmo exemplo inicial escrito com `<script src="https://borg.lenoborges.br/borg.js"></script>` e `Borg.aoClicar(...)` dentro de `<script>` no HTML;
+- o mesmo exemplo inicial escrito com `<script src="https://borg.lenoborges.com.br/borg.js"></script>` e `Borg.aoClicar(...)` dentro de `<script>` no HTML;
 - quando essa forma é útil (testes rápidos, ambientes que só aceitam um arquivo HTML) e que ela funciona abrindo o arquivo direto (`file://`).
 
 ### 5. Guia do professor
@@ -149,4 +149,4 @@ A seção **"Usando sem import"** mostra:
 
 ## Domínio
 
-- O domínio `https://borg.lenoborges.br` (verificado na Vercel) é o oficial. `borg-js.vercel.app` continua respondendo, mas não aparece na documentação.
+- O domínio `https://borg.lenoborges.com.br` (verificado na Vercel) é o oficial. `borg-js.vercel.app` continua respondendo, mas não aparece na documentação.

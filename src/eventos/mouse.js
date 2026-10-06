@@ -17,7 +17,7 @@ import { validarFuncao } from '../nucleo/mensagens.js'
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * import { aoClicar, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoClicar, mudarTexto } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoClicar('#botao', (botao) => {
  *   mudarTexto(botao, 'Clicado!')
@@ -61,7 +61,7 @@ function ouvirPosicaoDoMouse(tipo, nomeFuncao, callback) {
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * import { aoClicarNaTela, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoClicarNaTela, mudarTexto } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoClicarNaTela(({ x, y }) => {
  *   mudarTexto('#posicao', `Clique em ${x}, ${y}`)
@@ -79,7 +79,7 @@ export function aoClicarNaTela(callback) {
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * import { aoMoverMouse, mudarEstilo } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoMoverMouse, mudarEstilo } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoMoverMouse(({ x, y }) => {
  *   mudarEstilo('#seguidor', 'left', `${x}px`)

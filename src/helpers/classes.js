@@ -9,7 +9,7 @@ import { erroDeTipo, validarTexto } from '../nucleo/mensagens.js'
  * @returns {void}
  * @throws {TypeError} Quando a classe está vazia ou tem espaço, ou o seletor é inválido.
  * @example
- * import { aoClicar, alternarClasse } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoClicar, alternarClasse } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoClicar('#tema', () => {
  *   alternarClasse('body', 'escuro')
