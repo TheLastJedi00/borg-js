@@ -1,4 +1,4 @@
-import { secoesDeInicio } from '../dados/inicio.js'
+import { secoesComoFunciona } from '../dados/como-funciona.js'
 import { funcoes } from '../dados/funcoes.js'
 import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { iniciarPagina } from '../layout.js'
@@ -8,13 +8,18 @@ import { aviso } from '../componentes.js'
 
 iniciarPagina().innerHTML = `
   <div class="pagina com-lateral">
-    <nav class="lateral menu-lateral" aria-label="Seções">
-      <p>Começando</p>
-      <ul id="menu-inicio"></ul>
+    <nav class="lateral menu-lateral" aria-label="Nesta página">
+      <p>Como funciona</p>
+      <ul id="menu-como-funciona"></ul>
       <p>Funções</p>
       <ul id="menu-funcoes"></ul>
     </nav>
-    <div id="secoes"></div>
+    <div id="secoes">
+      <header class="pagina-cabecalho">
+        <h1>Funções</h1>
+        <p>Todas as funções da Borg: o que cada uma recebe, o que devolve e um exemplo que você pode editar.</p>
+      </header>
+    </div>
   </div>
 `
 const conteudo = document.getElementById('secoes')
@@ -43,7 +48,7 @@ function adicionarSecao(menu, { id, rotulo, html }, classe = 'secao') {
 }
 
 /**
- * Monta o HTML da seção de uma função: descrição, parâmetros, retorno e exemplo.
+ * Monta o HTML da seção de uma função: descrição, avisos, parâmetros, retorno e exemplo.
  * @param {(typeof funcoes)[number]} funcao
  * @returns {string}
  */
@@ -74,8 +79,8 @@ function htmlDaFuncao(funcao) {
   `
 }
 
-const menuInicio = document.getElementById('menu-inicio')
-secoesDeInicio.forEach((secao) => adicionarSecao(menuInicio, secao))
+const menuComoFunciona = document.getElementById('menu-como-funciona')
+secoesComoFunciona.forEach((secao) => adicionarSecao(menuComoFunciona, secao))
 
 const menuFuncoes = document.getElementById('menu-funcoes')
 funcoes.forEach((funcao) => {
