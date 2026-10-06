@@ -94,6 +94,11 @@ console.log(posicao(nave)) // { x: ..., y: ... }
 
 A extensão **Borg JS** escreve a chamada inteira de cada função, com o seletor, a arrow function e o `import`. Procure "Borg JS" na aba de extensões do VS Code (Marketplace) ou do Cursor e VSCodium (Open VSX). O código dela está em [`extensao-vscode/`](extensao-vscode/).
 
+## Borg JS com IA
+
+- **Copiar para IA**: o botão no topo do site copia a documentação completa em Markdown, para colar em um agente de IA e ele conhecer a Borg.
+- **AGENTS.md**: na página [Professores](https://borg.lenoborges.com.br/professores.html#ia-na-aula), o professor baixa um `AGENTS.md` para a raiz do projeto do aluno. Ele faz a IA agir como **tutor**: conhece toda a Borg, mas guia com perguntas e dicas em etapas em vez de entregar o código pronto.
+
 ## Desenvolvimento
 
 | Comando | O que faz |
@@ -104,6 +109,7 @@ A extensão **Borg JS** escreve a chamada inteira de cada função, com o seleto
 | `npm run build` | Gera `dist/borg.js` e `dist/borg.mjs` |
 | `npm run build:docs` | Gera o site em `docs-dist/`, com `borg.mjs` e `borg.js` na raiz |
 | `npm run lint` | Verifica o código com ESLint |
+| `npm run build:logo` | Gera `assets/logo.svg` e `assets/logo-fechada.svg` a partir de `assets/logo-animada.svg` |
 | `npm run build:extensao` | Gera o `.vsix` da extensão do VS Code em `dist-extensao/` |
 | `npm run publicar:extensao` | Publica a extensão no Marketplace do VS Code e no Open VSX |
 
