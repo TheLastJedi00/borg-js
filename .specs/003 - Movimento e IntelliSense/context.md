@@ -48,7 +48,7 @@ Detalhes que a spec não definia e que foram decididos durante a implementação
 | `elemento` no começo da linha | A sugestão escreve `const meuElemento = elemento('#meu-seletor')`. Depois de um `=` ou dentro de uma chamada, escreve só `elemento(...)`. |
 | URLs sem a biblioteca | As URLs e `linhaDeImport` foram para `docs/js/url.js`, sem importar a Borg. `config.js` reexporta tudo. Assim a extensão tem 18 KB em vez de embutir a biblioteca inteira. |
 | Ícone da extensão | É gerado no build a partir de `assets/logo.svg` (com `@resvg/resvg-js`), para a logo ter uma fonte só. |
-| Publisher | `lenoborges`, provisório. Ele precisa ser igual ao publisher criado no Marketplace. Um teste garante que `extensao-vscode/package.json` e os links do site usem o mesmo valor. |
+| Publisher | `lenoborges`, já criado no Marketplace (https://marketplace.visualstudio.com/manage/publishers/lenoborges). Um teste garante que `extensao-vscode/package.json` e os links do site usem o mesmo valor. |
 | Publicação | `npm run publicar:extensao -- --azure-credential` dispensa o `VSCE_PAT`. Os dois registros usam `skipDuplicate`, então rodar de novo depois de uma falha parcial não quebra. |
 | Começar | A extensão entrou como bloco "Opcional" dentro do passo 1, e não como um passo novo, para manter os "sete passos" e as referências "passo 2" e "passo 5". |
 | Aulas | "Movimento na tela" virou a aula 6, e o mini jogo passou a ser a aula 7. |
