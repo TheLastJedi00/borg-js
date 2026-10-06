@@ -510,3 +510,18 @@ pre {
 .recolhivel-corpo > * + * {
   margin-top: var(--e-3);
 }
+
+/* ---------- Entrada ao rolar ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-revelar] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  [data-revelar].revelado {
+    opacity: 1;
+    transform: none;
+  }
+}
