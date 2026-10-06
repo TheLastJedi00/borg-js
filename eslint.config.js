@@ -12,7 +12,7 @@ export default [
     },
   },
   {
-    files: ['*.config.js', 'build/**/*.js'],
+    files: ['*.config.js', 'build/**/*.js', 'tests/build/**/*.js'],
     languageOptions: { globals: { ...globals.node } },
   },
 ]
