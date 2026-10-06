@@ -12,13 +12,18 @@ export const URL_BORG_JS = `${URL_DO_SITE}/borg.js`
 /** Nomes das funções públicas da Borg. */
 export const FUNCOES_DA_BORG = Object.keys(Borg)
 
+const LIMITE_DA_LINHA = 80
+
 /**
- * Monta a linha de `import` da Borg pela URL pública.
+ * Monta o `import` da Borg pela URL pública. Se a linha passar de 80 caracteres, cada
+ * função vai para uma linha, para caber na tela sem rolagem.
  * @param {string[]} nomes
  * @returns {string}
  */
 export function linhaDeImport(nomes) {
-  return `import { ${nomes.join(', ')} } from '${URL_BORG_MJS}'`
+  const umaLinha = `import { ${nomes.join(', ')} } from '${URL_BORG_MJS}'`
+  if (umaLinha.length <= LIMITE_DA_LINHA) return umaLinha
+  return `import {\n${nomes.map((nome) => `  ${nome},\n`).join('')}} from '${URL_BORG_MJS}'`
 }
 
 /**

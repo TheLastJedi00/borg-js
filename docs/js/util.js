@@ -29,15 +29,27 @@ export async function copiarTexto(texto) {
 
 /**
  * Liga um botão que copia um texto e mostra "Copiado!" por um instante.
+ * Um botão só com ícone troca o ícone e o `aria-label`, sem texto.
  * @param {HTMLButtonElement} botao
  * @param {() => string} obterTexto
  */
 export function ligarBotaoDeCopiar(botao, obterTexto) {
   const original = botao.innerHTML
+  const rotuloOriginal = botao.getAttribute('aria-label')
   let temporizador
 
   botao.addEventListener('click', async () => {
     const copiou = await copiarTexto(obterTexto())
+    if (rotuloOriginal) {
+      botao.innerHTML = copiou ? icones.ok : original
+      botao.setAttribute('aria-label', copiou ? 'Copiado!' : 'Não deu para copiar. Selecione o texto e use Ctrl+C')
+      clearTimeout(temporizador)
+      temporizador = setTimeout(() => {
+        botao.innerHTML = original
+        botao.setAttribute('aria-label', rotuloOriginal)
+      }, 1800)
+      return
+    }
     botao.innerHTML = copiou ? `${icones.ok}Copiado!` : 'Selecione e copie com Ctrl+C'
     clearTimeout(temporizador)
     temporizador = setTimeout(() => (botao.innerHTML = original), 1800)
