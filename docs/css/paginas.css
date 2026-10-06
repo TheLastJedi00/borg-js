@@ -536,3 +536,27 @@
   color: var(--texto);
   font-size: var(--t-1);
 }
+
+.problemas {
+  max-width: 920px;
+  margin-top: var(--e-8);
+}
+
+.problemas > p {
+  margin: var(--e-3) 0 var(--e-5);
+  color: var(--texto-suave);
+}
+
+.problemas td {
+  font-size: var(--t-1);
+}
+
+.problemas td:first-child {
+  width: 45%;
+}
+
+/* Mensagens de erro longas quebram em qualquer lugar */
+.problemas td:first-child code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
