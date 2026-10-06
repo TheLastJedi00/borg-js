@@ -76,6 +76,17 @@ export function instalarPonteDoConsole(id, janela) {
     }
   }
   janela.addEventListener('error', (evento) => enviar('error', [evento.message]))
+  // Um script ou módulo que não carrega (sem internet, endereço errado) não chega como erro
+  // comum: o evento só passa pela janela na fase de captura.
+  janela.addEventListener(
+    'error',
+    (evento) => {
+      if (evento.target?.tagName === 'SCRIPT') {
+        enviar('error', ['Um script não carregou. Confira a internet e o endereço do import.'])
+      }
+    },
+    true,
+  )
   janela.addEventListener('unhandledrejection', (evento) => enviar('error', [evento.reason]))
 }
 

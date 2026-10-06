@@ -133,6 +133,22 @@ describe('instalarPonteDoConsole', () => {
     expect(textos).toEqual(['Uncaught TypeError: x', 'falhou'])
   })
 
+  it('avisa quando um script ou módulo não carrega', () => {
+    const ouvintes = []
+    const janela = {
+      ...janelaFalsa(),
+      addEventListener: (tipo, fn, captura) => ouvintes.push({ tipo, fn, captura }),
+    }
+    instalarPonteDoConsole('p1', janela)
+
+    const captura = ouvintes.find(({ tipo, captura }) => tipo === 'error' && captura)
+    captura.fn({ target: { tagName: 'SCRIPT' } })
+
+    const [mensagem] = janela.parent.postMessage.mock.calls[0]
+    expect(mensagem.tipo).toBe('error')
+    expect(mensagem.texto).toMatch(/não carregou/)
+  })
+
   it('mostra undefined e valores que não viram JSON', () => {
     const janela = janelaFalsa()
     instalarPonteDoConsole('p1', janela)

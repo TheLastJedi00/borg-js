@@ -61,6 +61,17 @@ export function publicarBiblioteca() {
       })
     },
 
+    // No `vite preview`, os mesmos cabeçalhos que o vercel.json põe em produção.
+    configurePreviewServer(servidor) {
+      servidor.middlewares.use((requisicao, resposta, proximo) => {
+        const nome = requisicao.url?.split('?')[0]
+        if (nome === '/borg.mjs' || nome === '/borg.js') {
+          resposta.setHeader('Access-Control-Allow-Origin', '*')
+        }
+        proximo()
+      })
+    },
+
     async generateBundle() {
       for (const [fileName, source] of await gerarBiblioteca()) {
         this.emitFile({ type: 'asset', fileName, source })
