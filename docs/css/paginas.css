@@ -560,3 +560,77 @@
   white-space: normal;
   overflow-wrap: anywhere;
 }
+
+/* ---------- Professores ---------- */
+
+.prosa .aulas {
+  counter-reset: aula;
+  margin: var(--e-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aula {
+  counter-increment: aula;
+  padding: var(--e-5) 0 var(--e-5) 76px;
+  border-top: 1px solid var(--borda);
+  position: relative;
+}
+
+.aula::before {
+  content: 'Aula ' counter(aula);
+  position: absolute;
+  top: calc(var(--e-5) + 4px);
+  left: 0;
+  color: var(--destaque);
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-1);
+  font-weight: 800;
+}
+
+.aula-objetivo {
+  margin-top: var(--e-2);
+  color: var(--texto-suave);
+}
+
+.aula dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--e-2) var(--e-4);
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-1);
+}
+
+.aula dl > div {
+  display: contents;
+}
+
+.aula dt {
+  color: var(--texto-suave);
+  font-weight: 700;
+}
+
+.aula dd {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .aula {
+    padding-left: 0;
+  }
+
+  .aula::before {
+    position: static;
+    display: block;
+    margin-bottom: var(--e-1);
+  }
+
+  .aula dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .aula dd {
+    margin-bottom: var(--e-2);
+  }
+}
