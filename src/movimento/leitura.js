@@ -70,3 +70,18 @@ export function tamanho(seletor) {
   const { width, height } = alvo.getBoundingClientRect()
   return { largura: width, altura: height }
 }
+
+/**
+ * Lê o tamanho da janela visível (viewport), em pixels.
+ *
+ * @returns {{ largura: number, altura: number }} A largura e a altura da janela.
+ * @throws {never} Não lança erros.
+ * @example
+ * import { moverPara, tamanhoDaTela } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * const tela = tamanhoDaTela()
+ * moverPara('#bola', { x: tela.largura / 2, y: tela.altura / 2 })
+ */
+export function tamanhoDaTela() {
+  return { largura: window.innerWidth, altura: window.innerHeight }
+}
