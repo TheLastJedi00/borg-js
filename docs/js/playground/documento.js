@@ -5,7 +5,7 @@ import { URL_BORG_MJS } from '../config.js'
  * Deixa os exemplos legíveis sem precisar escrever CSS. Não entra no código copiado.
  */
 const ESTILO_BASE = `
-:root { color-scheme: light dark; --gradiente: linear-gradient(120deg, #2dd4bf, #38bdf8); }
+:root { color-scheme: light dark; --gradiente: linear-gradient(120deg, #00bcb8, #3986ff); }
 * { box-sizing: border-box; }
 body {
   margin: 0;
