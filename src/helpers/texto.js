@@ -9,10 +9,12 @@ import { descrever, erroDeTipo } from '../nucleo/mensagens.js'
  * @returns {void}
  * @throws {TypeError} Quando o texto não é um texto ou número, ou o seletor é inválido.
  * @example
+ * import { aoClicar, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ *
  * let pontos = 0
- * Borg.aoClicar('#botao', () => {
+ * aoClicar('#botao', () => {
  *   pontos = pontos + 1
- *   Borg.mudarTexto('#pontos', pontos)
+ *   mudarTexto('#pontos', pontos)
  * })
  */
 export function mudarTexto(seletor, texto) {

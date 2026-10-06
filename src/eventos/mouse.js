@@ -17,8 +17,10 @@ import { validarFuncao } from '../nucleo/mensagens.js'
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * Borg.aoClicar('#botao', (botao) => {
- *   Borg.mudarTexto(botao, 'Clicado!')
+ * import { aoClicar, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoClicar('#botao', (botao) => {
+ *   mudarTexto(botao, 'Clicado!')
  * })
  */
 export function aoClicar(seletor, callback) {
@@ -59,8 +61,10 @@ function ouvirPosicaoDoMouse(tipo, nomeFuncao, callback) {
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * Borg.aoClicarNaTela(({ x, y }) => {
- *   Borg.mudarTexto('#posicao', `Clique em ${x}, ${y}`)
+ * import { aoClicarNaTela, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoClicarNaTela(({ x, y }) => {
+ *   mudarTexto('#posicao', `Clique em ${x}, ${y}`)
  * })
  */
 export function aoClicarNaTela(callback) {
@@ -75,9 +79,11 @@ export function aoClicarNaTela(callback) {
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * Borg.aoMoverMouse(({ x, y }) => {
- *   Borg.mudarEstilo('#seguidor', 'left', `${x}px`)
- *   Borg.mudarEstilo('#seguidor', 'top', `${y}px`)
+ * import { aoMoverMouse, mudarEstilo } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoMoverMouse(({ x, y }) => {
+ *   mudarEstilo('#seguidor', 'left', `${x}px`)
+ *   mudarEstilo('#seguidor', 'top', `${y}px`)
  * })
  */
 export function aoMoverMouse(callback) {
