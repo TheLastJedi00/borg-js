@@ -3,6 +3,7 @@ import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
 import { linhaDeImport, comImport } from '../config.js'
 import { aviso, passos } from '../componentes.js'
+import { irParaAncora } from '../menu-lateral.js'
 
 const HTML_DO_PROJETO = `
 <!doctype html>
@@ -90,6 +91,55 @@ const passosIniciais = [
       })}
     `,
   },
+  {
+    id: 'passo-abrir',
+    titulo: 'Abra no navegador com um servidor',
+    html: `
+      ${aviso('cuidado', 'Abrir o <code>index.html</code> com dois cliques não funciona com <code>import</code>. O endereço começa com <code>file://</code>, e o navegador bloqueia módulos abertos direto do computador, por segurança. A página abre, mas o botão não reage.')}
+      <p>A solução é abrir a pasta por um <strong>servidor local</strong>. O jeito mais fácil, no VS Code:</p>
+      <ol>
+        <li>Instale a extensão <strong>Live Server</strong> (procure por "Live Server" na aba de extensões).</li>
+        <li>Clique com o botão direito no <code>index.html</code> e escolha <strong>Open with Live Server</strong>.</li>
+        <li>O navegador abre a página num endereço como <code>http://127.0.0.1:5500</code>. Clique no botão.</li>
+      </ol>
+      <p>
+        Se você usa Node.js, outra opção é rodar <code>npx serve</code> dentro da pasta. Não pode usar
+        servidor nenhum? Veja <a href="./funcoes.html#sem-import">Usando sem import</a>, que funciona
+        com dois cliques.
+      </p>
+    `,
+  },
+  {
+    id: 'passo-console',
+    titulo: 'Abra o console e corrija um erro',
+    html: `
+      <p>
+        O <strong>console</strong> é onde o navegador e a Borg escrevem avisos e erros. Abra com
+        <kbd>F12</kbd> (ou <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd>; no Mac,
+        <kbd>Cmd</kbd> + <kbd>Option</kbd> + <kbd>J</kbd>) e clique na aba <strong>Console</strong>.
+      </p>
+      <p>Agora, erre de propósito. No <code>main.js</code>, troque <code>'#botao'</code> por <code>'#botão'</code>, com acento, e salve. O console mostra:</p>
+      ${blocoDeCodigo('[Borg] aoClicar: nenhum elemento encontrado para "#botão". Confira o seletor no seu HTML.', 'texto')}
+      <p>
+        A mensagem diz qual função reclamou, o que ela procurou e o que conferir. No HTML, o id é
+        <code>botao</code>, sem acento. Desfaça a troca, salve, e o botão volta a funcionar.
+      </p>
+      ${aviso('dica', 'Sempre que algo não funcionar, abra o console antes de qualquer outra coisa. Quase sempre a resposta está lá.')}
+    `,
+  },
+  {
+    id: 'passo-proximos',
+    titulo: 'Próximos passos',
+    html: `
+      <p>Seu botão já reage. Algumas ideias para continuar:</p>
+      <ul>
+        <li>Troque <code>mostrar</code> por <code>alternarClasse('body', 'escuro')</code> e crie um modo escuro no CSS.</li>
+        <li>Conte os cliques com <code>mudarTexto</code>. O exemplo está em <a href="./funcoes.html#aoClicar">aoClicar</a>.</li>
+        <li>Resolva os <a href="./desafios.html">desafios fáceis</a> e depois os médios.</li>
+        <li>Estude um <a href="./projetos.html">projeto completo</a>, como o jogo com as setas.</li>
+      </ul>
+    `,
+  },
 ]
 
 const conteudo = iniciarPagina()
@@ -111,3 +161,4 @@ conteudo.innerHTML = `
 
 ativarBlocosDeCodigo(conteudo)
 ativarPlaygrounds(conteudo)
+irParaAncora()
