@@ -9,7 +9,7 @@ Regras de execução (ver `.claude/RULES.md`):
 ## Fase 1 · `feat/docs-base`
 
 - [x] **1.1** Transformar o site em multipágina no Vite (`docs/index.html`, `comecar.html`, `funcoes.html`, `professores.html`, `desafios.html`, `projetos.html`), com um `main.js` comum e um arquivo de entrada por página.
-- [x] **1.2** Criar `docs/config.js` com a constante `URL_DO_SITE` (`https://borg.lenoborges.br`) e as URLs derivadas de `borg.mjs` e `borg.js`. Todo texto e exemplo da documentação usa essas constantes. Teste primeiro.
+- [x] **1.2** Criar `docs/config.js` com a constante `URL_DO_SITE` (`https://borg.lenoborges.com.br`) e as URLs derivadas de `borg.mjs` e `borg.js`. Todo texto e exemplo da documentação usa essas constantes. Teste primeiro.
 - [x] **1.3** Criar o plugin do Vite `publicarBiblioteca`. Ele gera `borg.mjs` e `borg.js` a partir de `src/` usando a mesma configuração de lib de `vite.config.js`. No `npm run dev`, serve os dois em `localhost:4200/`. No `npm run build:docs`, emite os dois na raiz de `docs-dist/`.
 - [x] **1.4** Configurar no `vercel.json` os cabeçalhos de `/borg.mjs` e `/borg.js`: `Access-Control-Allow-Origin: *` e `Content-Type: text/javascript`.
 - [x] **1.5** Reescrever os tokens de design em `estilo.css` (cores, gradiente, espaçamentos, raios, sombras, tipografia, temas claro e escuro) e separar o CSS por responsabilidade (base, layout, componentes, páginas).

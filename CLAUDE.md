@@ -46,7 +46,7 @@ npm run lint
 
 ## Conventions
 
-- Identifiers, JSDoc, test names, commit messages and error messages are in Portuguese. Every public function's JSDoc has `@param`, `@returns`, `@throws` and an `@example` that starts with `import { ... } from 'https://borg.lenoborges.br/borg.mjs'` and calls the functions without the `Borg.` prefix. Teaching material uses this `import` style first; the script tag with the global `Borg` is documented only in the "Usando sem import" section.
+- Identifiers, JSDoc, test names, commit messages and error messages are in Portuguese. Every public function's JSDoc has `@param`, `@returns`, `@throws` and an `@example` that starts with `import { ... } from 'https://borg.lenoborges.com.br/borg.mjs'` and calls the functions without the `Borg.` prefix. Teaching material uses this `import` style first; the script tag with the global `Borg` is documented only in the "Usando sem import" section.
 - TDD: write the test in `tests/` (mirroring `src/`) before the implementation.
 - Commit messages use conventional prefixes (`feat:`, `test:`, `docs:`, `chore:`, `build:`).
 

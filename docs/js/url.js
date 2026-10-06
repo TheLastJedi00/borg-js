@@ -4,7 +4,7 @@
  */
 
 /** Domínio oficial do site. Trocar aqui atualiza todos os textos e exemplos. */
-export const URL_DO_SITE = 'https://borg.lenoborges.br'
+export const URL_DO_SITE = 'https://borg.lenoborges.com.br'
 
 /** Build ESM, usado com `import`. */
 export const URL_BORG_MJS = `${URL_DO_SITE}/borg.mjs`

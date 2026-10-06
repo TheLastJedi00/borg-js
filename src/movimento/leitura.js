@@ -10,7 +10,7 @@ import { primeiroElemento } from '../nucleo/elementos.js'
  * @returns {Element|null} O elemento encontrado, ou `null` (com um aviso no console) quando nada é encontrado.
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * import { elemento, moverPara, mudarEstilo } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { elemento, moverPara, mudarEstilo } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * const nave = elemento('#nave')
  *
@@ -37,7 +37,7 @@ export function elemento(seletor) {
  * @returns {Posicao|null} A posição `{ x, y }`, ou `null` (com um aviso no console) quando nada é encontrado.
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * import { aoPressionar, elemento, moverPara, posicao } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoPressionar, elemento, moverPara, posicao } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * const nave = elemento('#nave')
  *
@@ -59,7 +59,7 @@ export function posicao(seletor) {
  * @returns {{ largura: number, altura: number }|null} O tamanho, ou `null` (com um aviso no console) quando nada é encontrado.
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * import { mudarTexto, tamanho } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { mudarTexto, tamanho } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * const { largura, altura } = tamanho('#caixa')
  * mudarTexto('#medida', `${largura} x ${altura}`)
@@ -77,7 +77,7 @@ export function tamanho(seletor) {
  * @returns {{ largura: number, altura: number }} A largura e a altura da janela.
  * @throws {never} Não lança erros.
  * @example
- * import { moverPara, tamanhoDaTela } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { moverPara, tamanhoDaTela } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * const tela = tamanhoDaTela()
  * moverPara('#bola', { x: tela.largura / 2, y: tela.altura / 2 })
