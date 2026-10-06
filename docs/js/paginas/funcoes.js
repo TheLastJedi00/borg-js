@@ -7,11 +7,11 @@ import { blocoDeCodigo } from '../util.js'
 window.Borg = Borg
 
 document.getElementById('conteudo').innerHTML = `
-  <div class="layout">
-    <nav class="menu" aria-label="Seções">
-      <p class="menu-titulo">Começando</p>
+  <div class="pagina com-lateral">
+    <nav class="lateral menu-lateral" aria-label="Seções">
+      <p>Começando</p>
       <ul id="menu-inicio"></ul>
-      <p class="menu-titulo">Funções</p>
+      <p>Funções</p>
       <ul id="menu-funcoes"></ul>
     </nav>
     <div id="secoes"></div>
@@ -56,10 +56,10 @@ function htmlDaFuncao(funcao) {
     <h2>${funcao.nome}<span class="parametros">(${funcao.parametros})</span></h2>
     <p>${funcao.descricao}</p>
     <h3>Parâmetros</h3>
-    <table class="tabela">
+    <div class="tabela"><table>
       <thead><tr><th>Nome</th><th>Tipo</th><th>Descrição</th></tr></thead>
       <tbody>${linhas}</tbody>
-    </table>
+    </table></div>
     <h3>Retorno</h3>
     <p>${funcao.retorno}</p>
     <h3>Exemplo</h3>

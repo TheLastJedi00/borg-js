@@ -1,0 +1,98 @@
+/* Componentes reutilizados em várias páginas. */
+
+/* Botões */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: 48px;
+  padding: 0 var(--e-5);
+  border: 2px solid transparent;
+  border-radius: var(--raio-pilula);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.botao:hover {
+  text-decoration: none;
+}
+
+.botao:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.botao-principal {
+  background: var(--gradiente);
+  color: var(--destaque-texto);
+}
+
+.botao-principal:hover {
+  filter: brightness(1.06);
+}
+
+.botao-secundario {
+  border-color: var(--texto);
+  background: transparent;
+  color: var(--texto);
+}
+
+.botao-secundario:hover {
+  background: var(--texto);
+  color: var(--fundo);
+}
+
+/* Botão pequeno de ferramenta (copiar, rodar, restaurar) */
+.botao-ferramenta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 var(--e-3);
+  border: 1px solid var(--codigo-borda);
+  border-radius: var(--raio-controle);
+  background: var(--codigo-superficie);
+  color: var(--codigo-texto);
+  font-size: var(--t-0);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao-ferramenta:hover {
+  border-color: var(--agua);
+}
+
+.botao-ferramenta svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Tabela com rolagem horizontal no celular */
+.tabela {
+  overflow-x: auto;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-codigo);
+  background: var(--superficie);
+}
+
+.tabela table {
+  min-width: 480px;
+}
+
+.tabela tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Bloco de código antes de ganhar realce */
+pre {
+  margin: 0;
+  padding: var(--e-4) var(--e-5);
+  overflow-x: auto;
+  border-radius: var(--raio-codigo);
+  background: var(--codigo-fundo);
+  color: var(--codigo-texto);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}

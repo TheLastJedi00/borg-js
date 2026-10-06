@@ -1,0 +1,87 @@
+/* Layout: estrutura das páginas. */
+
+.pagina {
+  width: 100%;
+  max-width: var(--largura-pagina);
+  margin: 0 auto;
+  padding: var(--e-7) var(--e-5) var(--e-9);
+}
+
+/* Cabeçalho de página interna */
+.pagina-cabecalho {
+  max-width: var(--largura-texto);
+  margin-bottom: var(--e-7);
+}
+
+.pagina-cabecalho h1 {
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+}
+
+.pagina-cabecalho p {
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+/* Texto corrido: ritmo vertical e largura de leitura */
+.prosa {
+  max-width: var(--largura-texto);
+}
+
+.prosa > * + * {
+  margin-top: var(--e-4);
+}
+
+.prosa > h2 {
+  margin-top: var(--e-8);
+}
+
+.prosa > h3 {
+  margin-top: var(--e-6);
+}
+
+.prosa > h2 + *,
+.prosa > h3 + * {
+  margin-top: var(--e-3);
+}
+
+.prosa ul,
+.prosa ol {
+  padding-left: 1.3em;
+}
+
+.prosa li + li {
+  margin-top: var(--e-2);
+}
+
+/* Página com menu lateral (Funções) */
+.com-lateral {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--e-7);
+  align-items: start;
+}
+
+.lateral {
+  position: sticky;
+  top: calc(var(--altura-topo) + var(--e-5));
+  max-height: calc(100dvh - var(--altura-topo) - var(--e-6));
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .pagina {
+    padding: var(--e-6) var(--e-4) var(--e-8);
+  }
+
+  .com-lateral {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-5);
+  }
+
+  .lateral {
+    position: static;
+    max-height: none;
+  }
+}
