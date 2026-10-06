@@ -90,7 +90,7 @@ describe('instalarPonteDoConsole', () => {
       original,
       console: { ...original },
       parent: { postMessage: vi.fn() },
-      addEventListener: (tipo, fn) => (ouvintes[tipo] = fn),
+      addEventListener: (tipo, fn, captura) => !captura && (ouvintes[tipo] = fn),
       disparar: (tipo, evento) => ouvintes[tipo](evento),
     }
   }
