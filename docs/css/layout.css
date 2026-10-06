@@ -278,3 +278,15 @@ body {
 #conteudo {
   flex: 1;
 }
+
+.logo-topo {
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+
+.logo-rodape {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}
