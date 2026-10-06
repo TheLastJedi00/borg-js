@@ -22,7 +22,8 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "build:extensao": "node build/extensao.js empacotar",
-    "publicar:extensao": "node build/extensao.js publicar"
+    "publicar:extensao": "node build/extensao.js publicar",
+    "build:logo": "node build/logo.js"
   },
   "keywords": [
     "dom",

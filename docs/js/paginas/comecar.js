@@ -4,26 +4,7 @@ import { playground, ativarPlaygrounds } from '../playground/playground.js'
 import { linhaDeImport, comImport, URL_EXTENSAO_MARKETPLACE, URL_EXTENSAO_OPEN_VSX } from '../config.js'
 import { aviso, passos } from '../componentes.js'
 import { irParaAncora } from '../menu-lateral.js'
-
-const HTML_DO_PROJETO = `
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8">
-    <title>Meu projeto</title>
-  </head>
-  <body>
-    <button id="botao">Clique em mim</button>
-    <p id="mensagem" hidden>Você clicou! 🎉</p>
-
-    <script type="module" src="main.js"></script>
-  </body>
-</html>`
-
-const REACAO = `
-aoClicar('#botao', () => {
-  mostrar('#mensagem')
-})`
+import { HTML_DO_PROJETO, REACAO, problemasComuns } from '../dados/comecar.js'
 
 const passosIniciais = [
   {
@@ -50,6 +31,7 @@ const passosIniciais = [
         <li><strong>Cursor, VSCodium e parecidos</strong>: procure "Borg JS" na aba de extensões ou abra a <a href="${URL_EXTENSAO_OPEN_VSX}">página no Open VSX</a>.</li>
       </ul>
       ${aviso('dica', 'A extensão ajuda a não esquecer parênteses e chaves, mas não é obrigatória. Os passos a seguir funcionam com qualquer editor.')}
+      ${aviso('dica', 'Usa IA para estudar? Peça ao seu professor o arquivo <strong>AGENTS.md</strong> (ou baixe em <a href="./professores.html#ia-na-aula">IA na aula</a>) e coloque na pasta do projeto. Com ele, a IA vira um tutor: conhece a Borg, mas ajuda você a pensar em vez de entregar o código pronto.')}
     `,
   },
   {
@@ -153,42 +135,6 @@ const passosIniciais = [
       </ul>
     `,
   },
-]
-
-/** Sintoma que o aluno vê → o que fazer. */
-const problemasComuns = [
-  [
-    'A página abre, mas nada reage, e o endereço começa com <code>file://</code>.',
-    'O arquivo foi aberto com dois cliques. Abra pelo Live Server (passo 5).',
-  ],
-  [
-    '<code>Access to script ... from origin \'null\' has been blocked by CORS policy</code>',
-    'É o mesmo caso do <code>file://</code>: abra pelo Live Server.',
-  ],
-  [
-    '<code>Cannot use import statement outside a module</code>',
-    'Faltou o <code>type="module"</code> na tag <code>&lt;script&gt;</code> do HTML (passo 2).',
-  ],
-  [
-    '<code>The requested module ... does not provide an export named \'aoClicr\'</code>',
-    'O nome da função no <code>import</code> está escrito errado. Confira na página <a href="./funcoes.html">Funções</a>.',
-  ],
-  [
-    '<code>aoClicar is not defined</code>',
-    'A função foi usada, mas não foi importada. Acrescente o nome entre as chaves do <code>import</code>.',
-  ],
-  [
-    '<code>[Borg] ...: nenhum elemento encontrado para "botao"</code>',
-    'O seletor está errado. Um id começa com <code>#</code> (<code>\'#botao\'</code>), uma classe com <code>.</code> (<code>\'.botao\'</code>), e o nome precisa ser igual ao do HTML.',
-  ],
-  [
-    'O console fica vazio e nada acontece.',
-    'O <code>main.js</code> não está sendo carregado. Confira se o nome do arquivo e o <code>src</code> da tag <code>&lt;script&gt;</code> são iguais e se os dois estão na mesma pasta.',
-  ],
-  [
-    '<code>net::ERR_INTERNET_DISCONNECTED</code> ou <code>Failed to load module script</code>',
-    'O navegador não conseguiu baixar a Borg. Confira a internet e o endereço do <code>import</code>.',
-  ],
 ]
 
 const conteudo = iniciarPagina()

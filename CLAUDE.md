@@ -12,6 +12,7 @@ npx vitest run tests/teclado/aoPressionar.test.js   # one test file
 npx vitest run -t "aoClicar"                       # tests whose name matches
 npm run build        # library: dist/borg.js (IIFE, global Borg) + dist/borg.mjs (ESM)
 npm run build:docs   # static docs site in docs-dist/, with borg.mjs and borg.js at its root
+npm run build:logo         # assets/logo.svg (open eyes) and logo-fechada.svg from assets/logo-animada.svg
 npm run build:extensao     # VS Code extension .vsix in dist-extensao/
 npm run publicar:extensao  # publish the .vsix to the VS Code Marketplace and Open VSX (needs VSCE_PAT and OVSX_PAT)
 npm run lint
@@ -39,6 +40,8 @@ npm run lint
 - The docs site (`docs/`) is multi-page (`index`, `comecar`, `funcoes`, `professores`, `desafios`, `projetos`). Each `.html` loads `docs/js/paginas/<pagina>.js`, which calls `iniciarPagina()` from `docs/js/layout.js` (shared header, menu, theme toggle, footer) and renders its content from `docs/js/dados/`.
   - `docs/js/url.js` holds the official URL (`URL_DO_SITE`), the extension links and `linhaDeImport`, with no import of the library (the extension bundles it). `docs/js/config.js` re-exports them and adds `comImport`, which adds the `import` for the Borg functions a snippet calls. Never hard-code the domain.
   - The playground's JS editors get the Borg autocomplete from `docs/js/codigo/autocomplete.js`.
+  - `docs/js/ia/` builds the docs for AI agents from the same `docs/js/dados/` the pages use: `markdown.js` (`htmlParaMarkdown`), `documentacao.js` (`documentacaoEmMarkdown`, behind the "Copiar para IA" button in the header) and `agents.js` (`gerarAgentsMd`: the tutor rules from `dados/tutor.js` plus the full docs, on the Professores page). These modules are loaded on demand. Text that should reach the AI must live in `docs/js/dados/`, not only inside a page.
+  - Tests that import page modules using `matchMedia` or `IntersectionObserver` at load time import `tests/docs/ambiente-do-navegador.js` first.
   - The build plugin `build/publicarBiblioteca.js` builds `borg.mjs` and `borg.js` from `src/`, using the same lib config as `vite.config.js` (`build/biblioteca.js`). It serves them in `npm run dev` and emits them at the root of `docs-dist/`. `vercel.json` adds CORS headers so other sites can import them.
   - Examples run in a **playground** (`docs/js/playground/`): CodeMirror editors and a sandboxed `iframe` built by `montarDocumentoDoPlayground`. An import map points the public URL to the current origin's `borg.mjs`, and a bridge forwards `console` and errors to the panel under the result. Playgrounds mount lazily when they get close to the screen. Keep playground IDs unique within a page.
   - Example data (`dados/funcoes.js`, `desafios.js`, `projetos.js`) holds `js` without the `import`; pages add it. Projects carry their full CSS and use `estiloBase: false`.
@@ -46,7 +49,7 @@ npm run lint
 
 ## Conventions
 
-- Identifiers, JSDoc, test names, commit messages and error messages are in Portuguese. Every public function's JSDoc has `@param`, `@returns`, `@throws` and an `@example` that starts with `import { ... } from 'https://borg.lenoborges.br/borg.mjs'` and calls the functions without the `Borg.` prefix. Teaching material uses this `import` style first; the script tag with the global `Borg` is documented only in the "Usando sem import" section.
+- Identifiers, JSDoc, test names, commit messages and error messages are in Portuguese. Every public function's JSDoc has `@param`, `@returns`, `@throws` and an `@example` that starts with `import { ... } from 'https://borg.lenoborges.com.br/borg.mjs'` and calls the functions without the `Borg.` prefix. Teaching material uses this `import` style first; the script tag with the global `Borg` is documented only in the "Usando sem import" section.
 - TDD: write the test in `tests/` (mirroring `src/`) before the implementation.
 - Commit messages use conventional prefixes (`feat:`, `test:`, `docs:`, `chore:`, `build:`).
 
@@ -54,7 +57,7 @@ npm run lint
 
 Borg JS is an **educational** JavaScript library whose public functions are **named and documented in Portuguese**. It hides the heavy DOM-control logic so learners can focus on simple reaction logic and on HTML/CSS design. The core feature is making elements react to mouse clicks, buttons and the keyboard in a very short, simple way.
 
-Branding: the logo is a minimalist owl face drawn in SVG, with a gradient from aqua green to sky blue.
+Branding: the logo is the owl designed in Figma (file "Leno Borges", frames "Borg Eye Open" and "Borg Eye Closed"; exports in `assets/figma/`), with a gradient from teal `#00BCB8` to blue `#3986FF` and navy `#324E7B` outlines. `assets/logo-animada.svg` is the source: its parts are classes (`cabeca`, `bico`, `olhos`, `pupilas`, `palpebras-cima`, `palpebras-baixo`, `penas`), and closing the eyes only moves the eyelids 130 units. `docs/js/logo.js` inlines it with unique ids (`svgDaLogo`), and the `.fechada` class closes the eyes (`piscar`, `piscarSozinha`, respecting `prefers-reduced-motion`).
 
 ## Spec-driven workflow
 

@@ -8,14 +8,14 @@ Biblioteca JavaScript **educacional** com funções **em português** para fazer
 
 Com ela, você foca no que importa enquanto aprende: a lógica de reação e o design com HTML e CSS.
 
-**Documentação, exemplos editáveis, desafios e guia do professor:** https://borg.lenoborges.br
+**Documentação, exemplos editáveis, desafios e guia do professor:** https://borg.lenoborges.com.br
 
 ```html
 <button id="botao">Clique</button>
 <p id="mensagem" hidden>Olá!</p>
 
 <script type="module">
-  import { aoClicar, mostrar } from 'https://borg.lenoborges.br/borg.mjs'
+  import { aoClicar, mostrar } from 'https://borg.lenoborges.com.br/borg.mjs'
 
   aoClicar('#botao', () => {
     mostrar('#mensagem')
@@ -30,17 +30,17 @@ Com ela, você foca no que importa enquanto aprende: a lógica de reação e o d
 Importe as funções que for usar direto do site, sem baixar nada:
 
 ```js
-import { aoClicar, mostrar } from 'https://borg.lenoborges.br/borg.mjs'
+import { aoClicar, mostrar } from 'https://borg.lenoborges.com.br/borg.mjs'
 ```
 
-O seu código precisa estar em um `<script type="module">`, e a página precisa ser aberta por um servidor local (por exemplo, a extensão Live Server do VS Code). Abrir o arquivo com dois cliques (`file://`) não funciona com módulos. O passo a passo completo está em [Começar](https://borg.lenoborges.br/comecar.html).
+O seu código precisa estar em um `<script type="module">`, e a página precisa ser aberta por um servidor local (por exemplo, a extensão Live Server do VS Code). Abrir o arquivo com dois cliques (`file://`) não funciona com módulos. O passo a passo completo está em [Começar](https://borg.lenoborges.com.br/comecar.html).
 
 ### Sem `import`
 
 Inclua o `borg.js` com uma tag `<script>`. Ele cria o objeto global `Borg`, e essa forma funciona até abrindo o arquivo com dois cliques:
 
 ```html
-<script src="https://borg.lenoborges.br/borg.js"></script>
+<script src="https://borg.lenoborges.com.br/borg.js"></script>
 <script>
   Borg.aoClicar('#botao', () => {
     Borg.mostrar('#mensagem')
@@ -74,10 +74,10 @@ Inclua o `borg.js` com uma tag `<script>`. Ele cria o objeto global `Borg`, e es
 | `aoEntrarNaTela(seletor, callback)` | Reage quando o elemento aparece na tela, ao rolar. |
 | `aoSairDaTela(seletor, callback)` | Reage quando o elemento some da tela. |
 
-As funções que começam com `ao` devolvem uma função `parar()`, que remove o evento. Detalhes e exemplos em [Funções](https://borg.lenoborges.br/funcoes.html).
+As funções que começam com `ao` devolvem uma função `parar()`, que remove o evento. Detalhes e exemplos em [Funções](https://borg.lenoborges.com.br/funcoes.html).
 
 ```js
-import { elemento, moverPor, posicao, teclaPressionada } from 'https://borg.lenoborges.br/borg.mjs'
+import { elemento, moverPor, posicao, teclaPressionada } from 'https://borg.lenoborges.com.br/borg.mjs'
 
 const nave = elemento('#nave')
 
@@ -94,6 +94,11 @@ console.log(posicao(nave)) // { x: ..., y: ... }
 
 A extensão **Borg JS** escreve a chamada inteira de cada função, com o seletor, a arrow function e o `import`. Procure "Borg JS" na aba de extensões do VS Code (Marketplace) ou do Cursor e VSCodium (Open VSX). O código dela está em [`extensao-vscode/`](extensao-vscode/).
 
+## Borg JS com IA
+
+- **Copiar para IA**: o botão no topo do site copia a documentação completa em Markdown, para colar em um agente de IA e ele conhecer a Borg.
+- **AGENTS.md**: na página [Professores](https://borg.lenoborges.com.br/professores.html#ia-na-aula), o professor baixa um `AGENTS.md` para a raiz do projeto do aluno. Ele faz a IA agir como **tutor**: conhece toda a Borg, mas guia com perguntas e dicas em etapas em vez de entregar o código pronto.
+
 ## Desenvolvimento
 
 | Comando | O que faz |
@@ -104,6 +109,7 @@ A extensão **Borg JS** escreve a chamada inteira de cada função, com o seleto
 | `npm run build` | Gera `dist/borg.js` e `dist/borg.mjs` |
 | `npm run build:docs` | Gera o site em `docs-dist/`, com `borg.mjs` e `borg.js` na raiz |
 | `npm run lint` | Verifica o código com ESLint |
+| `npm run build:logo` | Gera `assets/logo.svg` e `assets/logo-fechada.svg` a partir de `assets/logo-animada.svg` |
 | `npm run build:extensao` | Gera o `.vsix` da extensão do VS Code em `dist-extensao/` |
 | `npm run publicar:extensao` | Publica a extensão no Marketplace do VS Code e no Open VSX |
 

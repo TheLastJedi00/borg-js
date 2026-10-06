@@ -10,7 +10,7 @@ import { validarFuncao } from '../nucleo/mensagens.js'
  * @returns {boolean} `true` se pelo menos uma parte do elemento está dentro da janela.
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * import { aoClicar, estaNaTela, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoClicar, estaNaTela, mudarTexto } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoClicar('#conferir', () => {
  *   mudarTexto('#resposta', estaNaTela('#alvo') ? 'Aparece!' : 'Escondido')
@@ -65,7 +65,7 @@ function observarTela(momento, nomeFuncao, seletor, callback) {
  * @returns {() => void} Função `parar()`, que para de observar.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * import { aoEntrarNaTela, alternarClasse } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoEntrarNaTela, alternarClasse } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoEntrarNaTela('.cartao', (cartao) => {
  *   alternarClasse(cartao, 'visivel')
@@ -86,7 +86,7 @@ export function aoEntrarNaTela(seletor, callback) {
  * @returns {() => void} Função `parar()`, que para de observar.
  * @throws {TypeError} Quando o `callback` não é uma função ou o seletor é inválido.
  * @example
- * import { aoSairDaTela, mostrar } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoSairDaTela, mostrar } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoSairDaTela('#topo', () => {
  *   mostrar('#voltar-ao-topo')

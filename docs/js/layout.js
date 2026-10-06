@@ -1,4 +1,6 @@
 import { icones } from './icones.js'
+import { svgDaLogo, piscar, prefereMenosMovimento } from './logo.js'
+import { htmlDoBotaoParaIa, ligarBotaoParaIa } from './ia/botao.js'
 
 /** Páginas do menu principal, na ordem em que aparecem. */
 export const PAGINAS = [
@@ -36,13 +38,14 @@ function htmlDoTopo(paginaAtual) {
   return `
     <div class="topo-dentro">
       <a class="marca" href="./index.html" aria-label="Borg JS, página inicial">
-        <img src="/logo.svg" alt="" width="34" height="34" />
+        ${svgDaLogo({ classe: 'logo logo-topo' })}
         <span>Borg JS</span>
       </a>
       <nav class="topo-menu" id="menu-principal" aria-label="Páginas">
         <ul>${links}</ul>
       </nav>
       <div class="topo-acoes">
+        ${htmlDoBotaoParaIa({ id: 'copiar-para-ia', classe: 'botao-topo' })}
         <button class="botao-icone" type="button" id="botao-tema"></button>
         <button class="botao-icone botao-menu" type="button" id="botao-menu"
           aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">${icones.menu}</button>
@@ -54,7 +57,7 @@ function htmlDoTopo(paginaAtual) {
 function htmlDoRodape() {
   return `
     <div class="rodape-dentro">
-      <a class="marca" href="./index.html"><img src="/logo.svg" alt="" width="28" height="28" /><span>Borg JS</span></a>
+      <a class="marca" href="./index.html">${svgDaLogo({ classe: 'logo logo-rodape' })}<span>Borg JS</span></a>
       <p>Biblioteca educacional, em português, para aprender a fazer páginas que reagem. Licença MIT.</p>
       <ul>
         ${PAGINAS.map(({ rotulo, href }) => `<li><a href="${href}">${rotulo}</a></li>`).join('')}
@@ -115,5 +118,14 @@ export function iniciarPagina() {
   document.getElementById('rodape').innerHTML = htmlDoRodape()
   ligarTema()
   ligarMenuDoCelular()
+  ligarBotaoParaIa(document.getElementById('copiar-para-ia'))
+  saudarComUmaPiscada()
   return document.getElementById('conteudo')
+}
+
+/** A coruja do topo pisca uma vez logo depois que a página abre. */
+function saudarComUmaPiscada() {
+  if (prefereMenosMovimento()) return
+  const logo = document.querySelector('.logo-topo')
+  setTimeout(() => piscar(logo), 700)
 }

@@ -36,7 +36,7 @@ function paraFormatoCss(propriedade) {
  * @returns {void}
  * @throws {TypeError} Quando a propriedade ou o valor têm tipo inválido, ou o seletor é inválido.
  * @example
- * import { aoMoverMouse, mudarEstilo } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoMoverMouse, mudarEstilo } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoMoverMouse(({ x }) => {
  *   mudarEstilo('#barra', 'width', x)

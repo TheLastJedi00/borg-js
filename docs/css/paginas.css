@@ -211,37 +211,6 @@
   filter: drop-shadow(0 24px 30px rgb(11 37 48 / 0.18));
 }
 
-.coruja .olho {
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform 0.08s;
-  animation: acordar 0.9s 0.3s ease-out backwards;
-}
-
-.coruja.piscando .olho {
-  transform: scaleY(0.08);
-}
-
-.coruja .pupila {
-  transition: translate 0.08s linear;
-}
-
-@keyframes acordar {
-  0%,
-  40% {
-    transform: scaleY(0.08);
-  }
-  55% {
-    transform: scaleY(1);
-  }
-  70% {
-    transform: scaleY(0.08);
-  }
-  100% {
-    transform: scaleY(1);
-  }
-}
-
 .balao {
   position: absolute;
   top: 2%;
@@ -776,4 +745,20 @@
   margin-top: var(--e-4);
   color: var(--texto-suave);
   font-size: var(--t-1);
+}
+
+/* ---------- Professores: IA na aula ---------- */
+
+.acoes-ia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin: var(--e-5) 0;
+}
+
+.acoes-ia .botao svg {
+  width: 18px;
+  height: 18px;
+  margin-right: var(--e-2);
+  vertical-align: -3px;
 }

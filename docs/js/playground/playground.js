@@ -16,6 +16,9 @@ const FUNCOES_DE_TECLADO = /\b(aoPressionar|aoSoltar|teclaPressionada)\s*\(/
 /** @type {Map<string, OpcoesDoPlayground>} opções guardadas até o playground ser ativado */
 const pendentes = new Map()
 
+/** @type {Map<string, OpcoesDoPlayground>} todos os playgrounds criados, para a documentação em Markdown */
+const registrados = new Map()
+
 /** @type {Map<string, { iframe: HTMLIFrameElement, receber: (mensagem: any) => void } & ControleDoPlayground>} */
 const ativos = new Map()
 
@@ -34,7 +37,17 @@ function temaDaPagina() {
  */
 export function playground(opcoes) {
   pendentes.set(opcoes.id, opcoes)
+  registrados.set(opcoes.id, opcoes)
   return `<div class="playground" data-playground="${opcoes.id}" style="--altura-resultado: ${opcoes.altura ?? 280}px"></div>`
+}
+
+/**
+ * Devolve o código original de um playground criado com `playground()`.
+ * @param {string} id
+ * @returns {Codigo | undefined}
+ */
+export function codigoDoPlayground(id) {
+  return registrados.get(id)
 }
 
 /**

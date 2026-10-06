@@ -59,7 +59,7 @@ export async function copiarTexto(texto) {
  * Liga um botão que copia um texto e mostra "Copiado!" por um instante.
  * Um botão só com ícone troca o ícone e o `aria-label`, sem texto.
  * @param {HTMLButtonElement} botao
- * @param {() => string} obterTexto
+ * @param {() => string | Promise<string>} obterTexto - Pode devolver uma promessa, para textos carregados sob demanda.
  */
 export function ligarBotaoDeCopiar(botao, obterTexto) {
   const original = botao.innerHTML
@@ -67,7 +67,7 @@ export function ligarBotaoDeCopiar(botao, obterTexto) {
   let temporizador
 
   botao.addEventListener('click', async () => {
-    const copiou = await copiarTexto(obterTexto())
+    const copiou = await copiarTexto(await obterTexto())
     if (rotuloOriginal) {
       botao.innerHTML = copiou ? icones.ok : original
       botao.setAttribute('aria-label', copiou ? 'Copiado!' : 'Não deu para copiar. Selecione o texto e use Ctrl+C')
@@ -82,4 +82,19 @@ export function ligarBotaoDeCopiar(botao, obterTexto) {
     clearTimeout(temporizador)
     temporizador = setTimeout(() => (botao.innerHTML = original), 1800)
   })
+}
+
+/**
+ * Baixa um texto como arquivo, com o nome dado.
+ * @param {string} conteudo
+ * @param {string} nome - Ex.: `'index.html'`, `'AGENTS.md'`.
+ * @param {string} tipo - Tipo MIME, ex.: `'text/html'`.
+ */
+export function baixarArquivo(conteudo, nome, tipo) {
+  const url = URL.createObjectURL(new Blob([conteudo], { type: `${tipo};charset=utf-8` }))
+  const link = document.createElement('a')
+  link.href = url
+  link.download = nome
+  link.click()
+  URL.revokeObjectURL(url)
 }

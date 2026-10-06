@@ -127,7 +127,7 @@ mudarEstilo(nave, 'background-color', 'gold')
 import {
   aoMoverMouse, colidiu, elemento, manterNaTela, moverPara, moverPor,
   mudarEstilo, mudarTexto, posicao, teclaPressionada,
-} from 'https://borg.lenoborges.br/borg.mjs'
+} from 'https://borg.lenoborges.com.br/borg.mjs'
 
 const nave = elemento('#nave')
 
