@@ -1,5 +1,6 @@
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
+import { publicarBiblioteca } from './build/publicarBiblioteca.js'
 
 const raiz = resolve(import.meta.dirname, 'docs')
 
@@ -9,6 +10,7 @@ const paginas = ['index', 'comecar', 'funcoes', 'professores', 'desafios', 'proj
 export default defineConfig({
   root: 'docs',
   publicDir: '../assets',
+  plugins: [publicarBiblioteca()],
   server: {
     port: 4200,
     strictPort: true,
