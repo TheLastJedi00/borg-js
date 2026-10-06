@@ -2,7 +2,7 @@ import { iniciarPagina } from '../layout.js'
 import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { executarComBorg } from '../codigo/executar.js'
 import { comImport, linhaDeImport } from '../config.js'
-import { ligarBotaoDeCopiar } from '../util.js'
+import { ligarBotaoDeCopiar, escaparHtml } from '../util.js'
 import { icones } from '../icones.js'
 import { revelarAoRolar } from '../revelar.js'
 import { svgDaLogo, piscarSozinha } from '../logo.js'
@@ -79,7 +79,7 @@ conteudo.innerHTML = `
         <a class="botao botao-secundario" href="./professores.html">Sou professor</a>
       </div>
       <div class="heroi-import">
-        <code>${linhaDeImport(['aoClicar', 'mostrar'])}</code>
+        <code title="${escaparHtml(linhaDeImport(['aoClicar', 'mostrar']))}">${linhaDeImport(['aoClicar', 'mostrar'])}</code>
         <button type="button" class="botao-icone" id="copiar-import" aria-label="Copiar o import">${icones.copiar}</button>
       </div>
     </div>
