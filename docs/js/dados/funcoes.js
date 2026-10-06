@@ -375,4 +375,410 @@ aoClicar('#botao-redondo', () => {
   mudarEstilo('#caixa-estilo', 'border-radius', '50%')
 })`,
   },
+  {
+    nome: 'elemento',
+    grupo: 'Movimento',
+    parametros: 'seletor',
+    descricao:
+      'Pega um elemento da página, como um <code>document.querySelector</code> mais simples. O resultado é o elemento do DOM de verdade e pode ser passado para <strong>qualquer</strong> função da Borg no lugar do seletor.',
+    tabela: [['seletor', 'texto ou elemento', 'Seletor CSS (ex.: <code>\'#nave\'</code>) ou um elemento do DOM.']],
+    avisos: [
+      ['dica', 'Guarde o elemento em uma variável com um nome que diga o que ele é: <code>const nave = elemento(\'#nave\')</code>. Não chame a variável de <code>elemento</code>, senão a função some.'],
+      ['cuidado', 'Se o seletor encontrar vários elementos, <code>elemento</code> devolve só o primeiro. Para mexer em todos, passe o seletor direto para a função, como <code>mudarEstilo(\'.cartao\', ...)</code>.'],
+    ],
+    retorno: 'O elemento encontrado, ou <code>null</code> (com um aviso no console) se nada for encontrado.',
+    html: `
+<div class="caixa" id="caixa-elemento">Caixa</div>
+<button id="botao-pintar">Pintar</button>`,
+    css: `
+.caixa {
+  display: grid;
+  place-items: center;
+  width: 120px;
+  height: 70px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  background: #38bdf8;
+  font-weight: 700;
+}`,
+    js: `
+const caixa = elemento('#caixa-elemento')
+
+aoClicar('#botao-pintar', () => {
+  mudarEstilo(caixa, 'background', 'gold')
+  mudarTexto(caixa, 'Pintada!')
+})`,
+  },
+  {
+    nome: 'posicao',
+    grupo: 'Movimento',
+    parametros: 'seletor',
+    descricao:
+      'Lê a posição atual do elemento na tela: onde está o canto superior esquerdo dele, em pixels, a partir do canto superior esquerdo da janela.',
+    tabela: [['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento, como o devolvido por <code>elemento</code>.']],
+    avisos: [
+      ['dica', 'Com <code>posicao</code>, dá para andar a partir de onde o elemento está: <code>moverPara(bola, { x: posicao(bola).x + 20 })</code>. Para só deslocar, <code>moverPor</code> é o atalho.'],
+    ],
+    retorno: 'Um objeto <code>{ x, y }</code>, ou <code>null</code> (com um aviso no console) se nada for encontrado.',
+    html: `
+<button id="botao-andar">Andar 20 px</button>
+<p id="saida-posicao">x = ?</p>
+<div class="bola" id="bola-posicao"></div>`,
+    css: `
+.bola {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
+    js: `
+const bola = elemento('#bola-posicao')
+moverPara(bola, { x: 20, y: 110 })
+
+aoClicar('#botao-andar', () => {
+  moverPara(bola, { x: posicao(bola).x + 20 })
+  mudarTexto('#saida-posicao', 'x = ' + posicao(bola).x)
+})`,
+  },
+  {
+    nome: 'tamanho',
+    grupo: 'Movimento',
+    parametros: 'seletor',
+    descricao: 'Lê a largura e a altura do elemento na tela, em pixels.',
+    tabela: [['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.']],
+    retorno: 'Um objeto <code>{ largura, altura }</code>, ou <code>null</code> (com um aviso no console) se nada for encontrado.',
+    html: `
+<p class="dica">Clique na caixa para ela crescer</p>
+<div class="caixa" id="caixa-tamanho"></div>
+<p id="medida">—</p>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.caixa {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+  cursor: pointer;
+}`,
+    js: `
+aoClicar('#caixa-tamanho', (caixa) => {
+  mudarEstilo(caixa, 'width', tamanho(caixa).largura + 20)
+
+  const { largura, altura } = tamanho(caixa)
+  mudarTexto('#medida', largura + ' x ' + altura)
+})`,
+  },
+  {
+    nome: 'tamanhoDaTela',
+    grupo: 'Movimento',
+    parametros: '',
+    descricao: 'Lê a largura e a altura da janela visível (a parte da página que aparece na tela), em pixels.',
+    tabela: [['—', '—', 'Não recebe parâmetros.']],
+    avisos: [
+      ['dica', 'No playground, a "tela" é o quadro do resultado. Na sua página, é a janela do navegador.'],
+    ],
+    retorno: 'Um objeto <code>{ largura, altura }</code>.',
+    html: `
+<p id="medida-tela">—</p>
+<button id="botao-centro">Ir para o centro</button>
+<div class="bola" id="bola-centro"></div>`,
+    css: `
+.bola {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
+    js: `
+const tela = tamanhoDaTela()
+mudarTexto('#medida-tela', 'Tela: ' + tela.largura + ' x ' + tela.altura)
+
+aoClicar('#botao-centro', () => {
+  const bola = tamanho('#bola-centro')
+  moverPara('#bola-centro', {
+    x: (tela.largura - bola.largura) / 2,
+    y: (tela.altura - bola.altura) / 2,
+  })
+})`,
+  },
+  {
+    nome: 'moverPara',
+    grupo: 'Movimento',
+    parametros: 'seletor, { x, y }',
+    descricao:
+      'Coloca o elemento em um ponto da tela. O ponto <code>{ x, y }</code> é medido em pixels a partir do canto superior esquerdo da janela, e é o canto superior esquerdo do elemento que vai para lá.',
+    tabela: [
+      ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM. Se encontrar vários, todos vão para o ponto.'],
+      ['{ x, y }', 'objeto', 'O ponto da tela. Pode ter só um eixo: <code>{ x: 100 }</code> mantém o <code>y</code> atual. É o mesmo formato que <code>aoMoverMouse</code> entrega.'],
+    ],
+    avisos: [
+      ['cuidado', 'O elemento passa a usar <code>position: fixed</code> e sai do fluxo da página: o que vinha depois dele sobe para ocupar o lugar.'],
+      ['dica', 'O movimento é instantâneo. Para ele deslizar, veja <a href="#movimento-suave">Movimento suave</a>.'],
+    ],
+    retorno: 'Nada.',
+    html: `
+<p class="dica">Mova o mouse no resultado</p>
+<div class="mira" id="mira"></div>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.mira {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #f59e0b;
+  border-radius: 50%;
+  pointer-events: none;
+}`,
+    js: `
+aoMoverMouse((posicao) => {
+  moverPara('#mira', posicao)
+})`,
+  },
+  {
+    nome: 'moverPor',
+    grupo: 'Movimento',
+    parametros: 'seletor, { x, y }',
+    descricao:
+      'Desloca o elemento a partir de onde ele está. <code>x</code> positivo vai para a direita e negativo para a esquerda; <code>y</code> positivo vai para baixo e negativo para cima.',
+    tabela: [
+      ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM. Cada elemento anda a partir da própria posição.'],
+      ['{ x, y }', 'objeto', 'Quantos pixels andar. O eixo que faltar não muda: <code>{ x: 10 }</code> anda só para o lado.'],
+    ],
+    avisos: [
+      ['cuidado', 'Assim como <code>moverPara</code>, o elemento passa a usar <code>position: fixed</code>.'],
+    ],
+    retorno: 'Nada.',
+    html: `
+<p class="dica">Clique aqui e use as setas</p>
+<div class="carro" id="carro"></div>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.carro {
+  width: 50px;
+  height: 30px;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
+    js: `
+aoPressionar('seta direita', () => moverPor('#carro', { x: 20 }))
+aoPressionar('seta esquerda', () => moverPor('#carro', { x: -20 }))
+aoPressionar('seta cima', () => moverPor('#carro', { y: -20 }))
+aoPressionar('seta baixo', () => moverPor('#carro', { y: 20 }))`,
+  },
+  {
+    nome: 'manterNaTela',
+    grupo: 'Movimento',
+    parametros: 'seletor',
+    descricao:
+      'Se o elemento passou de alguma borda da janela, traz ele de volta para dentro. O ajuste acontece uma vez, na hora da chamada, então use dentro do loop do jogo, logo depois de mover.',
+    tabela: [['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.']],
+    avisos: [
+      ['dica', 'O retorno diz se o elemento bateu na borda. No exemplo, isso inverte a direção da bola.'],
+    ],
+    retorno: '<code>true</code> se precisou trazer o elemento de volta, senão <code>false</code>.',
+    html: `
+<div class="bola" id="bola-borda"></div>`,
+    css: `
+.bola {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+}`,
+    js: `
+let velocidade = 4
+moverPara('#bola-borda', { x: 0, y: 60 })
+
+function loop() {
+  moverPor('#bola-borda', { x: velocidade })
+
+  if (manterNaTela('#bola-borda')) {
+    velocidade = -velocidade
+  }
+  requestAnimationFrame(loop)
+}
+
+loop()`,
+  },
+  {
+    nome: 'colidiu',
+    grupo: 'Movimento',
+    parametros: 'seletorA, seletorB',
+    descricao: 'Diz se dois elementos estão se encostando, ou seja, se os retângulos deles se sobrepõem.',
+    tabela: [
+      ['seletorA', 'texto ou elemento', 'O primeiro elemento.'],
+      ['seletorB', 'texto ou elemento', 'O segundo elemento.'],
+    ],
+    avisos: [
+      ['dica', 'Só encostar na borda não conta como colisão: os dois precisam se sobrepor pelo menos um pouco.'],
+    ],
+    retorno: '<code>true</code> se os dois se sobrepõem, senão <code>false</code>.',
+    html: `
+<p id="placar-colisao">Leve o quadrado até a estrela</p>
+<div class="estrela" id="estrela">★</div>
+<div class="jogador" id="jogador-colisao"></div>`,
+    css: `
+.estrela {
+  position: fixed;
+  left: 70%;
+  top: 55%;
+  font-size: 2.5rem;
+  color: #f59e0b;
+}
+
+.jogador {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+  pointer-events: none;
+}`,
+    js: `
+aoMoverMouse((posicao) => {
+  moverPara('#jogador-colisao', posicao)
+
+  if (colidiu('#jogador-colisao', '#estrela')) {
+    mudarTexto('#placar-colisao', 'Pegou a estrela!')
+  } else {
+    mudarTexto('#placar-colisao', 'Leve o quadrado até a estrela')
+  }
+})`,
+  },
+  {
+    nome: 'estaNaTela',
+    grupo: 'Tela',
+    parametros: 'seletor',
+    descricao: 'Diz se o elemento aparece na tela agora, mesmo que só uma parte dele.',
+    tabela: [['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.']],
+    avisos: [
+      ['dica', 'Elementos escondidos (com <code>display: none</code>) não contam como "na tela".'],
+    ],
+    retorno: '<code>true</code> se pelo menos uma parte do elemento está dentro da janela, senão <code>false</code>.',
+    html: `
+<button class="fixo" id="botao-conferir">O alvo aparece?</button>
+<p class="dica">Role o resultado para baixo e clique de novo</p>
+<div class="espaco"></div>
+<div class="alvo" id="alvo">Alvo</div>`,
+    css: `
+.fixo {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.dica {
+  opacity: 0.7;
+}
+
+.espaco {
+  height: 400px;
+}
+
+.alvo {
+  padding: 20px;
+  border-radius: 14px;
+  background: #fde68a;
+  font-weight: 700;
+}`,
+    js: `
+aoClicar('#botao-conferir', (botao) => {
+  if (estaNaTela('#alvo')) {
+    mudarTexto(botao, 'Sim, aparece!')
+  } else {
+    mudarTexto(botao, 'Não aparece')
+  }
+})`,
+  },
+  {
+    nome: 'aoEntrarNaTela',
+    grupo: 'Tela',
+    parametros: 'seletor, callback',
+    descricao:
+      'Executa uma função quando o elemento passa a aparecer na tela, por exemplo ao rolar a página. Se ele já estiver na tela quando <code>aoEntrarNaTela</code> for chamada, a função roda uma vez logo no começo.',
+    tabela: [
+      ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento. Cada elemento encontrado é acompanhado separadamente.'],
+      ['callback', 'função', 'Executada a cada vez que o elemento aparece. Recebe o elemento.'],
+    ],
+    retorno: 'Uma função <code>parar()</code>, que para de observar.',
+    html: `
+<p class="dica">Role o resultado para baixo</p>
+<div class="cartao">Um</div>
+<div class="cartao">Dois</div>
+<div class="cartao">Três</div>
+<div class="cartao">Quatro</div>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.cartao {
+  margin: 0 0 120px;
+  padding: 24px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, #2dd4bf, #38bdf8);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s, transform 0.5s;
+}`,
+    js: `
+aoEntrarNaTela('.cartao', (cartao) => {
+  mudarEstilo(cartao, 'opacity', 1)
+  mudarEstilo(cartao, 'transform', 'none')
+})`,
+  },
+  {
+    nome: 'aoSairDaTela',
+    grupo: 'Tela',
+    parametros: 'seletor, callback',
+    descricao:
+      'Executa uma função quando o elemento deixa de aparecer na tela. Um elemento que já está fora da tela na hora da chamada não dispara a função.',
+    tabela: [
+      ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.'],
+      ['callback', 'função', 'Executada a cada vez que o elemento some da tela. Recebe o elemento.'],
+    ],
+    avisos: [
+      ['dica', 'Junto com <code>aoEntrarNaTela</code>, dá para mostrar algo só enquanto outra coisa está fora da tela, como no exemplo.'],
+    ],
+    retorno: 'Uma função <code>parar()</code>, que para de observar.',
+    html: `
+<h2 id="topo-pagina">Topo da página</h2>
+<p class="dica">Role o resultado para baixo</p>
+<div class="espaco"></div>
+<button class="fixo" id="voltar" hidden>Voltar ao topo</button>`,
+    css: `
+.dica {
+  opacity: 0.7;
+}
+
+.espaco {
+  height: 600px;
+}
+
+.fixo {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}`,
+    js: `
+aoSairDaTela('#topo-pagina', () => {
+  mostrar('#voltar')
+})
+
+aoEntrarNaTela('#topo-pagina', () => {
+  esconder('#voltar')
+})
+
+aoClicar('#voltar', () => {
+  window.scrollTo(0, 0)
+})`,
+  },
 ]

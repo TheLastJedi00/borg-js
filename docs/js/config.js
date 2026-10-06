@@ -1,30 +1,17 @@
 import * as Borg from '../../src/index.js'
+import { URL_BORG_MJS, linhaDeImport } from './url.js'
 
-/** Domínio oficial do site. Trocar aqui atualiza todos os textos e exemplos. */
-export const URL_DO_SITE = 'https://borg.lenoborges.br'
-
-/** Build ESM, usado com `import`. */
-export const URL_BORG_MJS = `${URL_DO_SITE}/borg.mjs`
-
-/** Build para script tag, que cria o objeto global `Borg`. */
-export const URL_BORG_JS = `${URL_DO_SITE}/borg.js`
+export {
+  URL_DO_SITE,
+  URL_BORG_MJS,
+  URL_BORG_JS,
+  URL_EXTENSAO_MARKETPLACE,
+  URL_EXTENSAO_OPEN_VSX,
+  linhaDeImport,
+} from './url.js'
 
 /** Nomes das funções públicas da Borg. */
 export const FUNCOES_DA_BORG = Object.keys(Borg)
-
-const LIMITE_DA_LINHA = 80
-
-/**
- * Monta o `import` da Borg pela URL pública. Se a linha passar de 80 caracteres, cada
- * função vai para uma linha, para caber na tela sem rolagem.
- * @param {string[]} nomes
- * @returns {string}
- */
-export function linhaDeImport(nomes) {
-  const umaLinha = `import { ${nomes.join(', ')} } from '${URL_BORG_MJS}'`
-  if (umaLinha.length <= LIMITE_DA_LINHA) return umaLinha
-  return `import {\n${nomes.map((nome) => `  ${nome},\n`).join('')}} from '${URL_BORG_MJS}'`
-}
 
 /**
  * Coloca no topo do código o `import` das funções da Borg que ele chama, na ordem em que

@@ -1,7 +1,7 @@
 import { iniciarPagina } from '../layout.js'
 import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
-import { linhaDeImport, comImport } from '../config.js'
+import { linhaDeImport, comImport, URL_EXTENSAO_MARKETPLACE, URL_EXTENSAO_OPEN_VSX } from '../config.js'
 import { aviso, passos } from '../componentes.js'
 import { irParaAncora } from '../menu-lateral.js'
 
@@ -37,6 +37,19 @@ const passosIniciais = [
       <pre class="arvore" aria-label="Pasta meu-projeto com os arquivos index.html e main.js">meu-projeto/
 ├── index.html
 └── main.js</pre>
+      <h4>Opcional: instale a extensão Borg JS</h4>
+      <p>
+        Usa o VS Code? A extensão <strong>Borg JS</strong> completa o código para você: digite o
+        começo de uma função, como <code>aoCli</code>, aperte <kbd>Enter</kbd>, e ela escreve a chamada
+        inteira, com o seletor, os parênteses, as chaves e o <code>import</code> no topo do arquivo.
+        A tecla <kbd>Tab</kbd> pula para o próximo pedaço que você precisa trocar.
+      </p>
+      ${blocoDeCodigo(`aoClicar('#meu-seletor', (elemento) => {\n  // reação\n})`, 'js')}
+      <ul>
+        <li><strong>VS Code</strong>: procure "Borg JS" na aba de extensões ou abra a <a href="${URL_EXTENSAO_MARKETPLACE}">página no Marketplace</a>.</li>
+        <li><strong>Cursor, VSCodium e parecidos</strong>: procure "Borg JS" na aba de extensões ou abra a <a href="${URL_EXTENSAO_OPEN_VSX}">página no Open VSX</a>.</li>
+      </ul>
+      ${aviso('dica', 'A extensão ajuda a não esquecer parênteses e chaves, mas não é obrigatória. Os passos a seguir funcionam com qualquer editor.')}
     `,
   },
   {

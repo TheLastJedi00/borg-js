@@ -158,7 +158,7 @@ conteudo.innerHTML = `
       </div>
       <div class="caminho caminho-professor">
         <h3>Vou ensinar</h3>
-        <p>Uma sequência de seis aulas com objetivos, os erros mais comuns dos alunos e como passar da Borg para o JavaScript puro.</p>
+        <p>Uma sequência de sete aulas com objetivos, os erros mais comuns dos alunos e como passar da Borg para o JavaScript puro.</p>
         <a class="botao botao-principal" href="./professores.html">Abrir o guia do professor</a>
       </div>
     </div>

@@ -16,6 +16,9 @@ const NOMES_ESPECIAIS = {
   qualquer: QUALQUER,
 }
 
+/** Nomes de tecla especiais aceitos pela Borg, sem apelidos. Usados no autocomplete. */
+export const NOMES_DE_TECLA = Object.keys(NOMES_ESPECIAIS).filter((nome) => nome !== 'espaco')
+
 /** `KeyboardEvent.key` em minúsculas → nome em português. */
 const NOMES_EM_PORTUGUES = {
   ' ': 'espaço',

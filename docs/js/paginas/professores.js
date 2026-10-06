@@ -58,15 +58,27 @@ const aulas = [
     desafios: [['placar-teclas', 'Placar com as setas']],
   },
   {
-    titulo: 'Mini jogo',
-    objetivo: 'Juntar tudo em um jogo simples, com movimento contínuo e limites na tela.',
-    funcoes: ['teclaPressionada'],
-    javascript: 'o loop com <code>requestAnimationFrame</code>, <code>Math.min</code> e <code>Math.max</code>',
+    titulo: 'Movimento na tela',
+    objetivo: 'Colocar e deslocar elementos com coordenadas e ler onde eles estão agora.',
+    funcoes: ['elemento', 'posicao', 'moverPara', 'moverPor', 'manterNaTela'],
+    javascript: 'variáveis que guardam elementos, objetos <code>{ x, y }</code>, somar à posição atual',
     roteiro:
-      'Explique por que <code>aoPressionar</code> não serve para movimento contínuo e por que o loop resolve. Termine com o projeto do <a href="./projetos.html#jogo-setas">jogo com as setas</a>.',
+      'Comece com <code>const nave = elemento(\'#nave\')</code> e mostre que a variável vale em qualquer função. Depois compare <code>moverPara(nave, { x: posicao(nave).x + 10 })</code> com o atalho <code>moverPor(nave, { x: 10 })</code>.',
+    desafios: [
+      ['mira', 'Mira que segue o mouse'],
+      ['quadrado-na-tela', 'Quadrado que não sai da tela'],
+    ],
+  },
+  {
+    titulo: 'Mini jogo',
+    objetivo: 'Juntar tudo em um jogo simples, com movimento contínuo, limites na tela e colisão.',
+    funcoes: ['teclaPressionada', 'manterNaTela', 'colidiu'],
+    javascript: 'o loop com <code>requestAnimationFrame</code>, condições que combinam várias teclas',
+    roteiro:
+      'Explique por que <code>aoPressionar</code> não serve para movimento contínuo e por que o loop resolve. Use <code>colidiu</code> para o jogador pegar algo. Termine com o projeto do <a href="./projetos.html#jogo-setas">jogo com as setas</a>.',
     desafios: [
       ['mover-setas', 'Mover um quadrado com as setas'],
-      ['alvo', 'Clique no alvo'],
+      ['pegar-estrelas', 'Pegar as estrelas'],
     ],
   },
 ]
@@ -131,7 +143,7 @@ const secoes = [
     html: `
       <h2>Sequência de aulas</h2>
       <p>
-        Seis aulas de cerca de 50 minutos, cada uma apoiada na anterior. Uma divisão que funciona bem:
+        Sete aulas de cerca de 50 minutos, cada uma apoiada na anterior. Uma divisão que funciona bem:
         10 minutos de demonstração, 20 de código junto com a turma e 20 para o desafio.
       </p>
       <ol class="aulas">${htmlDasAulas}</ol>
@@ -164,7 +176,17 @@ const errosComuns = [
   [
     'Usar <code>aoPressionar</code> para mover um personagem.',
     'O personagem anda um passo por toque e não continua andando quando a tecla é segurada.',
-    'Segurar não repete o <code>aoPressionar</code>, de propósito. Para movimento contínuo, use <code>teclaPressionada</code> dentro de um loop (aula 6).',
+    'Segurar não repete o <code>aoPressionar</code>, de propósito. Para movimento contínuo, use <code>teclaPressionada</code> dentro de um loop (aula 7).',
+  ],
+  [
+    'Dar à variável o nome da função: <code>const elemento = elemento(\'#nave\')</code>',
+    '<code>Identifier \'elemento\' has already been declared</code> (ou, dentro de uma função, <code>Cannot access \'elemento\' before initialization</code>)',
+    'A variável esconde a função de mesmo nome. Peça um nome que diga o que o elemento é: <code>const nave = elemento(\'#nave\')</code>.',
+  ],
+  [
+    'Mover algo que estava no meio do texto com <code>moverPara</code>.',
+    'O resto da página "sobe" e ocupa o lugar do elemento.',
+    'O elemento passa a usar <code>position: fixed</code> e sai do fluxo da página. Para peças de jogo, isso é o esperado; para o resto, deixe um espaço reservado no HTML.',
   ],
   [
     'Abrir o <code>index.html</code> com dois cliques.',
@@ -187,6 +209,15 @@ const equivalentes = [
   ['mudarTexto(seletor, texto)', 'el.textContent = texto'],
   ["mudarEstilo(seletor, 'left', 10)", "el.style.left = '10px'"],
   ['parar()', "el.removeEventListener('click', reacao)"],
+  ['elemento(seletor)', 'document.querySelector(seletor)'],
+  ['posicao(el)', 'const r = el.getBoundingClientRect()\nconst posicao = { x: r.left, y: r.top }'],
+  ['tamanho(el)', 'const r = el.getBoundingClientRect()\nconst tamanho = { largura: r.width, altura: r.height }'],
+  ['tamanhoDaTela()', 'const tela = { largura: innerWidth, altura: innerHeight }'],
+  ['moverPara(el, { x, y })', "el.style.position = 'fixed'\nel.style.left = x + 'px'\nel.style.top = y + 'px'"],
+  ['moverPor(el, { x, y })', "const r = el.getBoundingClientRect()\nel.style.position = 'fixed'\nel.style.left = r.left + x + 'px'\nel.style.top = r.top + y + 'px'"],
+  ['colidiu(a, b)', 'const ra = a.getBoundingClientRect()\nconst rb = b.getBoundingClientRect()\nconst colidiu = ra.left < rb.right && ra.right > rb.left &&\n  ra.top < rb.bottom && ra.bottom > rb.top'],
+  ['estaNaTela(el)', 'const r = el.getBoundingClientRect()\nconst naTela = r.right > 0 && r.bottom > 0 &&\n  r.left < innerWidth && r.top < innerHeight'],
+  ['aoEntrarNaTela(el, fn)', 'new IntersectionObserver((entradas) => {\n  entradas.forEach((e) => {\n    if (e.isIntersecting) fn(e.target)\n  })\n}).observe(el)'],
 ]
 
 secoes.push(
@@ -245,7 +276,7 @@ secoes.push(
           a solução na correção coletiva. O botão <strong>Carregar no exemplo</strong> coloca a
           solução no playground para comparar.
         </li>
-        <li>Os níveis acompanham as aulas: fáceis nas aulas 1 e 2, médios nas aulas 3 a 5 e difíceis na aula 6.</li>
+        <li>Os níveis acompanham as aulas: fáceis nas aulas 1 e 2, médios nas aulas 3 a 6 e difíceis na aula 7. A aula 6 também usa a mira, um desafio fácil, para aquecer.</li>
         <li>
           O playground não salva o que o aluno escreve. Para guardar, ele copia o código para os
           arquivos do projeto dele com o botão <strong>Copiar</strong>.
@@ -271,7 +302,7 @@ conteudo.innerHTML = `
     <div>
       <header class="pagina-cabecalho">
         <h1>Guia do professor</h1>
-        <p>Como usar a Borg JS em sala: uma sequência de seis aulas, os erros mais comuns dos alunos e como passar para o JavaScript puro.</p>
+        <p>Como usar a Borg JS em sala: uma sequência de sete aulas, os erros mais comuns dos alunos e como passar para o JavaScript puro.</p>
       </header>
       ${secoes.map(({ id, html }) => `<section id="${id}" class="secao">${html}</section>`).join('')}
     </div>

@@ -1,5 +1,14 @@
 import { describe, it, expect } from 'vitest'
-import { URL_DO_SITE, URL_BORG_MJS, URL_BORG_JS, linhaDeImport, comImport } from '../../docs/js/config.js'
+import {
+  URL_DO_SITE,
+  URL_BORG_MJS,
+  URL_BORG_JS,
+  URL_EXTENSAO_MARKETPLACE,
+  URL_EXTENSAO_OPEN_VSX,
+  linhaDeImport,
+  comImport,
+} from '../../docs/js/config.js'
+import extensao from '../../extensao-vscode/package.json'
 
 describe('config do site', () => {
   it('usa o domínio oficial', () => {
@@ -9,6 +18,12 @@ describe('config do site', () => {
   it('deriva as URLs dos dois builds a partir do domínio', () => {
     expect(URL_BORG_MJS).toBe(`${URL_DO_SITE}/borg.mjs`)
     expect(URL_BORG_JS).toBe(`${URL_DO_SITE}/borg.js`)
+  })
+
+  it('aponta para a extensão com o mesmo publisher e nome do package.json dela', () => {
+    const { publisher, name } = extensao
+    expect(URL_EXTENSAO_MARKETPLACE).toBe(`https://marketplace.visualstudio.com/items?itemName=${publisher}.${name}`)
+    expect(URL_EXTENSAO_OPEN_VSX).toBe(`https://open-vsx.org/extension/${publisher}/${name}`)
   })
 })
 

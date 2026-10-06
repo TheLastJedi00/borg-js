@@ -12,25 +12,41 @@ export const projetos = [
     descricao:
       'Um jogo com as setas do teclado: leve o quadrado até a estrela. Cada estrela vale um ponto, e com 10 pontos você vence. Enter recomeça.',
     observar: [
-      'O loop com <code>requestAnimationFrame</code> confere as setas cerca de 60 vezes por segundo, com <code>teclaPressionada</code>.',
-      '<code>Math.max</code> e <code>Math.min</code> mantêm o jogador dentro da arena.',
-      'A distância entre os centros (<code>Math.hypot</code>) diz se o jogador encostou na estrela.',
+      'O loop com <code>requestAnimationFrame</code> confere as setas cerca de 60 vezes por segundo, com <code>teclaPressionada</code>, e anda com <code>moverPor</code>.',
+      '<code>elemento</code> guarda o jogador e a estrela em variáveis, usadas em todas as funções.',
+      '<code>manterNaTela</code> não deixa o jogador sair da tela, e <code>colidiu</code> diz se ele encostou na estrela.',
+      'A estrela é sorteada com <code>Math.random()</code>, <code>tamanhoDaTela()</code> e <code>tamanho(estrela)</code>, para caber inteira na tela.',
       'A variável <code>jogando</code> pausa o jogo quando você vence.',
     ],
-    funcoes: ['teclaPressionada', 'aoPressionar', 'mudarEstilo', 'mudarTexto', 'mostrar', 'esconder'],
+    funcoes: [
+      'elemento',
+      'moverPara',
+      'moverPor',
+      'manterNaTela',
+      'colidiu',
+      'tamanho',
+      'tamanhoDaTela',
+      'teclaPressionada',
+      'aoPressionar',
+      'mudarTexto',
+      'mostrar',
+      'esconder',
+    ],
     altura: 360,
     html: `
 <p class="placar">Estrelas: <strong id="pontos">0</strong> de 10</p>
-<div class="arena" id="arena">
-  <div class="jogador" id="jogador"></div>
-  <div class="estrela" id="estrela">⭐</div>
-</div>
+<div class="jogador" id="jogador"></div>
+<div class="estrela" id="estrela">⭐</div>
 <p class="fim" id="fim" hidden>Você pegou todas! Aperte Enter para jogar de novo.</p>
 <p class="ajuda">Clique aqui e use as setas do teclado</p>`,
     css: `
 body {
+  min-height: 100vh;
   margin: 0;
   padding: 16px;
+  box-sizing: border-box;
+  background: #0b2530;
+  color: #e6f6f4;
   font-family: system-ui, sans-serif;
   text-align: center;
 }
@@ -40,16 +56,7 @@ body {
   font-size: 1.2rem;
 }
 
-.arena {
-  position: relative;
-  height: 220px;
-  border-radius: 14px;
-  background: #0b2530;
-  overflow: hidden;
-}
-
 .jogador {
-  position: absolute;
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -57,7 +64,6 @@ body {
 }
 
 .estrela {
-  position: absolute;
   width: 30px;
   height: 30px;
   font-size: 26px;
@@ -74,47 +80,37 @@ body {
   opacity: 0.7;
 }`,
     js: `
-const arena = document.querySelector('#arena')
+const jogador = elemento('#jogador')
+const estrela = elemento('#estrela')
 const velocidade = 5
-let x = 20
-let y = 20
-let estrelaX = 0
-let estrelaY = 0
 let pontos = 0
 let jogando = true
 
 function sortearEstrela() {
-  estrelaX = Math.random() * (arena.clientWidth - 30)
-  estrelaY = Math.random() * (arena.clientHeight - 30)
-  mudarEstilo('#estrela', 'left', estrelaX)
-  mudarEstilo('#estrela', 'top', estrelaY)
-}
-
-function pegouEstrela() {
-  // Distância entre o centro do jogador (40px) e o centro da estrela (30px)
-  const distancia = Math.hypot(x + 20 - (estrelaX + 15), y + 20 - (estrelaY + 15))
-  return distancia < 30
+  const tela = tamanhoDaTela()
+  const { largura, altura } = tamanho(estrela)
+  // Começa abaixo do placar (40 px) e cabe inteira na tela
+  moverPara(estrela, {
+    x: Math.random() * (tela.largura - largura),
+    y: 40 + Math.random() * (tela.altura - altura - 40),
+  })
 }
 
 function loop() {
   if (jogando) {
-    if (teclaPressionada('seta direita')) x = x + velocidade
-    if (teclaPressionada('seta esquerda')) x = x - velocidade
-    if (teclaPressionada('seta baixo')) y = y + velocidade
-    if (teclaPressionada('seta cima')) y = y - velocidade
+    if (teclaPressionada('seta direita')) moverPor(jogador, { x: velocidade })
+    if (teclaPressionada('seta esquerda')) moverPor(jogador, { x: -velocidade })
+    if (teclaPressionada('seta baixo')) moverPor(jogador, { y: velocidade })
+    if (teclaPressionada('seta cima')) moverPor(jogador, { y: -velocidade })
+    manterNaTela(jogador)
 
-    x = Math.max(0, Math.min(x, arena.clientWidth - 40))
-    y = Math.max(0, Math.min(y, arena.clientHeight - 40))
-    mudarEstilo('#jogador', 'left', x)
-    mudarEstilo('#jogador', 'top', y)
-
-    if (pegouEstrela()) {
+    if (colidiu(jogador, estrela)) {
       pontos = pontos + 1
       mudarTexto('#pontos', pontos)
 
       if (pontos === 10) {
         jogando = false
-        esconder('#estrela')
+        esconder(estrela)
         mostrar('#fim')
       } else {
         sortearEstrela()
@@ -128,11 +124,12 @@ aoPressionar('enter', () => {
   pontos = 0
   mudarTexto('#pontos', pontos)
   esconder('#fim')
-  mostrar('#estrela')
+  mostrar(estrela)
   sortearEstrela()
   jogando = true
 })
 
+moverPara(jogador, { x: 20, y: 60 })
 sortearEstrela()
 loop()`,
   },
