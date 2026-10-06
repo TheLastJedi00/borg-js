@@ -2,7 +2,7 @@
   "name": "borg-js",
   "displayName": "Borg JS",
   "description": "Autocomplete da Borg JS: escreve a chamada inteira de cada função, com seletor, arrow function e o import.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "lenoborges",
   "license": "MIT",
   "icon": "icone.png",
