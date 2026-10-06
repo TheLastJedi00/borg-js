@@ -8,3 +8,9 @@ coverage/
 
 .vercel
 .env*
+
+# Extensão do VS Code (gerados no build)
+extensao-vscode/dist/
+extensao-vscode/icone.png
+*.vsix
+dist-extensao/

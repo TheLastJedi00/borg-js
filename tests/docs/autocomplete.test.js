@@ -18,6 +18,10 @@ function completar(fonte, textoComCursor, explicito = false) {
   return fonte(new CompletionContext(estado, estado.selection.main.head, explicito))
 }
 
+// O jsdom não mede layout; o CodeMirror pede essas medidas depois de cada atualização.
+Range.prototype.getClientRects ??= () => []
+Range.prototype.getBoundingClientRect ??= () => new DOMRect()
+
 let vista
 
 afterEach(() => {
