@@ -13,6 +13,31 @@ export function escaparHtml(texto) {
     .replaceAll('"', '&quot;')
 }
 
+/** Quanto esperar pela área de transferência antes de tentar o jeito antigo. */
+const LIMITE_PARA_COPIAR = 1500
+
+/**
+ * Copia pelo jeito antigo, com um campo de texto escondido. Funciona onde a API nova é
+ * bloqueada ou fica esperando uma permissão.
+ * @param {string} texto
+ * @returns {boolean}
+ */
+function copiarPeloCampo(texto) {
+  const campo = document.createElement('textarea')
+  campo.value = texto
+  campo.setAttribute('readonly', '')
+  campo.style.cssText = 'position: fixed; opacity: 0; pointer-events: none'
+  document.body.append(campo)
+  campo.select()
+  try {
+    return document.execCommand('copy')
+  } catch {
+    return false
+  } finally {
+    campo.remove()
+  }
+}
+
 /**
  * Copia um texto para a área de transferência.
  * @param {string} texto
@@ -20,10 +45,13 @@ export function escaparHtml(texto) {
  */
 export async function copiarTexto(texto) {
   try {
-    await navigator.clipboard.writeText(texto)
+    await Promise.race([
+      navigator.clipboard.writeText(texto),
+      new Promise((_, rejeitar) => setTimeout(() => rejeitar(new Error('demorou')), LIMITE_PARA_COPIAR)),
+    ])
     return true
   } catch {
-    return false
+    return copiarPeloCampo(texto)
   }
 }
 

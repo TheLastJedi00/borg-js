@@ -69,6 +69,13 @@ describe('montarDocumentoDoPlayground', () => {
     expect(doc.getElementById('vazou')).toBeNull()
   })
 
+  it('pode ficar sem o estilo base, para projetos que trazem o próprio CSS', () => {
+    const { doc } = montar({ estiloBase: false })
+    const estilos = [...doc.head.querySelectorAll('style')]
+    expect(estilos.length).toBe(1)
+    expect(estilos[0].textContent).toContain('button { color: red }')
+  })
+
   it('funciona sem CSS', () => {
     const { doc } = montar({ css: undefined })
     expect(doc.head.querySelectorAll('style').length).toBe(1)

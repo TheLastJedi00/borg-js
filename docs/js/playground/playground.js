@@ -6,7 +6,7 @@ import { explicarErro } from './erros.js'
 
 /**
  * @typedef {{ html: string, css?: string, js: string }} Codigo
- * @typedef {Codigo & { id: string, titulo?: string, altura?: number }} OpcoesDoPlayground
+ * @typedef {Codigo & { id: string, titulo?: string, altura?: number, estiloBase?: boolean }} OpcoesDoPlayground
  * @typedef {{ carregar: (codigo: Codigo) => void, restaurar: () => void, rodar: () => void }} ControleDoPlayground
  */
 
@@ -116,6 +116,7 @@ function montar(elemento, opcoes) {
       id,
       origem: location.origin,
       tema: temaDaPagina(),
+      estiloBase: opcoes.estiloBase ?? true,
       ...codigo,
     })
   }

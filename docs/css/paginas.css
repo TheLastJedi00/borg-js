@@ -728,3 +728,52 @@
   width: 16px;
   height: 16px;
 }
+
+/* ---------- Projetos ---------- */
+
+.projeto {
+  max-width: 920px;
+  margin-top: var(--e-8);
+}
+
+.projeto > * + * {
+  margin-top: var(--e-4);
+}
+
+.projeto-descricao {
+  max-width: var(--largura-texto);
+  color: var(--texto-suave);
+  font-size: var(--t-3);
+  line-height: 1.45;
+}
+
+.projeto-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+.projeto-acoes svg {
+  width: 18px;
+  height: 18px;
+}
+
+.projeto-estudo {
+  max-width: var(--largura-texto);
+  padding-top: var(--e-2);
+}
+
+.projeto-estudo ul {
+  margin: var(--e-3) 0 0;
+  padding-left: 1.3em;
+}
+
+.projeto-estudo li + li {
+  margin-top: var(--e-2);
+}
+
+.projeto-funcoes {
+  margin-top: var(--e-4);
+  color: var(--texto-suave);
+  font-size: var(--t-1);
+}
