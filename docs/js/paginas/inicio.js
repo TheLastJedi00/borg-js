@@ -5,20 +5,21 @@ import { comImport, linhaDeImport } from '../config.js'
 import { ligarBotaoDeCopiar } from '../util.js'
 import { icones } from '../icones.js'
 import { revelarAoRolar } from '../revelar.js'
+import { svgDaLogo, piscarSozinha } from '../logo.js'
 
 /** Código da coruja do topo. É mostrado na página e é o mesmo que roda nela. */
 const CODIGO_DA_CORUJA = comImport(`
 // Os olhos seguem o mouse
 aoMoverMouse(({ x, y }) => {
-  const dx = (x / window.innerWidth - 0.5) * 14
-  const dy = (y / window.innerHeight - 0.5) * 14
+  const dx = (x / window.innerWidth - 0.5) * 140
+  const dy = (y / window.innerHeight - 0.5) * 140
   mudarEstilo('.pupila', 'translate', dx + 'px ' + dy + 'px')
 })
 
 // Um clique em qualquer lugar faz a coruja piscar
 aoClicarNaTela(() => {
-  alternarClasse('#coruja', 'piscando')
-  setTimeout(() => alternarClasse('#coruja', 'piscando'), 160)
+  alternarClasse('#coruja', 'fechada')
+  setTimeout(() => alternarClasse('#coruja', 'fechada'), 150)
 })
 
 // Cada tecla aparece no balão, com o nome em português
@@ -56,28 +57,12 @@ aoPressionar('espaço', () => {
   alternarClasse('body', 'escuro')
 })`)
 
-/** A coruja da logo, maior e com partes separadas para reagir. */
-const CORUJA = `
-  <svg class="coruja" id="coruja" viewBox="0 0 128 128" role="img"
-    aria-label="Coruja da Borg JS. Os olhos seguem o mouse, ela pisca quando você clica e mostra as teclas que você aperta.">
-    <defs>
-      <linearGradient id="coruja-gradiente" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#2DD4BF" />
-        <stop offset="1" stop-color="#38BDF8" />
-      </linearGradient>
-    </defs>
-    <path fill="url(#coruja-gradiente)" d="M22 22 L46 40 Q64 34 82 40 L106 22 L104 70 Q102 114 64 116 Q26 114 24 70 Z" />
-    <g class="olho">
-      <circle cx="46" cy="68" r="17" fill="#FFFFFF" />
-      <circle class="pupila" cx="46" cy="68" r="8" fill="#0B2530" />
-    </g>
-    <g class="olho">
-      <circle cx="82" cy="68" r="17" fill="#FFFFFF" />
-      <circle class="pupila" cx="82" cy="68" r="8" fill="#0B2530" />
-    </g>
-    <path fill="#0B2530" d="M57 88 H71 L64 99 Z" />
-  </svg>
-`
+/** A coruja da logo, maior. Cada parte do SVG tem uma classe, e é isso que o código usa. */
+const CORUJA = svgDaLogo({
+  classe: 'logo coruja',
+  id: 'coruja',
+  rotulo: 'Coruja da Borg JS. Os olhos seguem o mouse, ela pisca quando você clica e mostra as teclas que você aperta.',
+})
 
 const conteudo = iniciarPagina()
 
@@ -169,3 +154,6 @@ ligarBotaoDeCopiar(document.getElementById('copiar-import'), () => linhaDeImport
 ativarBlocosDeCodigo(conteudo)
 revelarAoRolar(conteudo)
 executarComBorg(CODIGO_DA_CORUJA)
+
+// Além do código acima, a coruja pisca sozinha de vez em quando (desligado com movimento reduzido).
+piscarSozinha(document.getElementById('coruja'))

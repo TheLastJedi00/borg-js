@@ -4,7 +4,7 @@ import { explicarErro } from '../../docs/js/playground/erros.js'
 describe('explicarErro', () => {
   it('explica uma função importada que a Borg não tem', () => {
     const dica = explicarErro(
-      "Uncaught SyntaxError: The requested module 'https://borg.lenoborges.br/borg.mjs' does not provide an export named 'aoClicr'",
+      "Uncaught SyntaxError: The requested module 'https://borg.lenoborges.com.br/borg.mjs' does not provide an export named 'aoClicr'",
     )
     expect(dica).toContain('aoClicr')
     expect(dica).toContain('import')

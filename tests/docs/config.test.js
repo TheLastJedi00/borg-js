@@ -12,7 +12,7 @@ import extensao from '../../extensao-vscode/package.json'
 
 describe('config do site', () => {
   it('usa o domínio oficial', () => {
-    expect(URL_DO_SITE).toBe('https://borg.lenoborges.br')
+    expect(URL_DO_SITE).toBe('https://borg.lenoborges.com.br')
   })
 
   it('deriva as URLs dos dois builds a partir do domínio', () => {

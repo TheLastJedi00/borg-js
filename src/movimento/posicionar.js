@@ -39,7 +39,7 @@ function colocarEm(alvo, { x, y }) {
  * @returns {void}
  * @throws {TypeError} Quando a posição não é um objeto com `x` e/ou `y` numéricos, ou o seletor é inválido.
  * @example
- * import { aoMoverMouse, moverPara } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoMoverMouse, moverPara } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoMoverMouse((posicao) => {
  *   moverPara('#mira', posicao)
@@ -65,7 +65,7 @@ export function moverPara(seletor, posicao) {
  * @returns {void}
  * @throws {TypeError} Quando o deslocamento não é um objeto com `x` e/ou `y` numéricos, ou o seletor é inválido.
  * @example
- * import { aoPressionar, moverPor } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { aoPressionar, moverPor } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * aoPressionar('seta direita', () => {
  *   moverPor('#nave', { x: 10 })
@@ -104,7 +104,7 @@ function limitar(valor, maximo) {
  * @returns {boolean} `true` se algum elemento precisou ser ajustado ("bateu na borda").
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * import { moverPor, manterNaTela, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { moverPor, manterNaTela, mudarTexto } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * function jogar() {
  *   moverPor('#bola', { x: 4 })
@@ -140,7 +140,7 @@ export function manterNaTela(seletor) {
  * @returns {boolean} `true` se os dois se sobrepõem; `false` se não, ou se um deles não for encontrado.
  * @throws {TypeError} Quando um dos seletores é inválido.
  * @example
- * import { colidiu, esconder, moverPor } from 'https://borg.lenoborges.br/borg.mjs'
+ * import { colidiu, esconder, moverPor } from 'https://borg.lenoborges.com.br/borg.mjs'
  *
  * function jogar() {
  *   moverPor('#nave', { x: 2 })

@@ -531,3 +531,35 @@ pre {
   white-space: nowrap;
   overflow-wrap: normal;
 }
+
+/* Logo da coruja (docs/js/logo.js). A classe .fechada fecha os olhos: as pálpebras de
+   cima descem e as de baixo sobem 130 unidades, como no frame "Borg Eye Closed". */
+.logo .palpebras-cima,
+.logo .palpebras-baixo {
+  transition: transform 0.07s ease-in;
+}
+
+.logo.fechada .palpebras-cima {
+  transform: translateY(130px);
+}
+
+.logo.fechada .palpebras-baixo {
+  transform: translateY(-130px);
+}
+
+.logo.fechada .palpebras {
+  stroke: var(--marinho);
+  stroke-width: 8px;
+}
+
+.logo .pupila {
+  transition: translate 0.08s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo .palpebras-cima,
+  .logo .palpebras-baixo,
+  .logo .pupila {
+    transition: none;
+  }
+}
