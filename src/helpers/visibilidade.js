@@ -10,8 +10,10 @@ const displayOriginal = new WeakMap()
  * @returns {void}
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * Borg.aoClicar('#fechar', () => {
- *   Borg.esconder('#janela')
+ * import { aoClicar, esconder } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoClicar('#fechar', () => {
+ *   esconder('#janela')
  * })
  */
 export function esconder(seletor) {
@@ -33,8 +35,10 @@ export function esconder(seletor) {
  * @returns {void}
  * @throws {TypeError} Quando o seletor é inválido.
  * @example
- * Borg.aoClicar('#abrir', () => {
- *   Borg.mostrar('#janela')
+ * import { aoClicar, mostrar } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoClicar('#abrir', () => {
+ *   mostrar('#janela')
  * })
  */
 export function mostrar(seletor) {

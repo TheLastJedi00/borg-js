@@ -9,8 +9,10 @@ import { erroDeTipo, validarTexto } from '../nucleo/mensagens.js'
  * @returns {void}
  * @throws {TypeError} Quando a classe está vazia ou tem espaço, ou o seletor é inválido.
  * @example
- * Borg.aoClicar('#tema', () => {
- *   Borg.alternarClasse('body', 'escuro')
+ * import { aoClicar, alternarClasse } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoClicar('#tema', () => {
+ *   alternarClasse('body', 'escuro')
  * })
  */
 export function alternarClasse(seletor, classe) {

@@ -59,8 +59,10 @@ function ouvirTecla(tipo, nomeFuncao, tecla, callback) {
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando a tecla não existe ou o `callback` não é uma função.
  * @example
- * Borg.aoPressionar('espaço', () => {
- *   Borg.alternarClasse('body', 'escuro')
+ * import { aoPressionar, alternarClasse } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoPressionar('espaço', () => {
+ *   alternarClasse('body', 'escuro')
  * })
  */
 export function aoPressionar(tecla, callback) {
@@ -75,8 +77,10 @@ export function aoPressionar(tecla, callback) {
  * @returns {() => void} Função `parar()`, que remove o evento.
  * @throws {TypeError} Quando a tecla não existe ou o `callback` não é uma função.
  * @example
- * Borg.aoSoltar('seta direita', () => {
- *   Borg.mudarTexto('#status', 'Parado')
+ * import { aoSoltar, mudarTexto } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoSoltar('seta direita', () => {
+ *   mudarTexto('#status', 'Parado')
  * })
  */
 export function aoSoltar(tecla, callback) {
