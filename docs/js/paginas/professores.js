@@ -1,5 +1,6 @@
 import { iniciarPagina } from '../layout.js'
-import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
+import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
+import { comImport } from '../config.js'
 import { aviso } from '../componentes.js'
 import { htmlDoMenuLateral, ligarMenuLateral, irParaAncora } from '../menu-lateral.js'
 
@@ -138,6 +139,129 @@ const secoes = [
   },
 ]
 
+/** Erro do aluno → o que aparece → como orientar. */
+const errosComuns = [
+  [
+    'Esquecer o <code>#</code> ou o <code>.</code> no seletor: <code>aoClicar(\'botao\', ...)</code>',
+    '<code>[Borg] aoClicar: nenhum elemento encontrado para "botao". Confira o seletor no seu HTML.</code>',
+    'Peça para comparar o seletor com o HTML, letra por letra. Lembre: <code>#</code> para id, <code>.</code> para classe.',
+  ],
+  [
+    'Chamar a função em vez de passá-la: <code>aoClicar(\'#b\', mostrar(\'#m\'))</code>',
+    'A mensagem aparece antes do clique, e depois: <code>[Borg] aoClicar: o parâmetro "callback" precisa ser uma função, mas recebeu nada (undefined).</code>',
+    'Explique a diferença entre <em>fazer agora</em> e <em>fazer quando clicar</em>. A reação vai dentro de <code>() =&gt; { }</code>.',
+  ],
+  [
+    'Escrever a tecla em inglês: <code>aoPressionar(\'space\', ...)</code>',
+    '<code>[Borg] aoPressionar: não conheço a tecla "space". Use, por exemplo: ...</code>',
+    'A própria mensagem lista os nomes válidos. Mostre <code>aoPressionar(\'qualquer\', ...)</code> para descobrir o nome de cada tecla.',
+  ],
+  [
+    'Criar a variável dentro da reação: <code>() =&gt; { let pontos = 0; pontos++ }</code>',
+    'O contador nunca passa de 1.',
+    'Cada clique roda a função de novo e recria a variável. Ela precisa ser criada fora, antes do <code>aoClicar</code>.',
+  ],
+  [
+    'Usar <code>aoPressionar</code> para mover um personagem.',
+    'O personagem anda um passo por toque e não continua andando quando a tecla é segurada.',
+    'Segurar não repete o <code>aoPressionar</code>, de propósito. Para movimento contínuo, use <code>teclaPressionada</code> dentro de um loop (aula 6).',
+  ],
+  [
+    'Abrir o <code>index.html</code> com dois cliques.',
+    'Nada reage, e o console fala em <code>CORS</code> ou <code>origin \'null\'</code>.',
+    'Módulos precisam de um servidor. Use o Live Server do VS Code (veja o <a href="./comecar.html#passo-abrir">passo 5 do guia</a>).',
+  ],
+]
+
+/** Função da Borg → equivalente em JavaScript puro. */
+const equivalentes = [
+  ['aoClicar(seletor, fn)', "document.querySelectorAll(seletor).forEach((el) => {\n  el.addEventListener('click', () => fn(el))\n})"],
+  ['aoClicarNaTela(fn)', "document.addEventListener('click', (e) => {\n  fn({ x: e.clientX, y: e.clientY })\n})"],
+  ['aoMoverMouse(fn)', "document.addEventListener('mousemove', (e) => {\n  fn({ x: e.clientX, y: e.clientY })\n})"],
+  ["aoPressionar('espaço', fn)", "document.addEventListener('keydown', (e) => {\n  if (e.key === ' ' && !e.repeat) {\n    e.preventDefault()\n    fn()\n  }\n})"],
+  ["aoSoltar('a', fn)", "document.addEventListener('keyup', (e) => {\n  if (e.key === 'a') fn()\n})"],
+  ["teclaPressionada('a')", "const teclas = new Set()\ndocument.addEventListener('keydown', (e) => teclas.add(e.key))\ndocument.addEventListener('keyup', (e) => teclas.delete(e.key))\n\nteclas.has('a')"],
+  ['mostrar(seletor)', "el.hidden = false\nel.style.display = ''"],
+  ['esconder(seletor)', "el.style.display = 'none'"],
+  ["alternarClasse(seletor, 'ativo')", "el.classList.toggle('ativo')"],
+  ['mudarTexto(seletor, texto)', 'el.textContent = texto'],
+  ["mudarEstilo(seletor, 'left', 10)", "el.style.left = '10px'"],
+  ['parar()', "el.removeEventListener('click', reacao)"],
+]
+
+secoes.push(
+  {
+    id: 'erros-comuns',
+    rotulo: 'Erros comuns dos alunos',
+    html: `
+      <h2>Erros comuns dos alunos</h2>
+      <p>
+        Quase todos aparecem no console. Ensine a turma a abrir o console (<kbd>F12</kbd>) antes de
+        pedir ajuda: as mensagens <code>[Borg]</code> dizem o que aconteceu e como corrigir.
+      </p>
+      <div class="tabela tabela-erros"><table>
+        <thead><tr><th>O aluno faz</th><th>O que aparece</th><th>Como orientar</th></tr></thead>
+        <tbody>
+          ${errosComuns.map((linha) => `<tr>${linha.map((celula) => `<td>${celula}</td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table></div>
+    `,
+  },
+  {
+    id: 'borg-para-js',
+    rotulo: 'Da Borg ao JavaScript puro',
+    html: `
+      <h2>Da Borg ao JavaScript puro</h2>
+      <p>
+        Quando a turma estiver pronta, mostre o que cada função faz por baixo. Nos exemplos,
+        <code>el</code> é um elemento já encontrado com <code>document.querySelector(seletor)</code>.
+      </p>
+      <div class="equivalentes">
+        ${equivalentes
+          .map(
+            ([borg, puro]) => `
+              <div class="equivalente">
+                <p><code>${borg}</code></p>
+                ${blocoDeCodigo(puro, 'js')}
+              </div>`,
+          )
+          .join('')}
+      </div>
+      ${aviso('dica', 'Uma boa atividade de transição: pegar um desafio que a turma já resolveu com a Borg e reescrever sem ela, usando a tabela acima.')}
+    `,
+  },
+  {
+    id: 'desafios-em-aula',
+    rotulo: 'Desafios e projetos em aula',
+    html: `
+      <h2>Como usar os desafios e os projetos em aula</h2>
+      <ul>
+        <li>
+          Cada <a href="./desafios.html">desafio</a> tem enunciado, funções sugeridas e um código
+          inicial que já roda no site. O aluno resolve ali mesmo, sem instalar nada.
+        </li>
+        <li>
+          A solução fica fechada em <strong>Ver solução</strong>. Peça para a turma tentar antes e use
+          a solução na correção coletiva. O botão <strong>Carregar no exemplo</strong> coloca a
+          solução no playground para comparar.
+        </li>
+        <li>Os níveis acompanham as aulas: fáceis nas aulas 1 e 2, médios nas aulas 3 a 5 e difíceis na aula 6.</li>
+        <li>
+          O playground não salva o que o aluno escreve. Para guardar, ele copia o código para os
+          arquivos do projeto dele com o botão <strong>Copiar</strong>.
+        </li>
+        <li>
+          Os <a href="./projetos.html">projetos</a> são para estudar código mais longo. O botão
+          <strong>Copiar projeto inteiro</strong> gera um único <code>index.html</code>, que funciona
+          aberto pelo Live Server.
+        </li>
+        <li>Para avaliar, peça uma mudança em um projeto, como contar pontos no jogo ou adicionar uma pergunta ao quiz.</li>
+      </ul>
+      ${blocoDeCodigo(comImport("// Exemplo de mudança pedida no quiz: mostrar a nota no fim\nmudarTexto('#nota', acertos + ' de ' + perguntas.length)"), 'js')}
+    `,
+  },
+)
+
 const menu = htmlDoMenuLateral([{ titulo: 'Guia do professor', itens: secoes }])
 
 const conteudo = iniciarPagina()
@@ -149,7 +273,7 @@ conteudo.innerHTML = `
         <h1>Guia do professor</h1>
         <p>Como usar a Borg JS em sala: uma sequência de seis aulas, os erros mais comuns dos alunos e como passar para o JavaScript puro.</p>
       </header>
-      ${secoes.map(({ id, html }) => `<section id="${id}" class="secao prosa">${html}</section>`).join('')}
+      ${secoes.map(({ id, html }) => `<section id="${id}" class="secao">${html}</section>`).join('')}
     </div>
   </div>
 `

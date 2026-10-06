@@ -104,6 +104,17 @@
   margin-top: var(--e-6);
 }
 
+/* Texto corrido na largura de leitura; tabelas e exemplos usam a largura toda */
+.secao > p,
+.secao > ul,
+.secao > ol:not(.aulas) {
+  max-width: var(--largura-texto);
+}
+
+.secao li + li {
+  margin-top: var(--e-2);
+}
+
 .funcao h2 {
   font-family: var(--fonte-codigo);
   font-size: var(--t-4);
@@ -563,7 +574,7 @@
 
 /* ---------- Professores ---------- */
 
-.prosa .aulas {
+.aulas {
   counter-reset: aula;
   margin: var(--e-6) 0 0;
   padding: 0;
@@ -633,4 +644,31 @@
   .aula dd {
     margin-bottom: var(--e-2);
   }
+}
+
+.tabela-erros table {
+  min-width: 720px;
+}
+
+.tabela-erros td code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.equivalentes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: var(--e-5) var(--e-4);
+  margin-top: var(--e-5);
+}
+
+.equivalente > p {
+  margin-bottom: var(--e-2);
+  font-weight: 700;
+}
+
+.equivalente > p code {
+  background: none;
+  padding: 0;
+  font-size: var(--t-2);
 }
