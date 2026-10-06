@@ -12,6 +12,8 @@ npx vitest run tests/teclado/aoPressionar.test.js   # one test file
 npx vitest run -t "aoClicar"                       # tests whose name matches
 npm run build        # library: dist/borg.js (IIFE, global Borg) + dist/borg.mjs (ESM)
 npm run build:docs   # static docs site in docs-dist/, with borg.mjs and borg.js at its root
+npm run build:extensao     # VS Code extension .vsix in dist-extensao/
+npm run publicar:extensao  # publish the .vsix to the VS Code Marketplace and Open VSX (needs VSCE_PAT and OVSX_PAT)
 npm run lint
 ```
 
@@ -19,16 +21,24 @@ npm run lint
 
 - `src/index.js` is the only public entry point. `tests/index.test.js` fails if a public function is added or removed without updating its list on purpose.
 - `src/nucleo/` holds shared internals:
-  - `resolverElementos(seletor, nomeFuncao)` turns a CSS selector, element, NodeList or array into `Element[]`. When nothing matches, it warns instead of throwing.
-  - `mensagens.js` holds `avisar`, `erroDeTipo`, `validarFuncao` and `validarTexto`. Every user-facing message is in Portuguese, starts with `[Borg] <nomeFuncao>:` and explains how to fix the problem.
+  - `resolverElementos(seletor, nomeFuncao)` turns a CSS selector, element, NodeList or array into `Element[]`. When nothing matches, it warns instead of throwing. `primeiroElemento` returns the first one or `null`.
+  - `mensagens.js` holds `avisar`, `erroDeTipo`, `validarFuncao`, `validarTexto` and `validarVetor` (`{ x, y }` with at least one axis). Every user-facing message is in Portuguese, starts with `[Borg] <nomeFuncao>:` and explains how to fix the problem.
 - `src/eventos/mouse.js` handles element and page mouse events. `src/teclado/` handles keys:
   - `teclas.js` maps Portuguese key names to `KeyboardEvent.key`.
   - `eventos.js` implements `aoPressionar` and `aoSoltar`.
   - `estado.js` implements `teclaPressionada`, which has lazy global state.
 - `src/helpers/` holds the DOM reaction helpers (`mostrar`, `esconder`, `alternarClasse`, `mudarTexto`, `mudarEstilo`).
+- `src/movimento/` handles position on the screen (viewport), in pixels, as `{ x, y }` vectors:
+  - `leitura.js`: `elemento`, `posicao`, `tamanho`, `tamanhoDaTela`. Functions that read use the selector's first element.
+  - `posicionar.js`: `moverPara`, `moverPor`, `manterNaTela`, `colidiu`. Moving uses `position: fixed` with `left`/`top`, then measures and corrects for margins or `transform`, so `posicao` returns the requested point.
+  - `tela.js`: `estaNaTela`, `aoEntrarNaTela`, `aoSairDaTela` (`IntersectionObserver`).
+  - jsdom has no layout: tests simulate `getBoundingClientRect` with `tests/movimento/retangulo.js`.
+- `sugestoes/` is the single source of the autocomplete. `dados.js` lists every public function with a VS Code-format snippet (`${1:#meu-seletor}`, `$0`); a test fails if a public function has no suggestion. `modelo.js` converts snippets to CodeMirror, `importar.js` creates or completes the Borg `import`, and `teclas.js` suggests key names inside quotes.
+- `extensao-vscode/` is the **Borg JS** VS Code extension. `src/provedor.js` holds the editor-independent logic (tested in `tests/extensao/`); `src/extensao.js` adapts it to the `vscode` API. `build/extensao.js` renders the icon from `assets/logo.svg`, bundles with `extensao-vscode/vite.config.js` and packages or publishes the `.vsix`. Publishing reads `VSCE_PAT` and `OVSX_PAT` from the environment; tokens never go in the repo. The `publisher` in its `package.json` must match `PUBLISHER_DA_EXTENSAO` in `docs/js/url.js`.
 - Every `ao*` function validates its arguments, registers listeners and returns `parar()`, which removes them.
 - The docs site (`docs/`) is multi-page (`index`, `comecar`, `funcoes`, `professores`, `desafios`, `projetos`). Each `.html` loads `docs/js/paginas/<pagina>.js`, which calls `iniciarPagina()` from `docs/js/layout.js` (shared header, menu, theme toggle, footer) and renders its content from `docs/js/dados/`.
-  - `docs/js/config.js` holds the official URL (`URL_DO_SITE`) and builds the `import` line. Never hard-code the domain; use `linhaDeImport` or `comImport`, which adds the `import` for the Borg functions a snippet calls.
+  - `docs/js/url.js` holds the official URL (`URL_DO_SITE`), the extension links and `linhaDeImport`, with no import of the library (the extension bundles it). `docs/js/config.js` re-exports them and adds `comImport`, which adds the `import` for the Borg functions a snippet calls. Never hard-code the domain.
+  - The playground's JS editors get the Borg autocomplete from `docs/js/codigo/autocomplete.js`.
   - The build plugin `build/publicarBiblioteca.js` builds `borg.mjs` and `borg.js` from `src/`, using the same lib config as `vite.config.js` (`build/biblioteca.js`). It serves them in `npm run dev` and emits them at the root of `docs-dist/`. `vercel.json` adds CORS headers so other sites can import them.
   - Examples run in a **playground** (`docs/js/playground/`): CodeMirror editors and a sandboxed `iframe` built by `montarDocumentoDoPlayground`. An import map points the public URL to the current origin's `borg.mjs`, and a bridge forwards `console` and errors to the panel under the result. Playgrounds mount lazily when they get close to the screen. Keep playground IDs unique within a page.
   - Example data (`dados/funcoes.js`, `desafios.js`, `projetos.js`) holds `js` without the `import`; pages add it. Projects carry their full CSS and use `estiloBase: false`.
