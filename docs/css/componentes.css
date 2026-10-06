@@ -524,3 +524,9 @@ pre {
     transform: none;
   }
 }
+
+/* Nome do parâmetro nunca quebra no meio */
+.tabela td:first-child code {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}

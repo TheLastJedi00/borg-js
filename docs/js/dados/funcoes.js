@@ -14,6 +14,9 @@ export const funcoes = [
       ['seletor', 'texto ou elemento', 'Seletor CSS (ex.: <code>\'#botao\'</code>) ou um elemento do DOM.'],
       ['callback', 'função', 'Executada a cada clique. Recebe o elemento clicado.'],
     ],
+    avisos: [
+      ['dica', 'O seletor é procurado no momento em que <code>aoClicar</code> é chamada. Elementos criados depois disso não reagem: chame <code>aoClicar</code> de novo para eles.'],
+    ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
 <button id="botao-contar">Clique em mim</button>
@@ -37,6 +40,9 @@ aoClicar('#botao-contar', () => {
     descricao: 'Executa uma função sempre que houver um clique em qualquer lugar da página.',
     tabela: [
       ['callback', 'função', 'Recebe <code>{ x, y }</code>: a posição do clique, em pixels, a partir do canto superior esquerdo da janela.'],
+    ],
+    avisos: [
+      ['dica', 'Para reagir só a cliques em um elemento específico, use <code>aoClicar</code>.'],
     ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
@@ -62,6 +68,9 @@ aoClicarNaTela(({ x, y }) => {
     descricao: 'Executa uma função sempre que o mouse se mover pela página.',
     tabela: [
       ['callback', 'função', 'Recebe <code>{ x, y }</code>: a posição atual do mouse, em pixels, a partir do canto superior esquerdo da janela.'],
+    ],
+    avisos: [
+      ['dica', '<code>x</code> e <code>y</code> contam a partir do canto da janela, não do elemento. Para fazer algo seguir o mouse, use esses valores em <code>mudarEstilo</code> com <code>left</code> e <code>top</code>.'],
     ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
@@ -101,6 +110,10 @@ aoMoverMouse(({ x }) => {
       ['tecla', 'texto', '<code>\'a\'</code>, <code>\'7\'</code>, <code>\'espaço\'</code>, <code>\'enter\'</code>, <code>\'esc\'</code>, <code>\'seta cima\'</code>, <code>\'seta baixo\'</code>, <code>\'seta esquerda\'</code>, <code>\'seta direita\'</code> ou <code>\'qualquer\'</code>. Maiúsculas não fazem diferença.'],
       ['callback', 'função', 'Recebe o nome, em português, da tecla pressionada.'],
     ],
+    avisos: [
+      ['cuidado', 'Dispara uma vez por toque: segurar a tecla não repete. Para movimento contínuo, como em jogos, use <code>teclaPressionada</code>.'],
+      ['dica', 'Com <code>\'espaço\'</code> e as setas, a Borg impede que a página role, exceto dentro de campos de texto. Com <code>\'qualquer\'</code>, a rolagem continua normal. <code>\'espaco\'</code>, sem acento, também funciona.'],
+    ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
 <p class="dica">Clique aqui e pressione qualquer tecla</p>
@@ -126,6 +139,9 @@ aoPressionar('qualquer', (tecla) => {
     tabela: [
       ['tecla', 'texto', 'Os mesmos nomes de <code>aoPressionar</code>.'],
       ['callback', 'função', 'Recebe o nome, em português, da tecla solta.'],
+    ],
+    avisos: [
+      ['dica', 'Use <code>aoPressionar</code> e <code>aoSoltar</code> juntas para saber quando uma tecla começa e quando termina de ser pressionada.'],
     ],
     retorno: 'Uma função <code>parar()</code>, que remove o evento.',
     html: `
@@ -155,6 +171,9 @@ aoSoltar('k', () => {
     descricao:
       'Diz se uma tecla está pressionada neste momento. É ideal para jogos, dentro de um loop. Quando a janela perde o foco, todas as teclas são consideradas soltas.',
     tabela: [['tecla', 'texto', 'Os mesmos nomes de <code>aoPressionar</code>.']],
+    avisos: [
+      ['cuidado', 'A Borg começa a acompanhar o teclado na primeira vez que <code>teclaPressionada</code> é chamada. Por isso, chame dentro de um loop, como no exemplo.'],
+    ],
     retorno: '<code>true</code> enquanto a tecla estiver pressionada, senão <code>false</code>.',
     html: `
 <p class="dica">Clique aqui e segure <kbd>a</kbd> ou <kbd>d</kbd></p>
@@ -219,6 +238,9 @@ aoClicar('#botao-mostrar', () => {
     parametros: 'seletor',
     descricao: 'Esconde o elemento.',
     tabela: [['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.']],
+    avisos: [
+      ['dica', '<code>mostrar</code> traz o elemento de volta com o <code>display</code> que ele tinha antes, como <code>flex</code> ou <code>grid</code>.'],
+    ],
     retorno: 'Nada.',
     html: `
 <div class="caixa" id="caixa-sumir"></div>
@@ -247,6 +269,9 @@ aoClicar('#botao-voltar', () => {
     tabela: [
       ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.'],
       ['classe', 'texto', 'Nome da classe, com ou sem ponto (<code>\'acesa\'</code> ou <code>\'.acesa\'</code>).'],
+    ],
+    avisos: [
+      ['cuidado', 'Uma classe por vez. Um nome com espaço, como <code>\'acesa grande\'</code>, gera um erro.'],
     ],
     retorno: 'Nada.',
     html: `
@@ -278,6 +303,10 @@ aoClicar('#interruptor', () => {
       ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.'],
       ['texto', 'texto ou número', 'O novo texto.'],
     ],
+    avisos: [
+      ['cuidado', 'O texto é tratado como texto puro: <code>&lt;b&gt;oi&lt;/b&gt;</code> aparece assim mesmo, com as tags, e não vira negrito.'],
+      ['dica', 'Números também funcionam: <code>mudarTexto(\'#pontos\', 10)</code>.'],
+    ],
     retorno: 'Nada.',
     html: `
 <p class="grande" id="saudacao">Olá!</p>
@@ -304,6 +333,10 @@ aoClicar('#botao-idioma', () => {
       ['seletor', 'texto ou elemento', 'Seletor CSS ou um elemento do DOM.'],
       ['propriedade', 'texto', 'Nome no formato do CSS (<code>\'border-radius\'</code>) ou do JS (<code>\'borderRadius\'</code>).'],
       ['valor', 'texto ou número', 'O valor do estilo.'],
+    ],
+    avisos: [
+      ['dica', 'Números viram pixels (<code>100</code> → <code>\'100px\'</code>), exceto em propriedades sem unidade, como <code>opacity</code> e <code>z-index</code>. Variáveis CSS, como <code>\'--cor\'</code>, também funcionam.'],
+      ['cuidado', 'Se o navegador não aceitar a propriedade ou o valor, a Borg avisa no console qual foi o problema.'],
     ],
     retorno: 'Nada.',
     html: `

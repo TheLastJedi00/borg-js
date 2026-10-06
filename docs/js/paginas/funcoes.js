@@ -4,6 +4,7 @@ import { ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { iniciarPagina } from '../layout.js'
 import { playground, ativarPlaygrounds } from '../playground/playground.js'
 import { comImport } from '../config.js'
+import { aviso } from '../componentes.js'
 
 iniciarPagina().innerHTML = `
   <div class="pagina com-lateral">
@@ -54,6 +55,7 @@ function htmlDaFuncao(funcao) {
   return `
     <h2>${funcao.nome}<span class="parametros">(${funcao.parametros})</span></h2>
     <p>${funcao.descricao}</p>
+    ${(funcao.avisos ?? []).map(([tipo, html]) => aviso(tipo, html)).join('')}
     <h3>Parâmetros</h3>
     <div class="tabela"><table>
       <thead><tr><th>Nome</th><th>Tipo</th><th>Descrição</th></tr></thead>
