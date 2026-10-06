@@ -5,7 +5,7 @@ import { comImport, linhaDeImport } from '../config.js'
 import { ligarBotaoDeCopiar } from '../util.js'
 import { icones } from '../icones.js'
 import { revelarAoRolar } from '../revelar.js'
-import { svgDaLogo } from '../logo.js'
+import { svgDaLogo, piscarSozinha } from '../logo.js'
 
 /** Código da coruja do topo. É mostrado na página e é o mesmo que roda nela. */
 const CODIGO_DA_CORUJA = comImport(`
@@ -154,3 +154,6 @@ ligarBotaoDeCopiar(document.getElementById('copiar-import'), () => linhaDeImport
 ativarBlocosDeCodigo(conteudo)
 revelarAoRolar(conteudo)
 executarComBorg(CODIGO_DA_CORUJA)
+
+// Além do código acima, a coruja pisca sozinha de vez em quando (desligado com movimento reduzido).
+piscarSozinha(document.getElementById('coruja'))
