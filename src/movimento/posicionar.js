@@ -1,4 +1,4 @@
-import { resolverElementos } from '../nucleo/elementos.js'
+import { primeiroElemento, resolverElementos } from '../nucleo/elementos.js'
 import { validarVetor } from '../nucleo/mensagens.js'
 
 /**
@@ -127,4 +127,36 @@ export function manterNaTela(seletor) {
     }
   })
   return ajustou
+}
+
+/**
+ * Diz se dois elementos estão encostando um no outro (se os retângulos se sobrepõem).
+ *
+ * Usa o primeiro elemento de cada seletor. Elementos que só se tocam na borda
+ * não contam como colisão.
+ *
+ * @param {string|Element} seletorA - Seletor CSS (ex.: `'#nave'`) ou um elemento do DOM.
+ * @param {string|Element} seletorB - Seletor CSS (ex.: `'#estrela'`) ou um elemento do DOM.
+ * @returns {boolean} `true` se os dois se sobrepõem; `false` se não, ou se um deles não for encontrado.
+ * @throws {TypeError} Quando um dos seletores é inválido.
+ * @example
+ * import { colidiu, esconder, moverPor } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * function jogar() {
+ *   moverPor('#nave', { x: 2 })
+ *   if (colidiu('#nave', '#estrela')) {
+ *     esconder('#estrela')
+ *   }
+ *   requestAnimationFrame(jogar)
+ * }
+ * jogar()
+ */
+export function colidiu(seletorA, seletorB) {
+  const a = primeiroElemento(seletorA, 'colidiu')
+  const b = primeiroElemento(seletorB, 'colidiu')
+  if (!a || !b) return false
+
+  const ra = a.getBoundingClientRect()
+  const rb = b.getBoundingClientRect()
+  return ra.left < rb.right && ra.right > rb.left && ra.top < rb.bottom && ra.bottom > rb.top
 }
