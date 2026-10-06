@@ -52,3 +52,32 @@ export function moverPara(seletor, posicao) {
     colocarEm(alvo, { x: posicao.x ?? atual.left, y: posicao.y ?? atual.top })
   })
 }
+
+/**
+ * Desloca o elemento a partir de onde ele está na tela.
+ *
+ * `x` positivo vai para a direita e negativo para a esquerda; `y` positivo vai para
+ * baixo e negativo para cima. Se faltar um dos eixos, ele não muda. Cada elemento do
+ * seletor anda a partir da própria posição.
+ *
+ * @param {string|Element} seletor - Seletor CSS (ex.: `'#nave'`) ou um elemento do DOM.
+ * @param {Vetor} deslocamento - Quantos pixels andar em cada eixo (ex.: `{ x: 5 }`).
+ * @returns {void}
+ * @throws {TypeError} Quando o deslocamento não é um objeto com `x` e/ou `y` numéricos, ou o seletor é inválido.
+ * @example
+ * import { aoPressionar, moverPor } from 'https://borg.lenoborges.br/borg.mjs'
+ *
+ * aoPressionar('seta direita', () => {
+ *   moverPor('#nave', { x: 10 })
+ * })
+ */
+export function moverPor(seletor, deslocamento) {
+  validarVetor(deslocamento, 'moverPor')
+  resolverElementos(seletor, 'moverPor').forEach((alvo) => {
+    const atual = alvo.getBoundingClientRect()
+    colocarEm(alvo, {
+      x: atual.left + (deslocamento.x ?? 0),
+      y: atual.top + (deslocamento.y ?? 0),
+    })
+  })
+}
