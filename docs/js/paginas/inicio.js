@@ -1,7 +1,32 @@
 import { iniciarPagina } from '../layout.js'
-import { linhaDeImport } from '../config.js'
+import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
+import { executarComBorg } from '../codigo/executar.js'
+import { comImport, linhaDeImport } from '../config.js'
 import { ligarBotaoDeCopiar } from '../util.js'
 import { icones } from '../icones.js'
+import { revelarAoRolar } from '../revelar.js'
+
+/** Código da coruja do topo. É mostrado na página e é o mesmo que roda nela. */
+const CODIGO_DA_CORUJA = comImport(`
+// Os olhos seguem o mouse
+aoMoverMouse(({ x, y }) => {
+  const dx = (x / window.innerWidth - 0.5) * 14
+  const dy = (y / window.innerHeight - 0.5) * 14
+  mudarEstilo('.pupila', 'translate', dx + 'px ' + dy + 'px')
+})
+
+// Um clique em qualquer lugar faz a coruja piscar
+aoClicarNaTela(() => {
+  alternarClasse('#coruja', 'piscando')
+  setTimeout(() => alternarClasse('#coruja', 'piscando'), 160)
+})
+
+// Cada tecla aparece no balão, com o nome em português
+aoPressionar('qualquer', (tecla) => {
+  mudarTexto('#balao', tecla)
+  mostrar('#balao')
+})
+`)
 
 /** A coruja da logo, maior e com partes separadas para reagir. */
 const CORUJA = `
@@ -51,6 +76,24 @@ conteudo.innerHTML = `
       <p class="heroi-convite">Mova o mouse, clique em qualquer lugar ou aperte uma tecla.</p>
     </div>
   </section>
+
+  <section class="faixa faixa-codigo" data-revelar>
+    <div class="pagina faixa-dentro">
+      <div class="faixa-texto">
+        <h2>A coruja aí em cima tem ${CODIGO_DA_CORUJA.split('\n').length} linhas de código.</h2>
+        <p>Cada reação é uma função com nome em português. O código ao lado é o mesmo que está rodando nesta página.</p>
+        <dl class="reacoes">
+          <div><dt><code>aoMoverMouse</code></dt><dd>entrega a posição <code>{ x, y }</code> do mouse, e os olhos acompanham.</dd></div>
+          <div><dt><code>aoClicarNaTela</code></dt><dd>reage a um clique em qualquer lugar: a coruja pisca.</dd></div>
+          <div><dt><code>aoPressionar</code></dt><dd>recebe o nome da tecla em português, como <code>'espaço'</code> ou <code>'seta cima'</code>.</dd></div>
+        </dl>
+      </div>
+      ${blocoDeCodigo(CODIGO_DA_CORUJA, 'js')}
+    </div>
+  </section>
 `
 
 ligarBotaoDeCopiar(document.getElementById('copiar-import'), () => linhaDeImport(['aoClicar', 'mostrar']))
+ativarBlocosDeCodigo(conteudo)
+revelarAoRolar(conteudo)
+executarComBorg(CODIGO_DA_CORUJA)

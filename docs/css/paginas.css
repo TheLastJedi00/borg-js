@@ -298,3 +298,74 @@
     overflow-wrap: anywhere;
   }
 }
+
+/* ---------- Início: o código da coruja ---------- */
+
+/* Faixa escura de ponta a ponta: a noite da coruja */
+.faixa-codigo {
+  background: var(--codigo-fundo);
+  color: var(--codigo-texto);
+}
+
+.faixa-dentro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--e-7);
+  align-items: center;
+  padding-top: var(--e-8);
+  padding-bottom: var(--e-8);
+}
+
+.faixa-texto h2 {
+  font-size: var(--t-5);
+}
+
+.faixa-texto > p {
+  margin-top: var(--e-4);
+  color: var(--codigo-suave);
+}
+
+.reacoes {
+  margin: var(--e-6) 0 0;
+}
+
+.reacoes > div {
+  padding: var(--e-3) 0;
+  border-top: 1px solid var(--codigo-borda);
+}
+
+.reacoes dt code {
+  padding: 0;
+  background: none;
+  color: var(--codigo-funcao);
+  font-size: var(--t-2);
+}
+
+.reacoes dd {
+  margin: 2px 0 0;
+  color: var(--codigo-suave);
+}
+
+.reacoes dd code {
+  background: var(--codigo-superficie);
+  color: var(--codigo-texto);
+}
+
+.faixa-codigo .bloco-codigo {
+  border: 1px solid var(--codigo-borda);
+  background: var(--codigo-superficie);
+}
+
+.faixa-codigo .bloco-codigo .cm-editor {
+  max-height: none;
+  background: var(--codigo-superficie);
+}
+
+@media (max-width: 900px) {
+  .faixa-dentro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--e-6);
+    padding-top: var(--e-7);
+    padding-bottom: var(--e-7);
+  }
+}

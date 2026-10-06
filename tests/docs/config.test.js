@@ -18,6 +18,13 @@ describe('linhaDeImport', () => {
       `import { aoClicar, mostrar } from '${URL_BORG_MJS}'`,
     )
   })
+
+  it('quebra em várias linhas quando passaria de 80 caracteres', () => {
+    const nomes = ['aoMoverMouse', 'mudarEstilo', 'aoClicarNaTela', 'alternarClasse']
+    expect(linhaDeImport(nomes)).toBe(
+      `import {\n  aoMoverMouse,\n  mudarEstilo,\n  aoClicarNaTela,\n  alternarClasse,\n} from '${URL_BORG_MJS}'`,
+    )
+  })
 })
 
 describe('comImport', () => {
@@ -25,7 +32,7 @@ describe('comImport', () => {
     const js = "mostrar('#a')\naoClicar('#b', () => mudarTexto('#c', 1))"
 
     expect(comImport(js)).toBe(
-      `import { mostrar, aoClicar, mudarTexto } from '${URL_BORG_MJS}'\n\n${js}`,
+      `${linhaDeImport(['mostrar', 'aoClicar', 'mudarTexto'])}\n\n${js}`,
     )
   })
 
