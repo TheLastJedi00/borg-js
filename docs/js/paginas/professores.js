@@ -3,6 +3,10 @@ import { blocoDeCodigo, ativarBlocosDeCodigo } from '../codigo/bloco.js'
 import { comImport } from '../config.js'
 import { aviso } from '../componentes.js'
 import { htmlDoMenuLateral, ligarMenuLateral, irParaAncora } from '../menu-lateral.js'
+import { icones } from '../icones.js'
+import { ligarBotaoDeCopiar, baixarArquivo } from '../util.js'
+import { htmlDoBotaoParaIa, ligarBotaoParaIa } from '../ia/botao.js'
+import { AJUSTES_DO_PROFESSOR, REGRAS_DE_TUTOR } from '../dados/tutor.js'
 
 /**
  * Sequência sugerida de aulas. Cada uma tem um objetivo, as funções da Borg, o que o aluno
@@ -293,6 +297,50 @@ secoes.push(
   },
 )
 
+secoes.push({
+  id: 'ia-na-aula',
+  rotulo: 'IA na aula',
+  html: `
+    <h2>IA na aula</h2>
+    <p>
+      Muitos alunos já usam IA para programar. Ela ajuda quando explica e atrapalha quando escreve
+      o código pelo aluno: o exercício fica pronto, mas ninguém aprendeu. A proposta aqui é usar a IA
+      como <strong>tutor</strong>: ela conhece toda a documentação da Borg, mas responde com
+      perguntas e dicas em etapas, pede para o aluno explicar o que entendeu e ensina a ler as
+      mensagens <code>[Borg]</code>.
+    </p>
+    <h3>Crie o AGENTS.md no projeto do aluno</h3>
+    <ol>
+      <li>Baixe o arquivo <strong>AGENTS.md</strong> no botão abaixo.</li>
+      <li>Coloque na raiz do projeto do aluno, ao lado do <code>index.html</code> e do <code>main.js</code>.</li>
+      <li>Abra o arquivo e preencha o bloco <strong>Ajustes do professor</strong>: a turma, o assunto e o que está liberado.</li>
+    </ol>
+    <pre class="arvore" aria-label="Pasta meu-projeto com os arquivos index.html, main.js e AGENTS.md">meu-projeto/
+├── index.html
+├── main.js
+└── AGENTS.md</pre>
+    <div class="acoes-ia">
+      <button type="button" class="botao botao-principal" id="baixar-agents">${icones.baixar}Baixar AGENTS.md</button>
+      <button type="button" class="botao botao-secundario" id="copiar-agents">${icones.copiar}Copiar AGENTS.md</button>
+      ${htmlDoBotaoParaIa({ id: 'copiar-para-ia-professor' })}
+    </div>
+    ${aviso('dica', 'O AGENTS.md tem as regras de tutor e, logo depois, a documentação completa da Borg, a mesma do botão <strong>Copiar para IA</strong>. Assim a IA sabe tudo da Borg e não inventa funções.')}
+    <h3>Quais ferramentas leem o arquivo</h3>
+    <div class="tabela"><table>
+      <thead><tr><th>Ferramenta</th><th>O que fazer</th></tr></thead>
+      <tbody>
+        <tr><td>GitHub Copilot no VS Code, Cursor, Codex</td><td>Leem o <code>AGENTS.md</code> da raiz do projeto sozinhos. No Copilot, o arquivo <code>.github/copilot-instructions.md</code>, com o mesmo conteúdo, também funciona.</td></tr>
+        <tr><td>Claude Code</td><td>Crie um <code>CLAUDE.md</code> com a linha <code>@AGENTS.md</code>, ou copie o conteúdo do <code>AGENTS.md</code> para ele.</td></tr>
+        <tr><td>Chat no navegador (ChatGPT, Gemini, Claude)</td><td>Anexe o arquivo ou cole o conteúdo no começo da conversa, antes da primeira pergunta.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>O que o prompt pede para a IA</h3>
+    <p>Esta é a parte de regras do arquivo. Leia antes de entregar para a turma e ajuste se quiser:</p>
+    ${blocoDeCodigo(`${AJUSTES_DO_PROFESSOR}\n\n${REGRAS_DE_TUTOR}`, 'texto')}
+    ${aviso('cuidado', 'Nenhum prompt garante que a IA nunca vai entregar a resposta. Combine o AGENTS.md com o que já funciona em sala: peça para o aluno explicar o próprio código e mudar uma parte na sua frente.')}
+  `,
+})
+
 const menu = htmlDoMenuLateral([{ titulo: 'Guia do professor', itens: secoes }])
 
 const conteudo = iniciarPagina()
@@ -311,4 +359,24 @@ conteudo.innerHTML = `
 
 ativarBlocosDeCodigo(conteudo)
 ligarMenuLateral(conteudo)
+ligarBotoesDoAgents()
 irParaAncora()
+
+/** AGENTS.md montado sob demanda: ele traz a documentação inteira. */
+let agents
+function carregarAgents() {
+  agents ??= import('../ia/agents.js').then((modulo) => modulo.gerarAgentsMd())
+  return agents
+}
+
+function ligarBotoesDoAgents() {
+  const baixar = document.getElementById('baixar-agents')
+  const copiar = document.getElementById('copiar-agents')
+  for (const botao of [baixar, copiar]) {
+    botao.addEventListener('pointerenter', carregarAgents, { once: true })
+    botao.addEventListener('focus', carregarAgents, { once: true })
+  }
+  baixar.addEventListener('click', async () => baixarArquivo(await carregarAgents(), 'AGENTS.md', 'text/markdown'))
+  ligarBotaoDeCopiar(copiar, carregarAgents)
+  ligarBotaoParaIa(document.getElementById('copiar-para-ia-professor'))
+}

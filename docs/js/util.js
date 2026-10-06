@@ -83,3 +83,18 @@ export function ligarBotaoDeCopiar(botao, obterTexto) {
     temporizador = setTimeout(() => (botao.innerHTML = original), 1800)
   })
 }
+
+/**
+ * Baixa um texto como arquivo, com o nome dado.
+ * @param {string} conteudo
+ * @param {string} nome - Ex.: `'index.html'`, `'AGENTS.md'`.
+ * @param {string} tipo - Tipo MIME, ex.: `'text/html'`.
+ */
+export function baixarArquivo(conteudo, nome, tipo) {
+  const url = URL.createObjectURL(new Blob([conteudo], { type: `${tipo};charset=utf-8` }))
+  const link = document.createElement('a')
+  link.href = url
+  link.download = nome
+  link.click()
+  URL.revokeObjectURL(url)
+}
