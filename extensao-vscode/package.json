@@ -1,0 +1,42 @@
+{
+  "name": "borg-js",
+  "displayName": "Borg JS",
+  "description": "Autocomplete da Borg JS: escreve a chamada inteira de cada função, com seletor, arrow function e o import.",
+  "version": "0.1.0",
+  "publisher": "lenoborges",
+  "license": "MIT",
+  "icon": "icone.png",
+  "homepage": "https://borg.lenoborges.br",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheLastJedi00/borg-js.git",
+    "directory": "extensao-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/TheLastJedi00/borg-js/issues"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Snippets",
+    "Education"
+  ],
+  "keywords": [
+    "borg",
+    "borg-js",
+    "português",
+    "educacional",
+    "autocomplete",
+    "dom"
+  ],
+  "galleryBanner": {
+    "color": "#0F172A",
+    "theme": "dark"
+  },
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:html"
+  ],
+  "main": "./dist/extensao.cjs"
+}
