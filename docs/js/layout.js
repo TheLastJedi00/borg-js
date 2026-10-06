@@ -1,5 +1,6 @@
 import { icones } from './icones.js'
 import { svgDaLogo, piscar, prefereMenosMovimento } from './logo.js'
+import { htmlDoBotaoParaIa, ligarBotaoParaIa } from './ia/botao.js'
 
 /** Páginas do menu principal, na ordem em que aparecem. */
 export const PAGINAS = [
@@ -44,6 +45,7 @@ function htmlDoTopo(paginaAtual) {
         <ul>${links}</ul>
       </nav>
       <div class="topo-acoes">
+        ${htmlDoBotaoParaIa({ id: 'copiar-para-ia', classe: 'botao-topo' })}
         <button class="botao-icone" type="button" id="botao-tema"></button>
         <button class="botao-icone botao-menu" type="button" id="botao-menu"
           aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">${icones.menu}</button>
@@ -116,6 +118,7 @@ export function iniciarPagina() {
   document.getElementById('rodape').innerHTML = htmlDoRodape()
   ligarTema()
   ligarMenuDoCelular()
+  ligarBotaoParaIa(document.getElementById('copiar-para-ia'))
   saudarComUmaPiscada()
   return document.getElementById('conteudo')
 }
