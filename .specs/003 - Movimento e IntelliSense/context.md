@@ -33,6 +33,27 @@
 | Testes | A biblioteca segue com TDD em `tests/movimento/`. A lógica da extensão e do autocomplete que não depende do editor (montar a sugestão, converter o modelo, editar o `import`) é testada antes da implementação. Em jsdom, `IntersectionObserver` e `getBoundingClientRect` são simulados nos testes. |
 | Porta | O site continua em `localhost:4200`. Não há backend (a porta 3000 não se aplica). |
 
+## Decisões da execução
+
+Detalhes que a spec não definia e que foram decididos durante a implementação:
+
+| Tema | Decisão |
+| --- | --- |
+| Margem e `transform` | `moverPara` e `moverPor` colocam o elemento, medem de novo e corrigem a diferença causada por margem ou `transform`. Assim `posicao` devolve exatamente o ponto pedido, e o incremento `posicao(nave).x + 1` anda 1 px. |
+| `manterNaTela` | Ajusta todos os elementos do seletor e retorna `true` se algum foi ajustado. Um elemento maior que a janela fica alinhado à esquerda e ao topo. |
+| `colidiu` | Encostar só na borda não conta como colisão. |
+| `estaNaTela` | Um elemento sem tamanho (escondido) não conta como "na tela". |
+| `<script>` sem módulo | Na extensão, dentro de um `<script>` sem `type="module"` no HTML, a sugestão escreve `Borg.aoClicar(...)` e não cria `import`, como na seção "Usando sem import". Depois de `Borg.`, também não cria `import`. |
+| Dentro do `import` | Entre as chaves do `import`, a sugestão escreve só o nome da função. |
+| `elemento` no começo da linha | A sugestão escreve `const meuElemento = elemento('#meu-seletor')`. Depois de um `=` ou dentro de uma chamada, escreve só `elemento(...)`. |
+| URLs sem a biblioteca | As URLs e `linhaDeImport` foram para `docs/js/url.js`, sem importar a Borg. `config.js` reexporta tudo. Assim a extensão tem 18 KB em vez de embutir a biblioteca inteira. |
+| Ícone da extensão | É gerado no build a partir de `assets/logo.svg` (com `@resvg/resvg-js`), para a logo ter uma fonte só. |
+| Publisher | `lenoborges`, provisório. Ele precisa ser igual ao publisher criado no Marketplace. Um teste garante que `extensao-vscode/package.json` e os links do site usem o mesmo valor. |
+| Publicação | `npm run publicar:extensao -- --azure-credential` dispensa o `VSCE_PAT`. Os dois registros usam `skipDuplicate`, então rodar de novo depois de uma falha parcial não quebra. |
+| Começar | A extensão entrou como bloco "Opcional" dentro do passo 1, e não como um passo novo, para manter os "sete passos" e as referências "passo 2" e "passo 5". |
+| Aulas | "Movimento na tela" virou a aula 6, e o mini jogo passou a ser a aula 7. |
+| Projeto do jogo | A tela inteira do resultado virou a arena, porque `manterNaTela` limita à janela. A estrela é sorteada com `tamanhoDaTela` e `tamanho`. |
+
 ## Público
 
 - **Alunos iniciantes**: querem fazer algo se mexer na tela e esquecem parênteses, chaves e a sintaxe da arrow function.
